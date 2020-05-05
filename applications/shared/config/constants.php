@@ -37,6 +37,7 @@ define('PROGRAM_EXPO', 3);
 define('PROGRAM_WORKSHOP', 4);
 define('PROGRAM_STARTUP', 5);
 define('PROGRAM_STARTUP_MEETUP', 6);
+define('PROGRAM_ONLINE_WORKSHOP', 7);
 
 // Jenis User
 define('TIPE_USER_NORMAL', 1);

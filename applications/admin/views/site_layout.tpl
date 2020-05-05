@@ -42,6 +42,7 @@
 								<ul class="dropdown-menu">
 									<li><a href="{site_url('kegiatan')}">Jadwal Kegiatan</a></li>
 									<li><a href="{site_url('kegiatan/lokasi')}">Lokasi Workshop</a></li>
+                                    <li><a href="{site_url('kegiatan/meeting')}">Jadwal Online Workshop</a></li>
 									<li role="separator" class="divider"></li>
 									<li><a href="{site_url('download')}">Download File</a></li>
 								</ul>
@@ -61,7 +62,7 @@
 								</ul>
 							</li>
 							<li>
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Proposal / Kegiatan <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Proposal &amp; Peserta <span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="{site_url('proposal/index-pbbt')}">Proposal PBBT</a></li>
 									<li><a href="{site_url('proposal/index-kbmi')}">Proposal KBMI</a></li>
@@ -77,6 +78,8 @@
 									<li><a href="{site_url('expo')}">Usulan Expo KMI</a></li>
 									<li><a href="{site_url('expo/rekap-per-pt')}">Rekap per PT</a></li>
 									<li><a href="{site_url('expo/rekap-per-kategori')}">Rekap per Kategori</a></li>
+                                    <li role="separator" class="divider"></li>
+									<li><h5 style="padding: 3px 20px; margin: 0"><i>Online Workshop</i></h5></li>
 								</ul>
 							</li>
 							<li>
