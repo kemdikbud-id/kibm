@@ -99,9 +99,9 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-center">&copy; {date('Y')} Direktorat Jenderal Pembelajaran dan Kemahasiswaan<br/>
-					Gedung D Lt 7, Jl. Jenderal Sudirman, Pintu I Senayan, Daerah Khusus Ibukota Jakarta 10270, Indonesia<br/>
-					Email: kk.ditmawa@ristekdikti.go.id</p>
+				<p class="text-center">&copy; Direktorat Jenderal Pendidikan Tinggi<br/>
+					Jl. Jenderal Sudirman, Senayan, Jakarta 10270, Indonesia<br/>
+                    <a href="http://dikti.kemdikbud.go.id">dikti.kemdikbud.go.id</a></p>
 			</div>
 		</footer>
 
