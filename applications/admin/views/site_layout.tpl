@@ -80,6 +80,7 @@
 									<li><a href="{site_url('expo/rekap-per-kategori')}">Rekap per Kategori</a></li>
                                     <li role="separator" class="divider"></li>
 									<li><h5 style="padding: 3px 20px; margin: 0"><i>Online Workshop</i></h5></li>
+                                    <li><a href="{site_url('online-workshop/peserta')}">Daftar Peserta</a></li>
 								</ul>
 							</li>
 							<li>
