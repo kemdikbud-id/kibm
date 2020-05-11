@@ -131,7 +131,7 @@ class Auth extends Frontend_Controller
 				$body = $this->smarty->fetch('email/login_mahasiswa.tpl');
 				
 				// Kirim Email
-				$this->email->from('no-reply@ristekbrin.go.id', 'SIM-PKMI');
+				$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI');
 				$this->email->to($email);
 				$this->email->subject('Informasi Akun SIM-PKMI');
 				$this->email->message($body);
