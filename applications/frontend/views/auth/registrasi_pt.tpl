@@ -122,6 +122,7 @@
 					<label class="col-md-3 control-label" for="singlebutton"></label>
 					<div class="col-md-4">
 						<button name="submit" class="btn btn-primary">Daftar</button>
+						<a href="{site_url('auth/login')}" class="btn btn-default">Kembali ke Login</a>
 					</div>
 				</div>
 
