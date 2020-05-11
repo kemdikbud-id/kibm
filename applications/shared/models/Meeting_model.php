@@ -12,6 +12,16 @@ class Meeting_model extends CI_Model
 			->get_where('meeting', ['kegiatan_id' => $kegiatan_id])->result();
 	}
 	
+	/**
+	 * Mendapatkan list meeting / online workshop berdasarkan mahasiswa
+	 * @param int $mahasiswa_id
+	 * @param int $kegiatan_id
+	 */
+	public function list_by_mahasiswa($mahasiswa_id)
+	{
+		return array();
+	}
+	
 	public function add()
 	{
 		$post = $this->input->post();

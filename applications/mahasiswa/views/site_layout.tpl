@@ -55,6 +55,12 @@
 									<li><a href="{site_url('startup')}">Unggah Pitchdeck &amp; Produk</a></li>
 								</ul>
 							</li>
+							<li>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Program Online Workshop <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+									<li><a href="{site_url('online-workshop')}">Daftar Online Workshop</a></li>
+								</ul>
+							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							{if $ci->session->user}

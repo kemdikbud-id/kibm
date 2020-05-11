@@ -35,6 +35,12 @@
 			p {
 				margin: 12px 15px 12px 15px;
 			}
+			table {
+				margin: 12px 15px 12px 15px;
+			}
+			h3 {
+				margin: 12px 15px 12px 15px;
+			}
 			ul {
 				font-size: 14px;
 				margin: 6px 15px 12px;
@@ -42,21 +48,33 @@
 			ul>li { font-size: 14px; }
 			ul>li>code { font-size: 14px; }
 		</style>
+		{* Prevent Automatic Link *}
+		<meta name="format-detection" content="telephone=no">
 	</head>
 	<body>
 		<div id="container">
 			<h2>Akun SIM-PKMI</h2>
-			<p>Berikut ini informasi <i>account</i> anda untuk login ke <a href="https://sim-pkmi.ristekdikti.go.id" target="_blank">Sim-PKMI Ristekdikti</a> :</p>
-			<ul>
-				<li>Username : <code>{if isset($username)}{$username}{else}$username{/if}</code></li>
-				<li>Password : <code>{if isset($password)}{$password}{else}$password{/if}</code></li>
-			</ul>
+			{if isset($nama)}<p>Halo {$nama},</p>{/if}
+			<p>Berikut ini informasi <i>account</i> anda untuk login ke <a href="https://sim-pkmi.kemdikbud.go.id" target="_blank">Sim-PKMI</a> :</p>
+			<table>
+				<tbody>
+					<tr>
+						<td>Username :</td>
+						<td><code>{if isset($username)}{$username}{else}$username{/if}</code></td>
+					</tr>
+					<tr>
+						<td>Password :</td>
+						<td><code>{if isset($password)}{$password}{else}$password{/if}</code></td>
+					</tr>
+				</tbody>
+			</table>
+			<h3><a href="https://sim-pkmi.kemdikbud.go.id" target="_blank">KLIK DISINI UNTUK LOGIN</a></h3>
 			<p>Harap disimpan baik-baik user login ini. Untuk keamanan silahkan ganti password sesaat setelah login pertama kali.</p>
 			<p></p>
 			<p><i style="font-size: 11px">Email ini otomatis. Tidak perlu dibalas.</i></p>
 		</div>
 		<div id="footer">
-			<p>&copy; SIM-PKMI - {date('Y')} </p>
+			<p>&copy; SIM-PKMI Kemdikbud - {date('Y')} </p>
 		</div>
 	</body>
 </html>

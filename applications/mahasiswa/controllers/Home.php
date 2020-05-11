@@ -4,6 +4,7 @@
  * @author Fathoni <m.fathoni@mail.com>
  * @property Kegiatan_model $kegiatan_model 
  * @property Proposal_model $proposal_model
+ * @property Meeting_model $meeting_model
  */
 class Home extends Mahasiswa_Controller
 {
@@ -13,20 +14,24 @@ class Home extends Mahasiswa_Controller
 		$this->check_credentials();
 		$this->load->model(MODEL_KEGIATAN, 'kegiatan_model');
 		$this->load->model(MODEL_PROPOSAL, 'proposal_model');
+		$this->load->model(MODEL_MEETING, 'meeting_model');
 	}
 	
 	public function index()
 	{
 		$kegiatan_kbmi = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
 		$kegiatan_startup = $this->kegiatan_model->get_aktif(PROGRAM_STARTUP);
+		$kegiatan_online_workshop = $this->kegiatan_model->get_aktif(PROGRAM_ONLINE_WORKSHOP);
 		
 		$proposal_kbmi_set = $this->proposal_model->list_by_mahasiswa($this->session->user->mahasiswa->id, PROGRAM_KBMI);
 		$proposal_startup_set = $this->proposal_model->list_by_mahasiswa($this->session->user->mahasiswa->id, PROGRAM_STARTUP);
+		$meeting_set = $this->meeting_model->list_by_mahasiswa($this->session->user->mahasiswa->id);
 		
 		$this->smarty->assign('kegiatan_kbmi', $kegiatan_kbmi);
 		$this->smarty->assign('kegiatan_startup', $kegiatan_startup);
 		$this->smarty->assign('proposal_kbmi_set', $proposal_kbmi_set);
 		$this->smarty->assign('proposal_startup_set', $proposal_startup_set);
+		$this->smarty->assign('meeting_set', $meeting_set);;
 		$this->smarty->display();
 	}
 }

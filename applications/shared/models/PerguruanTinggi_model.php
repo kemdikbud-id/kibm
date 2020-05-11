@@ -36,6 +36,7 @@ class PerguruanTinggi_model extends CI_Model
 			->select('id, nama_pt as value')
 			->from('perguruan_tinggi')
 			->where("(nama_pt like '{$nama_pt}%' or nama_pt like '% {$nama_pt}%')", NULL, TRUE)	// full-text matching
+			->order_by('nama_pt')
 			->limit(10)
 			->get()
 			->result_array();
@@ -48,6 +49,17 @@ class PerguruanTinggi_model extends CI_Model
 	public function get_single($id)
 	{
 		return $this->db->get_where('perguruan_tinggi', ['id' => $id])->row();
+	}
+	
+	/**
+	 * Get npsn / kode_pt
+	 * @param int $id
+	 * @return string
+	 */
+	public function get_npsn_by_id($id)
+	{
+		return $this->db->select('npsn')
+			->get_where('perguruan_tinggi', ['id' => $id])->row()->npsn;
 	}
 	
 	public function update(stdClass $model, $id)

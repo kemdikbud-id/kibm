@@ -7,9 +7,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			
+			<!--
 			<h4>Halaman ini adalah halaman untuk registrasi akun operator perguruan tinggi. Untuk registrasi
 				Workshop Rencana Bisnis untuk mahasiswa silahkan klik <a href="{site_url('jform/workshop')}" class="btn btn-xs btn-info">Registrasi Workshop</a></h4>
-
+			-->
+			
 			{if isset($error)}
 				<p>{$error['message']}</p>
 			{/if}

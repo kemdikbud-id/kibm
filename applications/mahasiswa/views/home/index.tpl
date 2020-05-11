@@ -28,6 +28,7 @@
 					</table>
 				</div>
 			</div>
+
 			<h3>Program Akselerasi Startup</h3>
 			{if $kegiatan_startup != NULL}
 				<p>Program Berjalan : {$kegiatan_startup->tahun}. Masa unggah: {$kegiatan_startup->tgl_awal_upload|date_format:"%d %B %Y %T"} sampai {$kegiatan_startup->tgl_akhir_upload|date_format:"%d %B %Y %T"}</p>
@@ -87,6 +88,41 @@
 					</table>
 				</div>
 			</div>
+
+			<h3>Online Workshop Peningkatan dan Pengembangan Kewirausahaan</h3>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Topik</th>
+								<th>Pemateri</th>
+								<th>Waktu</th>
+								<th>Meeting URL</th>
+								<th>Password Meeting</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $meeting_set as $meeting}
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+							{foreachelse}
+								<tr>
+									<td colspan="6"><i>Tidak ada data registrasi</i></td>
+								</tr>
+							{/foreach}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
 		</div>
 	</div>
 {/block}
