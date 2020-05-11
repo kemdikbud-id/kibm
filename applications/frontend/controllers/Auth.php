@@ -149,7 +149,36 @@ class Auth extends Frontend_Controller
 			}
 			else if ($this->input->post('submit') == 'reset-password')
 			{
-				// sampai sini
+				$pt = $this->pt_model->get_single($this->input->post('perguruan_tinggi_id'));				
+				$mahasiswa = $this->mahasiswa_model->get_by_nim(
+					$pt->npsn, 
+					$this->input->post('program_studi_id'), 
+					$this->input->post('nim'));
+				$user = $this->user_model->get_single_by_mahasiswa($mahasiswa->id);
+				
+				$email = $user->email;
+				
+				// Prepare Send Email
+				$this->smarty->assign('nama', $mahasiswa->nama);
+				$this->smarty->assign('username', $user->username);
+				$this->smarty->assign('password', $user->password);
+				$body = $this->smarty->fetch('email/login_mahasiswa.tpl');
+				
+				// Kirim Email
+				$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI');
+				$this->email->to($email);
+				$this->email->subject('Reset Password Akun SIM-PKMI');
+				$this->email->message($body);
+				$this->email->set_mailtype("html");
+				$this->email->send();
+
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+					'message' => "Reset password berhasil. User login akan dikirimkan ke {$email}",
+					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')
+				));
+				
+				redirect(site_url('alert/success'));
 			}
 			
 			exit();
