@@ -67,9 +67,9 @@
  */
 	if (ENVIRONMENT == 'production')
 		if (isset($_SERVER['HTTPS']))
-			define('GLOBAL_BASE_URL', 'https://sim-pkmi.ristekdikti.go.id');
+			define('GLOBAL_BASE_URL', 'https://' . $_SERVER['HTTP_HOST']);
 		else
-			define('GLOBAL_BASE_URL', 'http://sim-pkmi.ristekdikti.go.id');
+			define('GLOBAL_BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 	if (ENVIRONMENT == 'development')
 		if (php_sapi_name() !== 'cli')
 			define('GLOBAL_BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
