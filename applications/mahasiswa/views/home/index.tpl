@@ -106,11 +106,11 @@
 						<tbody>
 							{foreach $meeting_set as $meeting}
 								<tr>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
+									<td>{$meeting->topik}</td>
+									<td>{$meeting->pemateri}</td>
+									<td>{$meeting->waktu_mulai|date_format:"%d %B %Y %T"}</td>
+									<td><a href="{$meeting->meeting_url}">{$meeting->meeting_url}</a></td>
+									<td class="text-center"><code>{$meeting->meeting_password}</code></td>
 									<td></td>
 								</tr>
 							{foreachelse}

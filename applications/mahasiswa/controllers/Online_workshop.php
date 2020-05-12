@@ -18,7 +18,8 @@ class Online_workshop extends Mahasiswa_Controller
 	public function index()
 	{
 		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_ONLINE_WORKSHOP);
-		$meeting_set = $this->meeting_model->list_all($kegiatan->id);
+		$mahasiswa = $this->session->user->mahasiswa;
+		$meeting_set = $this->meeting_model->list_with_mahasiswa($kegiatan->id, $mahasiswa->id);
 
 		$this->smarty->assign('kegiatan', $kegiatan);
 		$this->smarty->assign('meeting_set', $meeting_set);
@@ -27,6 +28,23 @@ class Online_workshop extends Mahasiswa_Controller
 	
 	public function register($meeting_id)
 	{
-		$this->smarty->display();
+		$meeting = $this->meeting_model->get_single($meeting_id);
+		$mahasiswa = $this->session->user->mahasiswa;
+		
+		if (!$this->meeting_model->is_peserta_exist($meeting->id, $mahasiswa->id))
+		{
+			$this->meeting_model->add_peserta($meeting->id, $mahasiswa->id);
+		}
+		
+		$kegiatan = $this->kegiatan_model->get_single($meeting->kegiatan_id);
+		
+		$this->session->set_flashdata('result', [
+			'page_title' => "Program Online Workshop <small>Tahun {$kegiatan->tahun}</small>",
+			'message' => 'Pendaftaran workshop berhasil. Pastikan mengingat jadwal.',
+			'link_1' => anchor('home', 'Kembali ke Beranda'),
+			'link_2' => anchor('online-workshop', 'Kembali ke Daftar Online Workshop')
+		]);
+		
+		redirect('alert/success');
 	}
 }

@@ -22,8 +22,12 @@
 							<td>{$meeting->pemateri}</td>
                             <td>{$meeting->waktu_mulai|date_format:"%d %B %Y %T"}</td>
                             <td><a href="{$meeting->meeting_url}">{$meeting->meeting_url}</a></td>
-							<td>
-								<a href="{site_url("online-workshop/register/{$meeting->id}")}" class="btn btn-sm btn-default">Daftar</a>
+							<td class="text-center">
+								{if $meeting->mahasiswa_id == null}
+									<a href="{site_url("online-workshop/register/{$meeting->id}")}" class="btn btn-sm btn-default">Daftar</a>
+								{else}
+									<label class="label label-primary">TERDAFTAR</label>
+								{/if}
 							</td>
 						</tr>
 					{foreachelse}

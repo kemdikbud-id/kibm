@@ -2,30 +2,63 @@
 
 /**
  * @author Fathoni <m.fathoni@mail.com>
+ * @property CI_DB_query_builder $db
+ * @property int $id
+ * @property int $kegiatan_id
+ * @property string $topik
+ * @property string $pemateri
+ * @property string $meeting_url
+ * @property string $meeting_password
+ * @property string $waktu_mulai
+ * @property int $kapasitas
+ * @property string $kode_kehadiran_1
+ * @property string $kode_kehadiran_2
+ * @property string $tgl_awal_registrasi
+ * @property string $tgl_akhir_registrasi
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Meeting_model extends CI_Model
 {
+
 	public function list_all($kegiatan_id)
 	{
 		return $this->db
 			->order_by('waktu_mulai ASC')
 			->get_where('meeting', ['kegiatan_id' => $kegiatan_id])->result();
 	}
-	
+
 	/**
 	 * Mendapatkan list meeting / online workshop berdasarkan mahasiswa
-	 * @param int $mahasiswa_id
 	 * @param int $kegiatan_id
+	 * @param int $mahasiswa_id
 	 */
-	public function list_by_mahasiswa($mahasiswa_id)
+	public function list_with_mahasiswa($kegiatan_id, $mahasiswa_id = null)
 	{
-		return array();
+		return $this->db
+			->select('meeting.*')
+			->select('pm.mahasiswa_id')
+			->from('meeting')
+			->join('peserta_meeting pm', 'pm.meeting_id = meeting.id and pm.mahasiswa_id = '.$mahasiswa_id, 'left')
+			->where('meeting.kegiatan_id', $kegiatan_id)
+			->order_by('waktu_mulai ASC')
+			->get()->result();
 	}
 	
+	public function list_by_mahasiswa($mahasiswa_id)
+	{
+		return $this->db
+			->select('meeting.*')
+			->from('meeting')
+			->join('peserta_meeting pm', 'pm.meeting_id = meeting.id')
+			->where('pm.mahasiswa_id', $mahasiswa_id)
+			->get()->result();
+	}
+
 	public function add()
 	{
 		$post = $this->input->post();
-		
+
 		$meeting = new stdClass();
 		$meeting->kegiatan_id = $post['kegiatan_id'];
 		$meeting->topik = $post['topik'];
@@ -38,18 +71,23 @@ class Meeting_model extends CI_Model
 		$meeting->kode_kehadiran_1 = $post['kode_kehadiran_1'];
 		$meeting->kode_kehadiran_2 = $post['kode_kehadiran_2'];
 		$meeting->kapasitas = $post['kapasitas'];
+		
 		return $this->db->insert('meeting', $meeting);
 	}
-	
+
+	/**
+	 * @param int $id
+	 * @return Meeting_model
+	 */
 	public function get_single($id)
 	{
 		return $this->db->get_where('meeting', ['id' => $id], 1)->row();
 	}
-	
+
 	public function update($id)
 	{
 		$post = $this->input->post();
-		
+
 		$meeting = $this->get_single($id);
 		$meeting->topik = $post['topik'];
 		$meeting->pemateri = $post['pemateri'];
@@ -61,7 +99,25 @@ class Meeting_model extends CI_Model
 		$meeting->kode_kehadiran_1 = $post['kode_kehadiran_1'];
 		$meeting->kode_kehadiran_2 = $post['kode_kehadiran_2'];
 		$meeting->kapasitas = $post['kapasitas'];
-		
+
 		return $this->db->update('meeting', $meeting, ['id' => $id]);
 	}
+
+	public function add_peserta($meeting_id, $mahasiswa_id)
+	{
+		return $this->db->insert('peserta_meeting', [
+			'meeting_id' => $meeting_id,
+			'mahasiswa_id' => $mahasiswa_id
+		]);
+	}
+
+	function is_peserta_exist($meeting_id, $mahasiswa_id)
+	{
+		return ($this->db
+			->where('meeting_id', $meeting_id)
+			->where('mahasiswa_id', $mahasiswa_id)
+			->get('peserta_meeting')
+			->row() != null);
+	}
+
 }
