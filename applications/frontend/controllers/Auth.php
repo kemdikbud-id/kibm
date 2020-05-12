@@ -135,7 +135,6 @@ class Auth extends Frontend_Controller
 				$this->email->to($email);
 				$this->email->subject('Informasi Akun SIM-PKMI');
 				$this->email->message($body);
-				$this->email->set_mailtype("html");
 				$this->email->send();
 
 				$this->session->set_flashdata('result', array(
@@ -169,7 +168,6 @@ class Auth extends Frontend_Controller
 				$this->email->to($email);
 				$this->email->subject('Reset Password Akun SIM-PKMI');
 				$this->email->message($body);
-				$this->email->set_mailtype("html");
 				$this->email->send();
 
 				$this->session->set_flashdata('result', array(
