@@ -6,6 +6,7 @@
  * @property Program_model $program_model
  * @property LokasiWorkshop_model $lokasi_model
  * @property Syarat_model $syarat_model
+ * @property Meeting_model $meeting_model
  */
 class Kegiatan extends Admin_Controller
 {
@@ -19,6 +20,7 @@ class Kegiatan extends Admin_Controller
 		$this->load->model('Program_model', 'program_model');
 		$this->load->model('LokasiWorkshop_model', 'lokasi_model');
 		$this->load->model('Syarat_model', 'syarat_model');
+		$this->load->model('Meeting_model', 'meeting_model');
 	}
 	
 	public function index()
@@ -291,6 +293,92 @@ class Kegiatan extends Admin_Controller
 		
 		$this->smarty->assign('upload_set', [1 => 'Upload', 0 => 'Link']);
 		
+		$this->smarty->display();
+	}
+	
+	public function meeting()
+	{
+		$kegiatan_id = $this->input->get('kegiatan_id');
+		
+		$this->smarty->assign('kegiatan_set', $this->kegiatan_model->list_online_workshop());
+		$this->smarty->assign('meeting_set', $this->meeting_model->list_all($kegiatan_id));
+		
+		$this->smarty->display();
+	}
+	
+	public function add_meeting()
+	{
+		$kegiatan_id = $this->input->get('kegiatan_id');
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+			$add_result = $this->meeting_model->add();
+			
+			if ($add_result)
+			{
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Tambah Sesi Meeting',
+					'message' => 'Berhasil menambah data',
+					'link_1' => '<a href="' . site_url('kegiatan/meeting?kegiatan_id=' . $kegiatan_id) . '">Kembali ke Jadwal Online Workshop</a>',
+				));
+				
+				redirect(site_url('alert/success'));
+			}
+			else
+			{
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Tambah Sesi Meeting',
+					'message' => 'Gagal menambah data',
+					'link_1' => '<a href="' . site_url('kegiatan/meeting?kegiatan_id=' . $kegiatan_id) . '">Kembali ke Jadwal Online Workshop</a>',
+				));
+				
+				redirect(site_url('alert/error'));
+			}
+			
+			exit();
+		}
+		
+		$this->smarty->assign('kegiatan', $this->kegiatan_model->get_single($kegiatan_id));
+		
+		$this->smarty->display();
+	}
+	
+	public function edit_meeting($id)
+	{
+		$meeting = $this->meeting_model->get_single($id);
+		
+		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		{
+			$update_result = $this->meeting_model->update($id);
+			
+			if ($update_result)
+			{
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Edit Sesi Meeting',
+					'message' => 'Berhasil mengupdate data',
+					'link_1' => '<a href="' . site_url('kegiatan/meeting?kegiatan_id=' . $meeting->kegiatan_id) . '">Kembali ke Jadwal Online Workshop</a>',
+				));
+				
+				redirect(site_url('alert/success'));
+			}
+			else
+			{
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Edit Sesi Meeting',
+					'message' => 'Gagal mengupdate data',
+					'link_1' => '<a href="' . site_url('kegiatan/meeting?kegiatan_id=' . $meeting->kegiatan_id) . '">Kembali ke Jadwal Online Workshop</a>',
+				));
+				
+				redirect(site_url('alert/error'));
+			}
+			
+			exit();
+		}
+
+		$kegiatan = $this->kegiatan_model->get_single($meeting->kegiatan_id);
+		
+		$this->smarty->assign('data', $meeting);
+		$this->smarty->assign('kegiatan', $kegiatan);
 		$this->smarty->display();
 	}
 }

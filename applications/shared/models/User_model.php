@@ -80,10 +80,50 @@ class User_model extends CI_Model
 			->result();
 	}
 	
+	/**
+	 * @param User_model $model
+	 * @return bool
+	 */
+	public function add(&$model)
+	{
+		$result = $this->db->insert('user', $model);
+		$model->id = $this->db->insert_id();
+		return $result;
+	}
+	
+	/**
+	 * @param Mahasiswa_model $mahasiswa
+	 * @param int $pt_id
+	 * @param string $pt_npsn
+	 * @return User_model
+	 */
+	public function create_user_mahasiswa($mahasiswa, $pt_id, $pt_npsn)
+	{
+		$this->load->helper('string');
+		
+		$user = new User_model();
+		$user->username				= $pt_npsn . '-' . $mahasiswa->nim;
+		$user->password				= random_string('numeric', 6);
+		$user->password_hash		= sha1($user->password);
+		$user->mahasiswa_id			= $mahasiswa->id;
+		$user->perguruan_tinggi_id	= $pt_id;
+		$user->tipe_user			= TIPE_USER_MAHASISWA;
+		$user->program_id			= PROGRAM_KBMI;
+		$user->created_at			= date('Y-m-d H:i:s');
+		return $user;
+	}
+	
+	/**
+	 * @deprecated Silahkan gunakan fungsi User_model->add()
+	 * @param User_model $user
+	 * @return type
+	 */
 	public function create_user(User_model $user)
 	{
 		return $this->db->insert('user', $user);
 	}
+	
+	
 	
 	public function login_failed($username, $password, $ip_address, $keterangan)
 	{
@@ -114,5 +154,15 @@ class User_model extends CI_Model
 			'email' => $user->email,
 			'updated_at' => date('Y-m-d H:i:s')
 		], ['id' => $user->id], 1);
+	}
+	
+	/**
+	 * Mengecek apakah email sudah terdaftar di user / belum
+	 * @param string $email
+	 * @return bool
+	 */
+	public function is_email_exist($email)
+	{
+		return ($this->db->select('email')->get_where('user', ['email' => $email])->row() != null);
 	}
 }

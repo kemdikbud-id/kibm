@@ -26,6 +26,8 @@ define('MODEL_KELAS_PRESENTASI', 'Kelas_presentasi_model');
 define('MODEL_LOKASI_WORKSHOP', 'LokasiWorkshop_model');
 define('MODEL_PROPOSAL_WORKSHOP', 'ProposalWorkshop_model');
 define('MODEL_PESERTA_WORKSHOP', 'PesertaWorkshop_model');
+define('MODEL_MEETING', 'Meeting_model');
+define('MODEL_PESERTA_MEETING', 'PesertaMeeting_model');
 define('MODEL_PROGRAM_STUDI', 'Program_studi_model');
 define('MODEL_MAHASISWA', 'Mahasiswa_model');
 define('MODEL_DOSEN', 'Dosen_model');
@@ -37,6 +39,7 @@ define('PROGRAM_EXPO', 3);
 define('PROGRAM_WORKSHOP', 4);
 define('PROGRAM_STARTUP', 5);
 define('PROGRAM_STARTUP_MEETUP', 6);
+define('PROGRAM_ONLINE_WORKSHOP', 7);
 
 // Jenis User
 define('TIPE_USER_NORMAL', 1);

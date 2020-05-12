@@ -108,6 +108,16 @@ class Kegiatan_model extends CI_Model
 			->get()->result();
 	}
 	
+	public function list_online_workshop()
+	{
+		return $this->db
+			->select('kegiatan.id, program.nama_program, kegiatan.tahun')
+			->from('kegiatan')
+			->join('program', 'program.id = kegiatan.program_id')
+			->where(['program_id' => PROGRAM_ONLINE_WORKSHOP])
+			->get()->result();
+	}
+	
 	public function list_aktif_for_option($program_id = 0)
 	{
 		if ($program_id != 0)

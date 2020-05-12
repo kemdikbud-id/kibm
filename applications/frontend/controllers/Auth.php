@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @property Reviewer_model $reviewer_model 
  * @property Mahasiswa_model $mahasiswa_model 
  * @property Program_studi_model $program_studi_model
+ * @property CI_Email $email
  */
 class Auth extends Frontend_Controller
 {
@@ -32,9 +33,9 @@ class Auth extends Frontend_Controller
 		$this->load->model(MODEL_PROGRAM_STUDI, 'program_studi_model');
 	}
 	
-	public function reg()
+	public function registrasi_pt()
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			// Inisialisasi file upload
 			$this->load->library('upload', array(
@@ -53,8 +54,10 @@ class Auth extends Frontend_Controller
 				$this->requestuser_model->insert();
 				
 				$this->session->set_flashdata('result', array(
-					'page_title' => 'Registrasi Akun SIM-PKMI',
-					'message'	=> 'Request user telah berhasil. Dokumen yang diupload akan diverifikasi oleh tim admin maksimal 1x24 jam. User login akan dikirimkan ke email : '.$this->input->post('email')
+					'page_title'	=> 'Registrasi Akun SIM-PKMI',
+					'message'		=> 'Request user telah berhasil. '
+					. 'Dokumen yang diupload akan diverifikasi oleh tim admin maksimal 1x24 jam. '
+					. 'User login akan dikirimkan ke email : '.$this->input->post('email')
 				));
 				
 				redirect(site_url('alert/success'));
@@ -72,9 +75,121 @@ class Auth extends Frontend_Controller
 		$this->smarty->display();
 	}
 	
+	public function registrasi_mahasiswa()
+	{
+		if ($this->input->method() == 'post')
+		{
+			// Load Email Library
+			$this->load->library('email');
+			$this->config->load('email');
+			
+			if ($this->input->post('submit') == 'daftar')
+			{
+				$pt = $this->pt_model->get_single($this->input->post('perguruan_tinggi_id'));				
+				$mahasiswa = $this->mahasiswa_model->get_by_nim(
+					$pt->npsn, 
+					$this->input->post('program_studi_id'), 
+					$this->input->post('nim'));
+				$user = $this->user_model->get_single_by_mahasiswa($mahasiswa->id);
+				
+				$email = $this->input->post('email');
+				
+				// Pengecekan email yang sudah pernah dipakai
+				if ($this->user_model->is_email_exist($email))
+				{
+					$this->session->set_flashdata('result', array(
+						'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+						'message' => "Registrasi tidak berhasil. <strong>{$email}</strong> sudah terdaftar.",
+						'link_1' => anchor(site_url('auth/registrasi-mahasiswa'), 'Kembali ke halaman registrasi')
+					));
+
+					redirect(site_url('alert/error'));
+					
+					exit();
+				}
+				
+				// Buat user baru jika belum ada
+				if ($user == null)
+				{
+					$mahasiswa->email = $email;
+					$this->mahasiswa_model->update($mahasiswa);
+					
+					$user = $this->user_model->create_user_mahasiswa($mahasiswa, $pt->id, $pt->npsn);
+					$user->email = $email;
+					$this->user_model->add($user);
+				}
+				else // update email saja
+				{
+					$user->email = $email;
+					$this->user_model->change_email($user);
+				}
+				
+				// Prepare Send Email
+				$this->smarty->assign('nama', $mahasiswa->nama);
+				$this->smarty->assign('username', $user->username);
+				$this->smarty->assign('password', $user->password);
+				$body = $this->smarty->fetch('email/login_mahasiswa.tpl');
+				
+				// Kirim Email
+				$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI');
+				$this->email->to($email);
+				$this->email->subject('Informasi Akun SIM-PKMI');
+				$this->email->message($body);
+				$this->email->set_mailtype("html");
+				$this->email->send();
+
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+					'message' => "Registrasi berhasil. User login akan dikirimkan ke {$email}",
+					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')
+				));
+				
+				redirect(site_url('alert/success'));
+				
+			}
+			else if ($this->input->post('submit') == 'reset-password')
+			{
+				$pt = $this->pt_model->get_single($this->input->post('perguruan_tinggi_id'));				
+				$mahasiswa = $this->mahasiswa_model->get_by_nim(
+					$pt->npsn, 
+					$this->input->post('program_studi_id'), 
+					$this->input->post('nim'));
+				$user = $this->user_model->get_single_by_mahasiswa($mahasiswa->id);
+				
+				$email = $user->email;
+				
+				// Prepare Send Email
+				$this->smarty->assign('nama', $mahasiswa->nama);
+				$this->smarty->assign('username', $user->username);
+				$this->smarty->assign('password', $user->password);
+				$body = $this->smarty->fetch('email/login_mahasiswa.tpl');
+				
+				// Kirim Email
+				$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI');
+				$this->email->to($email);
+				$this->email->subject('Reset Password Akun SIM-PKMI');
+				$this->email->message($body);
+				$this->email->set_mailtype("html");
+				$this->email->send();
+
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+					'message' => "Reset password berhasil. User login akan dikirimkan ke {$email}",
+					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')
+				));
+				
+				redirect(site_url('alert/success'));
+			}
+			
+			exit();
+		}
+		
+		$this->smarty->display();
+	}
+	
 	public function login()
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$username	= $this->input->post('username');
 			$password	= $this->input->post('password');
@@ -112,7 +227,6 @@ class Auth extends Frontend_Controller
 						// Ambil kegiatan yang aktif
 						$kegiatan = $this->kegiatan_model->get_aktif($user->program_id);
 
-						// redirect
 						if ($user->tipe_user == TIPE_USER_NORMAL)
 						{
 							$redirect_to = site_url('home');
@@ -193,6 +307,64 @@ class Auth extends Frontend_Controller
 		$result_set = $this->pt_model->list_by_fts($term);
 		
 		echo json_encode($result_set);
+	}
+	
+	/**
+	 * AJAX-REQ /auth/list-prodi
+	 * @param int $perguruan_tinggi_id
+	 */
+	public function list_prodi($perguruan_tinggi_id)
+	{
+		$pt = $this->pt_model->get_single($perguruan_tinggi_id);
+		$program_studi_set = $this->program_studi_model->list_by_pt($pt->npsn);
+		
+		header('Content-type: application/json');
+		echo json_encode($program_studi_set);
+	}
+	
+	/**
+	 * AJAX-REQ /auth/cari-mahasiswa
+	 */
+	public function cari_mahasiswa()
+	{
+		$perguruan_tinggi_id = $this->input->get('perguruan_tinggi_id');
+		$program_studi_id = $this->input->get('program_studi_id');
+		$nim = $this->input->get('nim');
+		
+		$pt = $this->pt_model->get_single($perguruan_tinggi_id);
+		
+		header('Content-type: application/json');
+		
+		if ($pt != NULL)
+		{
+			try
+			{
+				$mahasiswa = $this->mahasiswa_model->get_by_nim($pt->npsn, $program_studi_id, $nim);
+				$user = $this->user_model->get_single_by_mahasiswa($mahasiswa->id);
+				$mahasiswa->has_login = false;
+					
+				if ($user != null)
+				{
+					if ($user->email != null)
+					{
+						$mahasiswa->has_login = true;
+						$mahasiswa->email = $user->email;
+					}
+				}
+				
+				unset($mahasiswa->id_pdpt);
+				
+				echo json_encode($mahasiswa);
+			}
+			catch (Exception $exc)
+			{
+				echo json_encode(null);
+			}
+		}
+		else
+		{
+			echo json_encode(null);
+		}
 	}
 	
 	public function get_captcha()

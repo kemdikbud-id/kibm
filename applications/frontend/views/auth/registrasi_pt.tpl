@@ -7,9 +7,11 @@
 	<div class="row">
 		<div class="col-md-12">
 			
+			<!--
 			<h4>Halaman ini adalah halaman untuk registrasi akun operator perguruan tinggi. Untuk registrasi
 				Workshop Rencana Bisnis untuk mahasiswa silahkan klik <a href="{site_url('jform/workshop')}" class="btn btn-xs btn-info">Registrasi Workshop</a></h4>
-
+			-->
+			
 			{if isset($error)}
 				<p>{$error['message']}</p>
 			{/if}
@@ -120,6 +122,7 @@
 					<label class="col-md-3 control-label" for="singlebutton"></label>
 					<div class="col-md-4">
 						<button name="submit" class="btn btn-primary">Daftar</button>
+						<a href="{site_url('auth/login')}" class="btn btn-default">Kembali ke Login</a>
 					</div>
 				</div>
 
