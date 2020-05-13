@@ -136,10 +136,28 @@ class Auth extends Frontend_Controller
 				$this->email->subject('Informasi Akun SIM-PKMI');
 				$this->email->message($body);
 				$this->email->send();
+				
+				// Untuk menampilkan login langsung
+				$message_2 = "<p style='margin-bottom: 15px'>Berikut adalah login Anda harap disimpan.</p>"
+					. "<form class='form-horizontal'>"
+					. "    <div class='form-group' style>"
+					. "        <label for='username' class='col-md-2 control-label'>Username</label>"
+					. "        <div class='col-md-10'>"
+					. "            <p class='form-control-static'>{$user->username}</p>"
+					. "        </div>"
+					. "    </div>"
+					. "    <div class='form-group'>"
+					. "        <label for='password' class='col-md-2 control-label'>Password</label>"
+					. "        <div class='col-md-10'>"
+					. "            <p class='form-control-static'>{$user->password}</p>"
+					. "        </div>"
+					. "    </div>"
+					. "</form>";
 
 				$this->session->set_flashdata('result', array(
 					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
 					'message' => "Registrasi berhasil. User login akan dikirimkan ke {$email}",
+					'message_2' => $message_2,
 					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')
 				));
 				
@@ -169,10 +187,28 @@ class Auth extends Frontend_Controller
 				$this->email->subject('Reset Password Akun SIM-PKMI');
 				$this->email->message($body);
 				$this->email->send();
+				
+				// Untuk menampilkan login langsung
+				$message_2 = "<p style='margin-bottom: 15px'>Berikut adalah login Anda harap disimpan.</p>"
+					. "<form class='form-horizontal'>"
+					. "    <div class='form-group' style>"
+					. "        <label for='username' class='col-md-2 control-label'>Username</label>"
+					. "        <div class='col-md-10'>"
+					. "            <p class='form-control-static'>{$user->username}</p>"
+					. "        </div>"
+					. "    </div>"
+					. "    <div class='form-group'>"
+					. "        <label for='password' class='col-md-2 control-label'>Password</label>"
+					. "        <div class='col-md-10'>"
+					. "            <p class='form-control-static'>{$user->password}</p>"
+					. "        </div>"
+					. "    </div>"
+					. "</form>";
 
 				$this->session->set_flashdata('result', array(
 					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
 					'message' => "Reset password berhasil. User login akan dikirimkan ke {$email}",
+					'message_2' => $message_2,
 					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')
 				));
 				

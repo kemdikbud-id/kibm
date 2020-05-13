@@ -38,13 +38,17 @@
 
         <div class="col-sm-6 col-lg-5">
             <h3>Hal yang perlu diperhatikan</h3>
-            <ul>
+            <ol>
                 <li>Username & password yang Resmi hanya yang berasal dari sistem SIM-PKMI.</li>
                 <li>Pastikan mengisi isian captcha agar bisa login</li>
                 <li>Ketika mengganti password selalu gunakan password yang sulit ditebak</li>
                 <li>Jangan membagikan password ke sembarang orang</li>
                 <li>Selalu Logout setelah menggunakan sistem</li>
-            </ul>
+				<li class="text-danger">Bagi mahasiswa yang belum mendapatkan email, silahkan masuk
+					ke halaman <a href="{site_url('auth/registrasi-mahasiswa')}">Registrasi Mahasiswa</a>
+					untuk Reset Password dengan memasukkan data yang pernah diinputkan sebelumnya.</li>
+				<li>Untuk pertanyaan lebih lanjut, bisa menghubungi WA : 0812-8534-3756 (Yugo)</li>
+            </ol>
         </div>
     </div>
 {/block}

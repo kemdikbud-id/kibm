@@ -8,6 +8,9 @@
 			{if $result['message']}
 				<div class="alert alert-success" role="alert">
 					<p>{$result['message']}</p>
+					
+					{if isset($result['message_2'])}{$result['message_2']}{/if}
+					
 					{if isset($result['link_1'])}<p>{$result['link_1']}</p>{/if}
 					{if isset($result['link_2'])}<p>{$result['link_2']}</p>{/if}
 				</div>
