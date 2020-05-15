@@ -6,18 +6,18 @@ use GuzzleHttp\Client;
  * @property CI_DB_query_builder $db 
  * @property Client $client
  * @property Program_studi_model $prodi_model
+ * @property int $id
+ * @property string $npsn
+ * @property string $nama_pt
+ * @property string $email_pt
+ * @property string $alamat_jalan
+ * @property string $alamat_kecamatan
+ * @property string $alamat_kota
+ * @property string $alamat_provinsi
+ * @property string $id_institusi
  */
 class PerguruanTinggi_model extends CI_Model
 {
-	public $id;
-	public $npsn;
-	public $nama_pt;
-	public $email_pt;
-	
-	public $alamat_jalan;
-	public $alamat_kecamatan;
-	public $alamat_kota;
-	public $alamat_provinsi;
 	
 	public function list_all()
 	{

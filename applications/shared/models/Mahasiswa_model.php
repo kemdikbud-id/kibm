@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
  * @property CI_Loader $load
  * @property CI_DB_query_builder $db 
  * @property Program_studi_model $program_studi_model
+ * @property PerguruanTinggi_model $pt_model
  * @property int $id
  * @property int $perguruan_tinggi_id 
  * @property string $nim
@@ -44,7 +45,7 @@ class Mahasiswa_model extends CI_Model
 	function get_by_nim($npsn, $program_studi_id, $nim)
 	{
 		$mahasiswa = $this->db
-			->select('m.*')
+			->select('m.*, pt.id_institusi')
 			->from('mahasiswa m')
 			->join('perguruan_tinggi pt', 'pt.id = m.perguruan_tinggi_id')
 			->where('pt.npsn', $npsn)
@@ -67,14 +68,17 @@ class Mahasiswa_model extends CI_Model
 					'Authorization' => 'Bearer ' . $pddikti_auth
 				],
 				'verify' => FALSE	// Disable CA Verification !
-			]); 
+			]);
+			
+			$this->load->model(MODEL_PERGURUAN_TINGGI, 'pt_model');
+			$pt = $this->pt_model->get_by_npsn($npsn);
 
 			$this->load->model(MODEL_PROGRAM_STUDI, 'program_studi_model');
 			$program_studi = $this->program_studi_model->get($program_studi_id);
 			$program_studi->kode_prodi = trim($program_studi->kode_prodi);
 
 			// Cari dari Forlap
-			$response = $this->client->get("pt/{$npsn}/prodi/{$program_studi->kode_prodi}/mahasiswa/{$nim}");
+			$response = $this->client->get("pt/{$pt->id_institusi}/prodi/{$program_studi->id_pdpt}/mahasiswa/{$nim}");
 			
 
 			if ($response->getStatusCode() == 200)
@@ -113,7 +117,7 @@ class Mahasiswa_model extends CI_Model
 		// get program studi id
 		$program_studi = $this->db->get_where('program_studi', [
 			'perguruan_tinggi_id' => $pt->id,
-			'kode_prodi' => $param->terdaftar->kode_prodi
+			'nama' => "{$param->terdaftar->jenjang_didik->nama} {$param->terdaftar->nama_prodi}"
 		])->row();
 		
 		return $this->db->insert('mahasiswa', [
