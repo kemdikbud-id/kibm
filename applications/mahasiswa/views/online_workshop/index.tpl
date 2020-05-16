@@ -24,7 +24,11 @@
                             <td><a href="{$meeting->meeting_url}">{$meeting->meeting_url}</a></td>
 							<td class="text-center">
 								{if $meeting->mahasiswa_id == null}
-									<a href="{site_url("online-workshop/register/{$meeting->id}")}" class="btn btn-sm btn-default">Daftar</a>
+									{if date('Y-m-d H:i:s') < $meeting->tgl_akhir_registrasi}
+										<a href="{site_url("online-workshop/register/{$meeting->id}")}" class="btn btn-sm btn-default">Daftar</a>
+									{else}
+										<label class="label label-danger">PENDAFTARAN DITUTUP</label>
+									{/if}
 								{else}
 									<label class="label label-primary">TERDAFTAR</label>
 								{/if}
