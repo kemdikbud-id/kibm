@@ -34,9 +34,13 @@ class Program_studi_model extends CI_Model
 	 * @param string $id_pdpt
 	 * @return Program_studi_model
 	 */
-	function get_by_id_pdpt($id_pdpt)
+	function get_by_pt_kode_nama($perguruan_tinggi_id, $kode_prodi, $nama)
 	{
-		return $this->db->get_where('program_studi', ['id_pdpt' => $id_pdpt], 1)->row();
+		return $this->db->get_where('program_studi', [
+			'perguruan_tinggi_id' => $perguruan_tinggi_id,
+			'kode_prodi' => $kode_prodi,
+			'nama' => $nama
+		], 1)->row();
 	}
 	
 	/**
@@ -48,5 +52,14 @@ class Program_studi_model extends CI_Model
 		$insert_result = $this->db->insert('program_studi', $model);
 		$model->id = $this->db->insert_id();
 		return $insert_result;
+	}
+	
+	/**
+	 * @param Program_studi_model $model
+	 * @return bool
+	 */
+	function update($model)
+	{
+		return $this->db->update('program_studi', $model, ['id' => $model->id]);
 	}
 }

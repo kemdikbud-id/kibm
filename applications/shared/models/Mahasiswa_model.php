@@ -78,7 +78,7 @@ class Mahasiswa_model extends CI_Model
 			$program_studi->kode_prodi = trim($program_studi->kode_prodi);
 
 			// Cari dari Forlap
-			$response = $this->client->get("pt/{$pt->id_institusi}/prodi/{$program_studi->id_pdpt}/mahasiswa/{$nim}");
+			$response = $this->client->get("pt/{$pt->npsn}/prodi/{$program_studi->id_pdpt}/mahasiswa/{$nim}");
 			
 
 			if ($response->getStatusCode() == 200)

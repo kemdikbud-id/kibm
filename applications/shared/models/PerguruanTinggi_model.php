@@ -181,6 +181,7 @@ class PerguruanTinggi_model extends CI_Model
 					$pt->id_institusi = strtolower($pt_dikti->id);
 					$pt->nama_pt = $pt_dikti->nama;
 					$pt->email_pt = $pt_dikti->email;
+					$pt->updated_at = date('Y-m-d H:i:s');
 					$this->update($pt, $pt->id);
 				}
 				
@@ -193,7 +194,10 @@ class PerguruanTinggi_model extends CI_Model
 					
 					foreach ($prodi_dikti_set as $prodi_dikti)
 					{
-						$prodi = $this->prodi_model->get_by_id_pdpt(strtolower($prodi_dikti->id));
+						$prodi = $this->prodi_model->get_by_pt_kode_nama(
+							$pt->id, 
+							$prodi_dikti->kode, 
+							"{$prodi_dikti->jenjang_didik->nama} {$prodi_dikti->nama}");
 						
 						if ($prodi == null)
 						{
@@ -203,6 +207,12 @@ class PerguruanTinggi_model extends CI_Model
 							$prodi->kode_prodi = $prodi_dikti->kode;
 							$prodi->nama = "{$prodi_dikti->jenjang_didik->nama} {$prodi_dikti->nama}";
 							$this->prodi_model->add($prodi);
+						}
+						else
+						{
+							$prodi->id_pdpt = strtolower($prodi_dikti->id);
+							$prodi->updated_at = date('Y-m-d H:i:s');
+							$this->prodi_model->update($prodi);
 						}
 					}
 				}
