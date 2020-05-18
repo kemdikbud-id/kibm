@@ -116,6 +116,14 @@
 							<input id="kapasitas" name="kapasitas" placeholder="" class="form-control input-md" type="number" value="{$data->kapasitas}">
 						</div>
 					</div>
+						
+					<!-- Text input-->
+					<div class="form-group">
+						<label class="col-md-2 control-label" for="kuesioner_url">Link Kuesioner</label>  
+						<div class="col-md-4">
+							<input id="kuesioner_url" name="kuesioner_url" placeholder="" class="form-control input-md" type="text" value="{$data->kuesioner_url}">
+						</div>
+					</div>
 							
 					<!-- Button -->
 					<div class="form-group">

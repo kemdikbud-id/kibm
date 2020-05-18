@@ -47,6 +47,9 @@
 												</form>
 											{else}
 												<span class="label label-success">HADIR</span>
+												{if $meeting->kuesioner_url != null}
+													<br/><a href="{$meeting->kuesioner_url}">Isi Kuesioner</a>
+												{/if}
 											{/if}
 										{/if}
 									</td>

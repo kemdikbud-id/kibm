@@ -16,6 +16,7 @@
  * @property string $batas_presensi
  * @property string $tgl_awal_registrasi
  * @property string $tgl_akhir_registrasi
+ * @property string $kuesioner_url
  * @property string $created_at
  * @property string $updated_at
  */
@@ -102,6 +103,7 @@ class Meeting_model extends CI_Model
 		if (checkdate($post['batas_presensi_Month'], $post['batas_presensi_Day'], $post['batas_presensi_Year']))
 			$meeting->batas_presensi = "{$post['batas_presensi_Year']}-{$post['batas_presensi_Month']}-{$post['batas_presensi_Day']} {$post['batas_presensi_time']}";
 		$meeting->kapasitas = $post['kapasitas'];
+		$meeting->kuesioner_url = $post['kuesioner_url'];
 
 		return $this->db->update('meeting', $meeting, ['id' => $id]);
 	}

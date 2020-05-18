@@ -63,9 +63,15 @@ class Online_workshop extends Mahasiswa_Controller
 				$peserta_meeting->kehadiran = 1;
 				$this->pmeeting_model->update($peserta_meeting);
 				
+				$link_kuesioner = anchor(
+					$meeting->kuesioner_url, 
+					'Link Google Form Ini <span class="glyphicon glyphicon-new-window"></span>', 
+					['target' => '_blank']);
+				
 				$this->session->set_flashdata('result', [
 					'page_title' => "Online Workshop Peningkatan dan Pengembangan Kewirausahaan",
-					'message' => 'Selamat Anda berhasil mengisi absensi kehadiran',
+					'message' => 'Selamat Anda berhasil mengisi absensi kehadiran.<br/>'
+						. "Mohon isi kuesioner di {$link_kuesioner}",
 					'link_1' => anchor('home', 'Kembali ke Beranda'),
 				]);
 
