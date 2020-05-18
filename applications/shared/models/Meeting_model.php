@@ -9,10 +9,11 @@
  * @property string $pemateri
  * @property string $meeting_url
  * @property string $meeting_password
+ * @property string $youtube_url
  * @property string $waktu_mulai
  * @property int $kapasitas
- * @property string $kode_kehadiran_1
- * @property string $kode_kehadiran_2
+ * @property string $kode_kehadiran
+ * @property string $batas_presensi
  * @property string $tgl_awal_registrasi
  * @property string $tgl_akhir_registrasi
  * @property string $created_at
@@ -94,10 +95,12 @@ class Meeting_model extends CI_Model
 		$meeting->waktu_mulai = "{$post['waktu_mulai_Year']}-{$post['waktu_mulai_Month']}-{$post['waktu_mulai_Day']} {$post['waktu_mulai_time']}";
 		$meeting->meeting_url = $post['meeting_url'];
 		$meeting->meeting_password = $post['meeting_password'];
+		$meeting->youtube_url = $post['youtube_url'];
 		$meeting->tgl_awal_registrasi = "{$post['awal_registrasi_Year']}-{$post['awal_registrasi_Month']}-{$post['awal_registrasi_Day']} {$post['awal_registrasi_time']}";
 		$meeting->tgl_akhir_registrasi = "{$post['akhir_registrasi_Year']}-{$post['akhir_registrasi_Month']}-{$post['akhir_registrasi_Day']} {$post['akhir_registrasi_time']}";
-		$meeting->kode_kehadiran_1 = $post['kode_kehadiran_1'];
-		$meeting->kode_kehadiran_2 = $post['kode_kehadiran_2'];
+		$meeting->kode_kehadiran = $post['kode_kehadiran'];
+		if (checkdate($post['batas_presensi_Month'], $post['batas_presensi_Day'], $post['batas_presensi_Year']))
+			$meeting->batas_presensi = "{$post['batas_presensi_Year']}-{$post['batas_presensi_Month']}-{$post['batas_presensi_Day']} {$post['batas_presensi_time']}";
 		$meeting->kapasitas = $post['kapasitas'];
 
 		return $this->db->update('meeting', $meeting, ['id' => $id]);

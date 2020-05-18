@@ -36,20 +36,22 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="waktu_mulai">Waktu Meeting</label>  
 						<div class="col-md-5">
-							{html_select_date field_order="DMY" prefix="waktu_mulai_" time=$data->waktu_mulai all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
-                            <input type="text" name="waktu_mulai_time" value="{$data->waktu_mulai|date_format:"%H:%M:%S"}" placeholder="00:00:00" class="form-control input-md" style="display: inline-block; width: 85px" />
+							{html_select_date field_order="DMY" prefix="waktu_mulai_" 
+								time=$data->waktu_mulai year_as_text=TRUE
+								all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
+							<input type="text" name="waktu_mulai_time" value="{$data->waktu_mulai|date_format:"%H:%M:%S"}" placeholder="00:00:00" class="form-control input-md" style="display: inline-block; width: 85px" />
 						</div>
 					</div>
-                        
-                    <!-- Text input-->
+
+					<!-- Text input-->
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="meeting_url">Meeting URL</label>  
 						<div class="col-md-4">
 							<input id="meeting_url" name="meeting_url" placeholder="" class="form-control input-md" type="text" value="{$data->meeting_url}">
 						</div>
 					</div>
-                    
-                    <!-- Text input-->
+
+					<!-- Text input-->
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="meeting_password">Password</label>  
 						<div class="col-md-3">
@@ -59,9 +61,19 @@
 						
 					<!-- Text input-->
 					<div class="form-group">
+						<label class="col-md-2 control-label" for="youtube_url">Youtube URL</label>  
+						<div class="col-md-4">
+							<input id="youtube_url" name="youtube_url" placeholder="" class="form-control input-md" type="text" value="{$data->youtube_url}">
+						</div>
+					</div>
+						
+					<!-- Text input-->
+					<div class="form-group">
 						<label class="col-md-2 control-label" for="tgl_awal_registrasi">Awal Registrasi</label>
 						<div class="col-md-5">
-							{html_select_date field_order="DMY" prefix="awal_registrasi_" time=$data->tgl_awal_registrasi all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
+							{html_select_date field_order="DMY" prefix="awal_registrasi_" 
+								time=$data->tgl_awal_registrasi year_as_text=TRUE
+								all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
 							<input type="text" name="awal_registrasi_time" value="{$data->tgl_awal_registrasi|date_format:'%H:%M:%S'}" placeholder="00:00:00" class="form-control input-md" style="display: inline-block; width: 85px" />
 						</div>
 					</div>
@@ -70,32 +82,38 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="tgl_akhir_registrasi">Akhir Registrasi</label>
 						<div class="col-md-5">
-							{html_select_date field_order="DMY" prefix="akhir_registrasi_" time=$data->tgl_akhir_registrasi all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
+							{html_select_date field_order="DMY" prefix="akhir_registrasi_" 
+								time=$data->tgl_akhir_registrasi year_as_text=TRUE
+								all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
 							<input type="text" name="akhir_registrasi_time" value="{$data->tgl_akhir_registrasi|date_format:'%H:%M:%S'}" placeholder="00:00:00" class="form-control input-md" style="display: inline-block; width: 85px" />
 						</div>
 					</div>
-                            
-                    <!-- Text input-->
+
+					<!-- Text input-->
 					<div class="form-group">
-						<label class="col-md-2 control-label" for="kode_kehadiran_1">Kode Kehadiran 1</label>  
+						<label class="col-md-2 control-label" for="kode_kehadiran">Kode Kehadiran</label>  
 						<div class="col-md-2">
-                            <input id="kode_kehadiran_1" name="kode_kehadiran_1" placeholder="" class="form-control input-md" type="text" value="{$data->kode_kehadiran_1}" maxlength="5">
+							<input id="kode_kehadiran" name="kode_kehadiran" placeholder="" class="form-control input-md" type="text" value="{$data->kode_kehadiran}" maxlength="5">
 						</div>
 					</div>
-                    
-                    <!-- Text input-->
+						
+					<!-- Text input-->
 					<div class="form-group">
-						<label class="col-md-2 control-label" for="kode_kehadiran_2">Kode Kehadiran 2</label>  
-						<div class="col-md-2">
-                            <input id="kode_kehadiran_2" name="kode_kehadiran_2" placeholder="" class="form-control input-md" type="text" value="{$data->kode_kehadiran_2}" maxlength="5">
+						<label class="col-md-2 control-label" for="batas_presensi">Batas Presensi</label>
+						<div class="col-md-5">
+							{html_select_date field_order="DMY" prefix="batas_presensi_" 
+								day_empty='' month_empty='' 
+								time=$data->batas_presensi year_as_text=TRUE
+								all_extra='class="form-control input-md" style="display: inline-block; width: auto;"'}
+							<input type="text" name="batas_presensi_time" value="{if $data->batas_presensi}{$data->batas_presensi|date_format:'%H:%M:%S'}{/if}" placeholder="00:00:00" class="form-control input-md" style="display: inline-block; width: 85px" />
 						</div>
 					</div>
-                    
-                    <!-- Text input-->
+
+					<!-- Text input-->
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="kapasitas">Kapasitas</label>  
 						<div class="col-md-2">
-                            <input id="kapasitas" name="kapasitas" placeholder="" class="form-control input-md" type="number" value="{$data->kapasitas}">
+							<input id="kapasitas" name="kapasitas" placeholder="" class="form-control input-md" type="number" value="{$data->kapasitas}">
 						</div>
 					</div>
 							
