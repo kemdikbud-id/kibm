@@ -4,6 +4,7 @@
  * @author Fathoni <m.fathoni@mail.com>
  * @property Kegiatan_model $kegiatan_model 
  * @property Meeting_model $meeting_model
+ * @property PesertaMeeting_model $pmeeting_model
  */
 class Online_workshop extends Mahasiswa_Controller
 {
@@ -13,6 +14,7 @@ class Online_workshop extends Mahasiswa_Controller
 		$this->check_credentials();
 		$this->load->model(MODEL_KEGIATAN, 'kegiatan_model');
 		$this->load->model(MODEL_MEETING, 'meeting_model');
+		$this->load->model(MODEL_PESERTA_MEETING, 'pmeeting_model');
 	}
 	
 	public function index()
@@ -46,5 +48,49 @@ class Online_workshop extends Mahasiswa_Controller
 		]);
 		
 		redirect('alert/success');
+	}
+	
+	public function presensi()
+	{
+		$meeting = $this->meeting_model->get_single($this->input->post('meeting_id'));
+		$mahasiswa = $this->session->user->mahasiswa;
+		
+		if (date('Y-m-d H:i:s') < $meeting->batas_presensi)
+		{
+			if (trim($this->input->post('kode_kehadiran')) == $meeting->kode_kehadiran)
+			{
+				$peserta_meeting = $this->pmeeting_model->get_single($meeting->id, $mahasiswa->id);
+				$peserta_meeting->kehadiran = 1;
+				$this->pmeeting_model->update($peserta_meeting);
+				
+				$this->session->set_flashdata('result', [
+					'page_title' => "Online Workshop Peningkatan dan Pengembangan Kewirausahaan",
+					'message' => 'Selamat Anda berhasil mengisi absensi kehadiran',
+					'link_1' => anchor('home', 'Kembali ke Beranda'),
+				]);
+
+				redirect('alert/success');
+			}
+			else
+			{
+				$this->session->set_flashdata('result', [
+					'page_title' => "Online Workshop Peningkatan dan Pengembangan Kewirausahaan",
+					'message' => 'Mohon maaf, kode presensi tidak sesuai. Silahkan ulangi',
+					'link_1' => anchor('home', 'Kembali ke Beranda'),
+				]);
+
+				redirect('alert/error');
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('result', [
+				'page_title' => "Online Workshop Peningkatan dan Pengembangan Kewirausahaan",
+				'message' => 'Mohon maaf, waktu presensi sudah selesai',
+				'link_1' => anchor('home', 'Kembali ke Beranda'),
+			]);
+
+			redirect('alert/error');
+		}
 	}
 }

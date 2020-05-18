@@ -49,7 +49,7 @@ class Meeting_model extends CI_Model
 	public function list_by_mahasiswa($mahasiswa_id)
 	{
 		return $this->db
-			->select('meeting.*')
+			->select('meeting.*, pm.kehadiran, pm.is_terpilih_meeting')
 			->from('meeting')
 			->join('peserta_meeting pm', 'pm.meeting_id = meeting.id')
 			->where('pm.mahasiswa_id', $mahasiswa_id)

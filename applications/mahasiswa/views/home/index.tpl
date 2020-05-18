@@ -4,6 +4,67 @@
 		<div class="col-lg-12">
 
 			<h2>Selamat datang, {$ci->session->user->mahasiswa->nama}</h2>
+			
+			<h3>Online Workshop Peningkatan dan Pengembangan Kewirausahaan</h3>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Topik</th>
+								<th>Pemateri</th>
+								<th>Waktu</th>
+								<th>Meeting URL</th>
+								<th>Password Meeting</th>
+								<th>Presensi</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $meeting_set as $meeting}
+								<tr>
+									<td>{$meeting->topik}</td>
+									<td>{$meeting->pemateri}</td>
+									<td>{$meeting->waktu_mulai|date_format:"%d %B %Y %T"}</td>
+									{if is_null($meeting->is_terpilih_meeting)}
+										<td colspan="2"></td>
+									{else}
+										{if $meeting->is_terpilih_meeting == 1}
+											<td><a href="{$meeting->meeting_url}" target="_blank">{$meeting->meeting_url}</a></td>
+											<td class="text-center"><code>{$meeting->meeting_password}</code></td>
+										{elseif $meeting->is_terpilih_meeting == 0}
+											<td colspan="2">
+												<a href="{$meeting->youtube_url}" target="_blank">{$meeting->youtube_url}</a>
+											</td>
+										{/if}
+									{/if}
+									<td>
+										{if $meeting->waktu_mulai < date('Y-m-d H:i:s')}
+											{if $meeting->kehadiran == 0}
+												<form action="{site_url('online-workshop/presensi')}" method="post">
+													<input type="hidden" name="meeting_id" value="{$meeting->id}" />
+													<input type='text' class='form-control input-sm' style='width: 100px' name='kode_kehadiran' placeholder='Kode presensi' />
+													<button type='submit' class="btn btn-primary btn-sm">Simpan</button>
+												</form>
+											{else}
+												<span class="label label-success">HADIR</span>
+											{/if}
+										{/if}
+									</td>
+								</tr>
+							{foreachelse}
+								<tr>
+									<td colspan="6"><i>Tidak ada data registrasi</i></td>
+								</tr>
+							{/foreach}
+						</tbody>
+					</table>
+					<p>Informasi:<br/>
+						<sup>1</sup> Waktu pelaksanaan menggunakan zona waktu WIB (Waktu Indonesia Barat).<br/>
+						<sup>2</sup> Meeting URL akan muncul jika sudah diumumkan.<br/>
+						<sup>3</sup> Harap mengisi kode presensi sebelum meeting selesai.
+					</p>
+				</div>
+			</div>
 
 			<h3>Program KBMI</h3>
 			{if $kegiatan_kbmi != NULL}
@@ -89,39 +150,7 @@
 				</div>
 			</div>
 
-			<h3>Online Workshop Peningkatan dan Pengembangan Kewirausahaan</h3>
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<table class="table table-striped">
-						<thead>
-							<tr>
-								<th>Topik</th>
-								<th>Pemateri</th>
-								<th>Waktu</th>
-								<th>Meeting URL</th>
-								<th>Password Meeting</th>
-								<th></th>
-							</tr>
-						</thead>
-						<tbody>
-							{foreach $meeting_set as $meeting}
-								<tr>
-									<td>{$meeting->topik}</td>
-									<td>{$meeting->pemateri}</td>
-									<td>{$meeting->waktu_mulai|date_format:"%d %B %Y %T"}</td>
-									<td><a href="{$meeting->meeting_url}">{$meeting->meeting_url}</a></td>
-									<td class="text-center"><code>{$meeting->meeting_password}</code></td>
-									<td></td>
-								</tr>
-							{foreachelse}
-								<tr>
-									<td colspan="6"><i>Tidak ada data registrasi</i></td>
-								</tr>
-							{/foreach}
-						</tbody>
-					</table>
-				</div>
-			</div>
+			
 			
 		</div>
 	</div>

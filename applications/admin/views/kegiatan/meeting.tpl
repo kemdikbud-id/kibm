@@ -71,7 +71,8 @@
 				<tfoot>
 					<tr>
 						<td colspan="11">
-							<a href="{site_url('kegiatan/add-meeting/')}?kegiatan_id={$smarty.get.kegiatan_id}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah Meeting</a>
+							<a href="{site_url('kegiatan/add-meeting/')}?kegiatan_id={$smarty.get.kegiatan_id}" class="btn btn-sm btn-success">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah Meeting</a>
 						</td>
 					</tr>
 				</tfoot>	

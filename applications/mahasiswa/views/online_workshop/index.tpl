@@ -11,7 +11,6 @@
 						<th>Topik</th>
 						<th>Pemateri</th>
 						<th>Waktu Pelaksanaan</th>
-                        <th>Meeting URL</th>
                         <th></th>
 					</tr>
 				</thead>
@@ -21,7 +20,6 @@
 							<td>{$meeting->topik}</td>
 							<td>{$meeting->pemateri}</td>
                             <td>{$meeting->waktu_mulai|date_format:"%d %B %Y %T"}</td>
-                            <td><a href="{$meeting->meeting_url}">{$meeting->meeting_url}</a></td>
 							<td class="text-center">
 								{if $meeting->mahasiswa_id == null}
 									{if date('Y-m-d H:i:s') < $meeting->tgl_akhir_registrasi}
@@ -42,7 +40,7 @@
 				</tbody>	
 			</table>
 				
-				<p>* Waktu pelaksanaan menggunakan zona waktu WIB (Waktu Indonesia Barat)</p>
+			<p>* Waktu pelaksanaan menggunakan zona waktu WIB (Waktu Indonesia Barat)</p>
 
 		</div>
 	</div>
