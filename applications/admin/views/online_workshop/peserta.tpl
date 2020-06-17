@@ -46,7 +46,7 @@
 								<td>{$data->nama_pt}</td>
                                 <td>{$data->nim}</td>
 								<td>{$data->nama}</td>
-								<td class="text-center">{if $data->kehadiran_1 == true}<span class="label label-primary">Ya</span>{/if}</td>
+								<td class="text-center">{if $data->kehadiran == true}<span class="label label-primary">Ya</span>{/if}</td>
 							</tr>
 						{/foreach}
 					</tbody>
