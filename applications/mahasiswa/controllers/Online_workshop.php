@@ -99,4 +99,22 @@ class Online_workshop extends Mahasiswa_Controller
 			redirect('alert/error');
 		}
 	}
+	
+	public function cetak_sertifikat()
+	{
+		$meeting_id = $this->input->get('meeting_id');
+		$meeting = $this->meeting_model->get_single($meeting_id);
+		
+		$background_path = FCPATH . 'upload' . 
+			DIRECTORY_SEPARATOR . 'sertifikat' . 
+			DIRECTORY_SEPARATOR . $meeting->file_sertifikat;		
+		
+		$this->mpdf->AddPage('L');
+		$this->mpdf->Image($background_path, 0, 0, 297, 210, '', '', true, false);
+		$this->mpdf->SetFont('FreeSerif');
+		$this->mpdf->SetFontSize(22);
+		$this->mpdf->SetY(90);
+		$this->mpdf->WriteCell(267, 15, ucwords(strtolower($this->session->user->mahasiswa->nama)), 0, 0, 'C');
+		$this->mpdf->Output('Sertifikat ', 'I');
+	}
 }

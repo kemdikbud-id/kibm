@@ -17,6 +17,7 @@
  * @property string $tgl_awal_registrasi
  * @property string $tgl_akhir_registrasi
  * @property string $kuesioner_url
+ * @property string $file_sertifikat
  * @property string $created_at
  * @property string $updated_at
  */
