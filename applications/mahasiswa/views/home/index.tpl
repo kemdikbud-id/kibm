@@ -17,6 +17,7 @@
 								<th>Meeting URL</th>
 								<th>Password Meeting</th>
 								<th>Presensi</th>
+								<th>Sertifikat</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -53,10 +54,15 @@
 											{/if}
 										{/if}
 									</td>
+									<td>
+										{if $meeting->kehadiran}
+											<a href="{site_url('online-workshop/cetak-sertifikat')}?meeting_id={$meeting->id}" target="_blank">Cetak Sertifikat</a>
+										{/if}
+									</td>
 								</tr>
 							{foreachelse}
 								<tr>
-									<td colspan="6"><i>Tidak ada data registrasi</i></td>
+									<td colspan="7"><i>Tidak ada data registrasi</i></td>
 								</tr>
 							{/foreach}
 						</tbody>
