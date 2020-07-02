@@ -65,8 +65,8 @@
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Proposal &amp; Peserta <span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="{site_url('proposal/index-pbbt')}">Proposal PBBT</a></li>
-									<li><a href="{site_url('proposal/index-kbmi')}">Proposal KBMI</a></li>
-									<li><a href="{site_url('proposal/index-kbmi-v2')}">Proposal KBMI (2019)</a></li>
+									<li><a href="{site_url('proposal/index-kbmi')}">Proposal KBMI (&leq; 2018)</a></li>
+									<li><a href="{site_url('proposal/index-kbmi-v2')}">Proposal KBMI</a></li>
 									<li><a href="{site_url('proposal/index-startup')}">Usulan Startup</a></li>
 									<li role="separator" class="divider"></li>
 									<li><h5 style="padding: 3px 20px; margin: 0"><i>Workshop</i></h5></li>
