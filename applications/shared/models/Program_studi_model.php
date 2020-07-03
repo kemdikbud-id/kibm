@@ -20,6 +20,17 @@ class Program_studi_model extends CI_Model
 			->order_by('ps.nama')
 			->get()->result();
 	}
+
+	function list_by_pt_sarjana_only($npsn)
+	{
+		return $this->db->select('ps.id, ps.kode_prodi, ps.nama, ps.created_at, ps.updated_at')
+			->from('program_studi ps')
+			->join('perguruan_tinggi pt', 'pt.id = ps.perguruan_tinggi_id')
+			->where("left(ps.nama, 2) = 'S1'", NULL, FALSE)
+			->where('pt.npsn', $npsn)
+			->order_by('ps.nama')
+			->get()->result();
+	}
 	
 	/**
 	 * @param int $id
