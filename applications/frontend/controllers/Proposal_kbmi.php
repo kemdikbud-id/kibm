@@ -77,7 +77,7 @@ class Proposal_KBMI extends Frontend_Controller
 			}
 			catch (Exception $exc)
 			{
-				$error_type = 'MHS_TIDAK_AKTIF';
+				$error_type = 'MHS_SEARCH_EXCEPTION';
 				$this->smarty->assign('error_message', $exc->getMessage());
 			}
 			

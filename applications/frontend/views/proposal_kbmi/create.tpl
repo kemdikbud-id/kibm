@@ -90,10 +90,10 @@
 						<p>Untuk memastikan mahasiswa terdaftar di PDDIKTI buka laman <a href="https://forlap.ristekdikti.go.id/mahasiswa" target="_blank">https://forlap.ristekdikti.go.id/mahasiswa</a></p>
 					</div>
 				{/if}
-				{if $error_type == 'MHS_TIDAK_AKTIF'}
+				{if $error_type == 'MHS_SEARCH_EXCEPTION'}
 					<div class="alert alert-warning alert-dismissible">
 						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<p>{$error_message}</p>
+						<p>{$error_message} [Exc]</p>
 						<p>Silahkan ulangi pencarian</p>
 					</div>
 				{/if}

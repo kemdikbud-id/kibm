@@ -55,11 +55,15 @@ class Mahasiswa_model extends CI_Model
 		// Jika tidak ada dalam DB
 		if ($mahasiswa == NULL)
 		{
-			
 			// Ambil konfigurasi
 			$this->config->load('pddikti');
 			$pddikti_url = $this->config->item('pddikti_url');
 			$pddikti_auth = $this->config->item('pddikti_auth');
+
+			if ( ! filter_var($pddikti_url, FILTER_VALIDATE_URL))
+			{
+				show_error('Konfigurasi pddikti_url belum ada atau bukan format URL');
+			}
 			
 			$this->client = new Client([
 				'base_uri' => $pddikti_url,
@@ -79,7 +83,6 @@ class Mahasiswa_model extends CI_Model
 
 			// Cari dari Forlap
 			$response = $this->client->get("pt/{$pt->npsn}/prodi/{$program_studi->id_pdpt}/mahasiswa/{$nim}");
-			
 
 			if ($response->getStatusCode() == 200)
 			{
@@ -88,12 +91,14 @@ class Mahasiswa_model extends CI_Model
 				
 				if ( ! isset($mahasiswa_pddikti[0]))
 				{
-					throw new Exception("Mahasiswa tidak ditemukan");
+					throw new Exception("Mahasiswa tidak ditemukan di sistem maupun di PDDIKTI");
 				}
-				// cek jika mahasiswa sudah lulus
-				else if ($mahasiswa_pddikti[0]->terdaftar->tgl_keluar != '')
+				// cek jika mahasiswa masih aktif
+				else if ($mahasiswa_pddikti[0]->terdaftar->status != 'A')
 				{
-					throw new Exception("Mahasiswa \"{$mahasiswa_pddikti[0]->terdaftar->nim} {$mahasiswa_pddikti[0]->nama}\" sudah tidak aktif / lulus");
+					$info_mhs = "{$mahasiswa_pddikti[0]->terdaftar->nim} {$mahasiswa_pddikti[0]->nama}";
+					$exception_msg = "Mahasiswa \"{$info_mhs}\" sudah tidak aktif / lulus";
+					throw new Exception($exception_msg);
 				}
 				else
 				{
