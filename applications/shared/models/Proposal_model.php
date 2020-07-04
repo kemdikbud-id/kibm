@@ -6,6 +6,7 @@
  * @property int $id
  * @property int $perguruan_tinggi_id
  * @property string $judul
+ * @property string $mulai_berjalan
  * @property int $kegiatan_id
  * @property int $dosen_id
  * @property bool $is_submited
@@ -156,6 +157,12 @@ class Proposal_model extends CI_Model
 	
 	public function list_by_mahasiswa($mahasiswa_id, $program_id)
 	{
+		$select_isian_proposal_count = $this->db
+			->select('count(ip.id)')->from('isian_proposal ip')
+			->where('ip.isian is not null', NULL, FALSE)
+			->where('ip.proposal_id = p.id')
+			->get_compiled_select();
+
 		$select_file_pitchdeck = $this->db
 			->select('fp.nama_file')->from('file_proposal fp')
 			->join('syarat s', 's.id = fp.syarat_id and s.syarat = \'Pitchdeck\'')
@@ -173,6 +180,7 @@ class Proposal_model extends CI_Model
 		
 		return $this->db
 			->select('p.id, k.tahun, p.judul, p.is_submited')
+			->select("({$select_isian_proposal_count}) as isian_proposal", FALSE)
 			->select("({$select_file_pitchdeck}) as file_pitchdeck", FALSE)
 			->select("({$select_link_presentasi}) as link_presentasi", FALSE)
 			->select("({$select_link_produk}) as link_produk", FALSE)

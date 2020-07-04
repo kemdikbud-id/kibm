@@ -48,8 +48,8 @@ class Kbmi extends Mahasiswa_Controller
 			// Update jika belum di submit
 			if (!$proposal->is_submited)
 			{
-				// Update Judul saja
 				$proposal->judul = trim($this->input->post('judul'));
+				$proposal->mulai_berjalan = trim($this->input->post('mulai_berjalan'));
 				$proposal->updated_at = date('Y-m-d H:i:s');
 				$this->proposal_model->update($proposal->id, $proposal);
 			}
@@ -192,8 +192,7 @@ class Kbmi extends Mahasiswa_Controller
 		// Prevent URL Hack
 		if ($step < 0 || $step > 31 || !is_numeric($step))
 		{
-			echo '<html><body><p>Halaman tidak ditemukan.</p></body></html>';
-			exit();
+			show_error('Halaman tidak ditemukan.');
 		}
 		
 		$proposal = $this->proposal_model->get_by_ketua($kegiatan->id, $this->session->user->mahasiswa_id);

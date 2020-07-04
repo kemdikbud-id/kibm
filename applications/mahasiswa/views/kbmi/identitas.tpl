@@ -14,12 +14,25 @@
 					<legend>Informasi Umum</legend>
 					
 					<div class="form-group">
-						<label class="col-lg-2 control-label">Nama (Calon) Perusahaan</label>
-						<div class="col-lg-10">
+						<label class="col-lg-2 control-label">Nama / Merek Perusahaan</label>
+						<div class="col-lg-8 col-md-10">
 							{if $proposal->is_submited == FALSE}
 								<input type="text" name="judul" class="form-control" value="{$proposal->judul}" />
 							{else}
 								<p class="form-control-static">{$proposal->judul}</p>
+							{/if}
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-lg-2 control-label">Bisnis Berjalan Sejak</label>
+						<div class="col-lg-4 col-md-6">
+							{if $proposal->is_submited == FALSE}
+								<input type="text" name="mulai_berjalan" class="form-control" value="{$proposal->mulai_berjalan}" />
+								<span class="help-block">Tulis informasi kapan bisnis mulai dijalankan.
+								Misal: Januari 2020</span>
+							{else}
+								<p class="form-control-static">{$proposal->mulai_berjalan}</p>
 							{/if}
 						</div>
 					</div>
