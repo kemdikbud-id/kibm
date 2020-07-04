@@ -81,7 +81,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						{foreach $debug_vars as $debug_var}
-							<pre class="pre-scrollable">{$debug_var|htmlentities}</pre>
+							<pre class="pre-scrollable" style="font-size: x-small">{$debug_var|htmlentities}</pre>
 						{/foreach}
 					</div>
 				</div>
