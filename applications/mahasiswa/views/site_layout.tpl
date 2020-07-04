@@ -77,6 +77,15 @@
 
 		<!-- Begin page content -->
 		<div class="container">
+			{if isset($debug_vars)}
+				<div class="row">
+					<div class="col-lg-12">
+						{foreach $debug_vars as $debug_var}
+							<pre class="pre-scrollable">{$debug_var|htmlentities}</pre>
+						{/foreach}
+					</div>
+				</div>
+			{/if}
 			{block name='content'}
 			{/block}
 		</div>
