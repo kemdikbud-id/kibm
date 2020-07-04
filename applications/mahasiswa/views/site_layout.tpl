@@ -94,7 +94,7 @@
 			<div class="container">
 				<p class="text-center">&copy; Direktorat Jenderal Pendidikan Tinggi<br/>
 					Jl. Jenderal Sudirman, Senayan, Jakarta 10270, Indonesia<br/>
-                    <a href="http://dikti.kemdikbud.go.id">dikti.kemdikbud.go.id</a></p>
+					<a href="http://dikti.kemdikbud.go.id">dikti.kemdikbud.go.id</a></p>
 			</div>
 		</footer>
 
