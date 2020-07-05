@@ -444,7 +444,17 @@ class Proposal_model extends CI_Model
 	function get_kelengkapan_proposal($proposal_id)
 	{
 		$hasil = array();
-		
+
+		// Cek Isian Mulai Berjalan
+		$mulai_berjalan = $this->db->select('mulai_berjalan')
+			->get_where('proposal', ['id' => $proposal_id])
+			->row()->mulai_berjalan;
+
+		if ($mulai_berjalan == null)
+		{
+			array_push($hasil, 'Isian Identitas Proposal belum lengkap.');
+		}
+
 		// Ambil jumlah anggota kelompok
 		$jumlah_anggota = $this->db->where('proposal_id', $proposal_id)->count_all_results('anggota_proposal');
 		
