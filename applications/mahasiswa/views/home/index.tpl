@@ -77,7 +77,9 @@
 
 			<h3>Program KBMI</h3>
 			{if $kegiatan_kbmi != NULL}
-				<p>Program Berjalan : {$kegiatan_kbmi->tahun}. Mulai unggah {$kegiatan_kbmi->tgl_awal_upload} sampai {$kegiatan_kbmi->tgl_akhir_upload}</p>
+				<p>Program Berjalan : {$kegiatan_kbmi->tahun}.
+					Mulai unggah <strong>{strftime('%d %B %Y %H:%M:%S', strtotime($kegiatan_kbmi->tgl_awal_upload))}</strong>
+					sampai <strong>{strftime('%d %B %Y %H:%M:%S', strtotime($kegiatan_kbmi->tgl_akhir_upload))}</strong></p>
 			{/if}
 			<div class="panel panel-default">
 				<div class="panel-body">
@@ -86,14 +88,42 @@
 							<tr>
 								<th style="width: 1%">Tahun</th>
 								<th>Judul</th>
+								<th>Kelengkapan</th>
+								<th>Upload</th>
 								<th>Status</th>
 								<th></th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td colspan="4"><i>Tidak ada judul terdaftar</i></td>
-							</tr>
+							{foreach $proposal_kbmi_set as $proposal_kbmi}
+								<tr>
+									<td>{$proposal_kbmi->tahun}</td>
+									<td>{$proposal_kbmi->judul|htmlentities}</td>
+									<td><span class="badge">{$proposal_kbmi->isian_proposal}</span> dari <span class="badge">31</span></td>
+									<td><span class="label label-info">3</span></td>
+									<td>
+										{if $proposal_kbmi->is_submited}
+											<span class="label label-success">Sudah Submit</span>
+										{else}
+											<span class="label label-default">Belum Submit</span>
+										{/if}
+									</td>
+									<td>
+										{* Tampilkan tombol jika tahun sesuai dengan yg aktif *}
+										{if $kegiatan_kbmi != NULL}
+											{if $kegiatan_kbmi->tahun == $proposal_kbmi->tahun}
+												<a href="{site_url('kbmi/identitas')}" class="btn btn-primary btn-xs">
+													<i class="glyphicon glyphicon-pencil"></i> Identitas Proposal
+												</a>
+											{/if}
+										{/if}
+									</td>
+								</tr>
+							{foreachelse}
+								<tr>
+									<td colspan="5"><i>Tidak ada judul terdaftar</i></td>
+								</tr>
+							{/foreach}
 						</tbody>
 					</table>
 				</div>

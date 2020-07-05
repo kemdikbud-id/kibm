@@ -9,6 +9,7 @@
  * @property Proposal_model $proposal_model
  * @property Anggota_proposal_model $anggota_model
  * @property Syarat_model $syarat_model
+ * @property Isian_model $isian_model
  */
 class Kbmi extends Mahasiswa_Controller
 {
@@ -28,6 +29,7 @@ class Kbmi extends Mahasiswa_Controller
 		$this->load->model(MODEL_PROPOSAL, 'proposal_model');
 		$this->load->model(MODEL_ANGGOTA_PROPOSAL, 'anggota_model');
 		$this->load->model(MODEL_SYARAT, 'syarat_model');
+		$this->load->model(MODEL_ISIAN, 'isian_model');
 	}
 	
 	public function identitas()
@@ -182,7 +184,8 @@ class Kbmi extends Mahasiswa_Controller
     public function step($step)
 	{
 		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
-		
+		$isian = $this->isian_model->get_single($kegiatan->id, $step);
+
 		// If expired, redirect ke home
 		if (time() < strtotime($kegiatan->tgl_awal_upload) || strtotime($kegiatan->tgl_akhir_upload) < time())
 		{
@@ -229,7 +232,8 @@ class Kbmi extends Mahasiswa_Controller
 		{
 			$this->smarty->assign('heading', 'Pernyataan');
 		}
-		
+
+		$this->smarty->assign('isian', $isian);
 		$this->smarty->assign('isian_proposal', $this->proposal_model->get_isian_proposal($proposal->id, $step));
 
 		$this->smarty->assign('step', $step);
