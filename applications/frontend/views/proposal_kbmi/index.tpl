@@ -37,7 +37,7 @@
 							<td class="text-center">
 								{if $data->is_reviewed == TRUE}
 									<label class="label label-primary">Direview</label>
-								{else if $data->is_submited == TRUE}
+								{elseif $data->is_submited == TRUE}
 									<label class="label label-success">Submit</label>
 								{else}
 									<label class="label label-default">Pengisian Form</label>
@@ -49,10 +49,10 @@
 									<input type="hidden" name="mahasiswa_id" value="{$data->mahasiswa_id}" />
 								</form>
 								<a href="{site_url('proposal-kbmi/update')}/{$data->id}" class="btn btn-xs btn-success">Edit</a>
-								{if time() < strtotime($kegiatan->tgl_akhir_upload)}
+								{if $waktu_sekarang < $kegiatan->tgl_akhir_upload}
 									{if $data->is_submited == 0}{* Jika belum disubmit, bisa dihapus *}
 										<a href="{site_url('proposal-kbmi/delete')}/{$data->id}" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
-									{else if $data->is_reviewed == 0}{* Jika belum di review, bisa dibatalkan *}
+									{elseif $data->is_reviewed == 0}{* Jika belum di review, bisa dibatalkan *}
 										<a href="{site_url('proposal-kbmi/cancel-submit')}/{$data->id}" class="btn btn-xs btn-default" style="margin-top: 5px">Batalkan Submit</a>
 									{/if}
 								{/if}
@@ -68,7 +68,13 @@
 					<tr>
 						<td colspan="6">
 							{if $kegiatan != null}
-								<a href="{site_url('proposal-kbmi/create')}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah</a>
+								{if $waktu_sekarang < $kegiatan->tgl_awal_upload}
+									Masa pengusulan proposal belum dimulai
+								{elseif $kegiatan->tgl_akhir_upload < $waktu_sekarang}
+									Masa pengusulan proposal sudah selesai
+								{elseif $kegiatan->proposal_per_pt > count($data_set)}
+									<a href="{site_url('proposal-kbmi/create')}" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah</a>
+								{/if}
 							{else}
 								Tidak ada kegiatan aktif.
 							{/if}

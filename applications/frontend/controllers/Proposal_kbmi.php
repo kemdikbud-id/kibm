@@ -38,7 +38,8 @@ class Proposal_KBMI extends Frontend_Controller
 		{
 			$data->jumlah_isian = $data->jumlah_isian . ' dari 31'; // Khusus tahun 2019
 		}
-		
+
+		$this->smarty->assign('waktu_sekarang', date('Y-m-d H:i:s'));
 		$this->smarty->assign('kegiatan', $kegiatan_aktif);
 		$this->smarty->assign('data_set', $data_set);
 		$this->smarty->display();
@@ -47,6 +48,43 @@ class Proposal_KBMI extends Frontend_Controller
 	public function create()
 	{
 		$current_pt = $this->session->perguruan_tinggi;
+
+		// Ambil informasi kegiatan yang aktif
+		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
+
+		// Jika ada kegiatan yg aktif
+		if ($kegiatan != null)
+		{
+			$jumlah_proposal = $this->proposal_model->get_jumlah_per_pt($kegiatan->id, $this->session->perguruan_tinggi->id);
+
+			// Jika diluar tanggal upload
+			if (time() < strtotime($kegiatan->tgl_awal_upload))
+			{
+				$this->smarty->assign('pesan', 'Masa upload proposal belum dimulai');
+				$this->smarty->display('proposal_kbmi/create_unable.tpl');
+				exit();
+			}
+
+			if (strtotime($kegiatan->tgl_akhir_upload) < time())
+			{
+				$this->smarty->assign('pesan', 'Masa upload proposal sudah selesai');
+				$this->smarty->display('proposal_kbmi/create_unable.tpl');
+				exit();
+			}
+
+			if ($kegiatan->proposal_per_pt <= $jumlah_proposal)
+			{
+				$this->smarty->assign('pesan', 'Jumlah proposal sudah maksimum');
+				$this->smarty->display('proposal_kbmi/create_unable.tpl');
+				exit();
+			}
+		}
+		else
+		{
+			$this->smarty->assign('pesan', 'Tidak ada kegiatan yang aktif');
+			$this->smarty->display('proposal_kbmi/create_unable.tpl');
+			exit();
+		}
 		
 		if ($this->input->post('mode') == 'search')
 		{
@@ -90,7 +128,6 @@ class Proposal_KBMI extends Frontend_Controller
 			$this->load->helper('string');
 			
 			$mahasiswa_id = $this->input->post('mahasiswa_id');
-			$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
 			$mahasiswa = $this->mahasiswa_model->get($mahasiswa_id);
 			$user = $this->user_model->get_single_by_mahasiswa($mahasiswa->id);
 			
