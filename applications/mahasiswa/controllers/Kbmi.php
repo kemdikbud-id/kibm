@@ -378,6 +378,13 @@ class Kbmi extends Mahasiswa_Controller
 	public function confirm()
 	{
 		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
+
+		// If expired, redirect ke home
+		if (time() < strtotime($kegiatan->tgl_awal_upload) || strtotime($kegiatan->tgl_akhir_upload) < time())
+		{
+			redirect('home'); exit();
+		}
+
 		$proposal = $this->proposal_model->get_by_ketua($kegiatan->id, $this->session->user->mahasiswa_id);
 		$kelengkapan = $this->proposal_model->get_kelengkapan_proposal($proposal->id);
 		
