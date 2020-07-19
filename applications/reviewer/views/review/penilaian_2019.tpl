@@ -63,10 +63,11 @@
 				</div>
 					
 				<div class="form-group">
-					<label class="col-md-2 col-sm-3 control-label">File Upload</label>
+					<label class="col-md-2 col-sm-3 control-label">Lampiran</label>
 					<div class="col-md-8 col-sm-7">
 						{foreach $file_proposal_set as $file_proposal}
 							<p class="form-control-static" style="min-height: 0; padding: 2px 0">
+								<span class="label label-primary">{$file_proposal->syarat}</span>
 								{$file_proposal->nama_asli} 
 								&bull; <a class="btn btn-sm btn-default" href="{$download_url}?id={$file_proposal->id}&mode=download" target="_blank">Download <i class="glyphicon glyphicon-download-alt"></i></a> 
 								&bull; <a class="btn btn-sm btn-default open-file" href="#" data-nama-file="{$file_proposal->nama_asli}" data-file="{$file_proposal->nama_file}">Buka</a>
@@ -143,6 +144,7 @@
 						<span class="input-group-addon">Rp.</span>
 						<input type="text" class="form-control number" name="biaya_rekomendasi" value="{$plot_reviewer->biaya_rekomendasi}"/>
 					</div>
+					<span class="help-block">Min Rp 10.000.000 , Maks Rp 20.000.000 </span>
 					{if form_error('biaya_rekomendasi')}
 						{form_error('biaya_rekomendasi')}
 					{/if}
