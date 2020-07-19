@@ -35,9 +35,14 @@ class Review extends Reviewer_Controller
 	public function index()
 	{
 		$tahapan_id = $this->input->get('tahapan_id');
+		$kegiatan_id = $this->input->get('kegiatan_id');
+
+		if ($kegiatan_id)
+		{
+			$this->smarty->assign('kegiatan', $this->kegiatan_model->get_single($kegiatan_id));
+		}
 		
 		$this->smarty->assign('tahapan', $this->tahapan_model->get_single($tahapan_id));
-		
 		$this->smarty->assign('kegiatan_option_set', $this->kegiatan_model->list_aktif_for_option());
 		$this->smarty->assign('tahapan_option_set', $this->tahapan_model->list_all_for_option());
 		$this->smarty->assign('reviewer_id', $this->session->userdata('user')->reviewer_id);

@@ -70,6 +70,7 @@
 
 		var keg_id = '{$smarty.get.kegiatan_id}';
 		var thp_id = '{$smarty.get.tahapan_id}';
+		var keg_thn = '{$kegiatan->tahun}';
 
 		if ($('#table').length) {
 
@@ -96,7 +97,11 @@
 						data: 'id',
 						render: function (data, type, row, meta) {
 							if (thp_id === '{$smarty.const.TAHAPAN_EVALUASI}')
-								return '<a class="btn btn-info" href="{site_url('review/penilaian-2019/')}' + data + '">Nilai</a>';
+								if (keg_thn >= '2019') /* KBMI >= 2019 menggunakan format isian. TODO: Perlu diganti ke dalam bentuk setting */ {
+									return '<a class="btn btn-info" href="{site_url('review/penilaian-2019/')}' + data + '">Nilai</a>';
+								} else {
+									return '<a class="btn btn-info" href="{site_url('review/penilaian/')}' + data + '">Nilai</a>';
+								}
 							else if (thp_id === '{$smarty.const.TAHAPAN_MONEV}')
 								return '<a class="btn btn-info" href="{site_url('review/monev/')}' + data + '">Nilai</a>';
 							else if (thp_id === '{$smarty.const.TAHAPAN_SELEKSI_EXPO}')
