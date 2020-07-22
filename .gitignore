@@ -49,6 +49,7 @@ applications/frontend/views/site/index_content.tpl
 assets/js/jquery-validation-*/
 assets/js/*.zip
 assets/captcha/*
+!assets/captcha/index.html
 adminer-*.php
 php1nf0.php
 db-dump/
