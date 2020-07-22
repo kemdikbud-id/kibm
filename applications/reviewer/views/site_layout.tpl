@@ -68,9 +68,9 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-center">&copy; Direktorat Jenderal Pendidikan Tinggi<br/>
-					Jl. Jenderal Sudirman, Senayan, Jakarta 10270, Indonesia<br/>
-                    <a href="http://dikti.kemdikbud.go.id">dikti.kemdikbud.go.id</a></p>
+				<p class="text-center">&copy; 2020 Pusat Prestasi Nasional<br/>
+					Jl. Jenderal Sudirman, Senayan, Jakarta 10270<br/>
+					<a href="http://pusatprestasinasional.kemdikbud.go.id">pusatprestasinasional.kemdikbud.go.id</a></p>
 			</div>
 		</footer>
 

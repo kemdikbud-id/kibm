@@ -99,7 +99,7 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-center">&copy; Pusat Prestasi Nasional<br/>
+				<p class="text-center">&copy; 2020 Pusat Prestasi Nasional<br/>
 					Jl. Jenderal Sudirman, Senayan, Jakarta 10270, Indonesia<br/>
                     <a href="http://pusatprestasinasional.kemdikbud.go.id">pusatprestasinasional.kemdikbud.go.id</a></p>
 			</div>
