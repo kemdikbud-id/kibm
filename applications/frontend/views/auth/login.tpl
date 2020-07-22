@@ -47,7 +47,7 @@
 				<li class="text-danger">Bagi mahasiswa yang belum mendapatkan email, silahkan masuk
 					ke halaman <a href="{site_url('auth/registrasi-mahasiswa')}">Registrasi Mahasiswa</a>
 					untuk Reset Password dengan memasukkan data yang pernah diinputkan sebelumnya.</li>
-				<li>Untuk pertanyaan lebih lanjut, bisa menghubungi WA : 0855-9918-983 (Yas Ahmad) / 0823-8196-2606 (Topan)</li>
+				<li>Untuk pertanyaan lebih lanjut, bisa menghubungi WA : <br/>&bullet; 0855-9918-983 (Yas Ahmad)<br/>&bullet; 0823-8196-2606 (Topan)</li>
             </ol>
         </div>
     </div>
