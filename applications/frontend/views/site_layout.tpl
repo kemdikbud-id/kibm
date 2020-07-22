@@ -29,9 +29,9 @@
 						<span class="icon-bar"></span>
 					</button>
 					{if $ci->session->user}
-						<a class="navbar-brand" href="{site_url('home')}">KBMI</a>
+						<a class="navbar-brand" href="{site_url('home')}">KIBM</a>
 					{else}
-						<a class="navbar-brand" href="{base_url()}">KBMI</a>
+						<a class="navbar-brand" href="{base_url()}">KIBM</a>
 					{/if}
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
