@@ -3,7 +3,7 @@
 	<link rel="stylesheet" href="{base_url('assets/jquery-ui-1.12.1.custom/jquery-ui.min.css')}" />
 {/block}
 {block name='content'}
-	<h2 class="page-header">Registrasi Akun SIM-PKMI untuk Perguruan Tinggi</h2>
+	<h2 class="page-header">Registrasi Akun KIBM untuk Perguruan Tinggi</h2>
 	<div class="row">
 		<div class="col-md-12">
 			

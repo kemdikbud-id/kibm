@@ -1,5 +1,4 @@
 <?php
-use GuzzleHttp\Client;
 
 /**
  * @author Fathoni <m.fathoni@mail.com>
@@ -258,15 +257,15 @@ class Proposal_KBMI extends Frontend_Controller
 		$this->config->load('email');
 		
 		// Kirim Email
-		$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI Ristekdikti');
+		$this->email->from($this->config->item('smtp_user'), 'KIBM');
 		$this->email->to($mahasiswa->email);
-		$this->email->subject('Informasi Akun SIM-PKMI');
+		$this->email->subject('Informasi Akun KIBM');
 		$this->email->message($body);
 		$this->email->set_mailtype("html");
 		$send_result = $this->email->send();
 
 		$this->session->set_flashdata('result', array(
-			'page_title' => 'Pengiriman Akun SIM-PKMI',
+			'page_title' => 'Pengiriman Akun KIBM',
 			'message' => 'Pengiriman login berhasil',
 			'link_1' => '<a href="'.site_url('proposal-kbmi/index').'">Kembali</a>'
 		));

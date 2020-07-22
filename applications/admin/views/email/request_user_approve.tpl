@@ -44,7 +44,7 @@
 	<body>
 		<div id="container">
 			<h2>Registrasi Berhasil</h2>
-			<p><strong>Terima kasih {if isset($nama)}{$nama}{else}$nama{/if}, permintaan user anda di <a href="http://sim-pkmi.ristekdikti.go.id">SIM-PKMI</a> telah berhasil.</strong></p>
+			<p><strong>Terima kasih {if isset($nama)}{$nama}{else}$nama{/if}, permintaan user anda di <a href="https://kibm.kemdikbud.go.id">KIBM</a> telah berhasil.</strong></p>
 			<p>Berikut ini informasi <i>account</i> anda :</p>
 			<ul>
 				<li>Program : <code>{if isset($nama_program)}{$nama_program}{else}$nama_program{/if}</code></li>
@@ -57,7 +57,7 @@
 			<p><i style="font-size: 11px">Email ini otomatis. Tidak perlu dibalas.</i></p>
 		</div>
 		<div id="footer">
-			<p>&copy; SIM-PKMI - {date('Y')} </p>
+			<p>&copy; 2020 KIBM - Pusat Prestasi Nasional - KEMDIKBUD</p>
 		</div>
 	</body>
 </html>

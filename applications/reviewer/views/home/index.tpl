@@ -2,5 +2,5 @@
 {block name='content'}
 	<h2 class="page-header">Home</h2>
 	
-	<p class="lead">Selamat datang di SIM-PKMI</p>
+	<p class="lead">Selamat datang di KIBM</p>
 {/block}

@@ -54,7 +54,7 @@ class Auth extends Frontend_Controller
 				$this->requestuser_model->insert();
 				
 				$this->session->set_flashdata('result', array(
-					'page_title'	=> 'Registrasi Akun SIM-PKMI',
+					'page_title'	=> 'Registrasi Akun KIBM',
 					'message'		=> 'Request user telah berhasil. '
 					. 'Dokumen yang diupload akan diverifikasi oleh tim admin maksimal 1x24 jam. '
 					. 'User login akan dikirimkan ke email : '.$this->input->post('email')
@@ -98,7 +98,7 @@ class Auth extends Frontend_Controller
 				if ($this->user_model->is_email_exist($email))
 				{
 					$this->session->set_flashdata('result', array(
-						'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+						'page_title' => 'Registrasi Akun KIBM untuk Mahasiswa',
 						'message' => "Registrasi tidak berhasil. <strong>{$email}</strong> sudah terdaftar.",
 						'link_1' => anchor(site_url('auth/registrasi-mahasiswa'), 'Kembali ke halaman registrasi')
 					));
@@ -131,9 +131,9 @@ class Auth extends Frontend_Controller
 				$body = $this->smarty->fetch('email/login_mahasiswa.tpl');
 				
 				// Kirim Email
-				$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI');
+				$this->email->from($this->config->item('smtp_user'), 'KIBM');
 				$this->email->to($email);
-				$this->email->subject('Informasi Akun SIM-PKMI');
+				$this->email->subject('Informasi Akun KIBM');
 				$this->email->message($body);
 				$this->email->send();
 				
@@ -155,7 +155,7 @@ class Auth extends Frontend_Controller
 					. "</form>";
 
 				$this->session->set_flashdata('result', array(
-					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+					'page_title' => 'Registrasi Akun KIBM untuk Mahasiswa',
 					'message' => "Registrasi berhasil. User login akan dikirimkan ke {$email}",
 					'message_2' => $message_2,
 					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')
@@ -182,9 +182,9 @@ class Auth extends Frontend_Controller
 				$body = $this->smarty->fetch('email/login_mahasiswa.tpl');
 				
 				// Kirim Email
-				$this->email->from($this->config->item('smtp_user'), 'SIM-PKMI');
+				$this->email->from($this->config->item('smtp_user'), 'KIBM');
 				$this->email->to($email);
-				$this->email->subject('Reset Password Akun SIM-PKMI');
+				$this->email->subject('Reset Password Akun KIBM');
 				$this->email->message($body);
 				$this->email->send();
 				
@@ -206,7 +206,7 @@ class Auth extends Frontend_Controller
 					. "</form>";
 
 				$this->session->set_flashdata('result', array(
-					'page_title' => 'Registrasi Akun SIM-PKMI untuk Mahasiswa',
+					'page_title' => 'Registrasi Akun KIBM untuk Mahasiswa',
 					'message' => "Reset password berhasil. User login akan dikirimkan ke {$email}",
 					'message_2' => $message_2,
 					'link_1' => anchor(site_url('auth/login'), 'Kembali ke Login')

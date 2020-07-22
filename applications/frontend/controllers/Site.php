@@ -49,7 +49,7 @@ class Site extends Frontend_Controller
 	{
 		$this->load->library('email');  // configuration file : applications/user/config/email.php
 		
-		$this->email->from('sim-pkmi@ristekdikti.go.id', 'SIM PKMI');
+		$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
 		$this->email->to('m.fathoni@mail.com');
 		$this->email->cc('mokhammad.fathoni.rokhman@gmail.com');
 

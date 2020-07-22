@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Dashboard SIM-PKMI</title>
+		<title>Dashboard KIBM</title>
 		{if ENVIRONMENT == 'development'}
 			<link href="{base_url('vendor/twbs/bootstrap/dist/css/bootstrap.css')}" rel="stylesheet"/>
 		{/if}
@@ -28,7 +28,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="{current_url()}">SIM-PKMI Dashboard</a>
+					<a class="navbar-brand" href="{current_url()}">KIBM Dashboard</a>
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 
@@ -44,9 +44,9 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-center">&copy; {date('Y')} Direktorat Jenderal Pembelajaran dan Kemahasiswaan<br/>
-					Gedung D Lt 7, Jl. Jenderal Sudirman, Pintu I Senayan, Daerah Khusus Ibukota Jakarta 10270, Indonesia<br/>
-					Email: kk.ditmawa@ristekdikti.go.id</p>
+				<p class="text-center">&copy; {date('Y')} Pusat Prestasi Nasional<br/>
+					Jl. Jenderal Sudirman, Senayan, Jakarta 10270<br/>
+					<a href="http://pusatprestasinasional.kemdikbud.go.id">pusatprestasinasional.kemdikbud.go.id</a></p>
 			</div>
 		</footer>
 

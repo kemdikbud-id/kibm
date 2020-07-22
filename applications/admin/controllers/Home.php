@@ -22,7 +22,7 @@ class Home extends Admin_Controller
 	{
 		$this->load->library('email');
 		
-		$this->email->from('no-reply@ristekdikti.go.id', 'SIM-PKMI');
+		$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
 		$this->email->to('mokhammad.fathoni.rokhman@gmail.com');
 		$this->email->cc('m.fathoni@mail.com');
 		$this->email->subject('Jajal Email');

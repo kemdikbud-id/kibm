@@ -1,6 +1,6 @@
 {
-    "name": "fathonir/simpkmi",
-    "description": "Sistem pendaftaran online untuk program kewirausahaan mahasiswa oleh Kemenristekdikti",
+    "name": "fathonir/kibm",
+    "description": "Kompetisi Inovasi Bisnis Mahasiswa",
     "type": "project",
     "require": {
         "smarty/smarty": "~3.1",

@@ -42,7 +42,7 @@
 	</head>
 	<body>
 		<div id="container">
-			<h2>Informasi Login SIM-PKMI</h2>
+			<h2>Informasi Login KBMI</h2>
 			<p><strong>Berikut ini informasi <i>account</i> anda :</strong></p>
 			<ul>
 				<li>Program : <code>{if isset($nama_program)}{$nama_program}{else}$nama_program{/if}</code></li>
@@ -53,7 +53,7 @@
 			<p><i style="font-size: 11px">Email ini otomatis. Tidak perlu dibalas.</i></p>
 		</div>
 		<div id="footer">
-			<p>&copy; SIM-PKMI - {date('Y')} </p>
+			<p>&copy; 2020 KBMI - Pusat Prestasi Nasional - KEMDIKBUD</p>
 		</div>
 	</body>
 </html>

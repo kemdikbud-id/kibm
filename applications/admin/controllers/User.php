@@ -167,16 +167,16 @@ class User extends Admin_Controller
 				// Assign variable
 				$this->smarty->assign('nama', $data->nama_pengusul);
 				$this->smarty->assign('nama_program', $program->nama_program);
-				$this->smarty->assign('login_link', 'http://sim-pkmi.ristekdikti.go.id');
+				$this->smarty->assign('login_link', site_url());
 				$this->smarty->assign('username', $user->username);
 				$this->smarty->assign('password', $user->password);
 				$body = $this->smarty->fetch("email/request_user_approve.tpl");
 
 				// Kirim Email
 
-				$this->email->from('no-reply@ristekdikti.go.id', 'SIM-PKMI Ristekdikti');
+				$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
 				$this->email->to($data->email);
-				$this->email->subject('Informasi Akun SIM-PKMI');
+				$this->email->subject('Informasi Akun KIBM');
 				$this->email->message($body);
 				$this->email->set_mailtype("html");
 				$send_result = $this->email->send();
@@ -215,9 +215,9 @@ class User extends Admin_Controller
 			$this->request_user_model->reject($id, $reject_message);
 			
 			// Kirim email
-			$this->email->from('no-reply@ristekdikti.go.id', 'SIM-PKMI Ristekdikti');
+			$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
 			$this->email->to($data->email);
-			$this->email->subject('Registrasi User SIM PKMI Tidak Disetujui '. date('H:i:s d/m/Y'));
+			$this->email->subject('Registrasi User KIBM Tidak Disetujui '. date('H:i:s d/m/Y'));
 			$this->smarty->assign('message', $reject_message);
 			$body = $this->smarty->fetch("email/request_user_reject.tpl");
 			$this->email->message($body);
@@ -253,15 +253,15 @@ class User extends Admin_Controller
 			
 			// Assign variable
 			$this->smarty->assign('nama_program', $program->nama_program);
-			$this->smarty->assign('login_link', 'http://sim-pkmi.ristekdikti.go.id');
+			$this->smarty->assign('login_link', site_url());
 			$this->smarty->assign('username', $user->username);
 			$this->smarty->assign('password', $new_password);
 			$body = $this->smarty->fetch("email/user_reset_password.tpl");
 			
 			// Kirim Email
-			$this->email->from('no-reply@ristekdikti.go.id', 'SIM-PKMI Ristekdikti');
+			$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
 			$this->email->to($user->email);
-			$this->email->subject('Reset Password Berhasil - SIM-PKMI');
+			$this->email->subject('Reset Password Berhasil - KIBM');
 			$this->email->message($body);
 			$this->email->set_mailtype("html");
 			$mail_result = $this->email->send();
@@ -283,15 +283,15 @@ class User extends Admin_Controller
 			
 			// Assign variable
 			$this->smarty->assign('nama_program', $program->nama_program);
-			$this->smarty->assign('login_link', 'http://sim-pkmi.ristekdikti.go.id');
+			$this->smarty->assign('login_link', site_url());
 			$this->smarty->assign('username', $user->username);
 			$this->smarty->assign('password', $user->password);
 			$body = $this->smarty->fetch("email/user_resend_login.tpl");
 			
 			// Kirim Email
-			$this->email->from('no-reply@ristekdikti.go.id', 'SIM-PKMI Ristekdikti');
+			$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
 			$this->email->to($user->email);
-			$this->email->subject('Informasi Login - SIM-PKMI');
+			$this->email->subject('Informasi Login - KIBM');
 			$this->email->message($body);
 			$this->email->set_mailtype("html");
 			$mail_result = $this->email->send();

@@ -53,7 +53,7 @@
 			<p><i style="font-size: 11px">Email ini otomatis. Tidak perlu dibalas.</i></p>
 		</div>
 		<div id="footer">
-			<p>&copy; SIM-PKMI - {date('Y')} </p>
+			<p>&copy; 2020 KIBM - Pusat Prestasi Nasional - KEMDIKBUD</p>
 		</div>
 	</body>
 </html>

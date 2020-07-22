@@ -378,7 +378,7 @@ $config['encryption_key'] = '';
 |
 */
 $config['sess_driver'] = 'files';
-$config['sess_cookie_name'] = 'simpkmi';
+$config['sess_cookie_name'] = 'kibm';
 $config['sess_expiration'] = 3600;
 $config['sess_save_path'] = APPPATH . '../sessions';
 $config['sess_match_ip'] = FALSE;

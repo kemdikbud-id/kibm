@@ -29,16 +29,16 @@
 						<span class="icon-bar"></span>
 					</button>
 					{if $ci->session->user}
-						<a class="navbar-brand" href="{site_url('home')}">SIM-PKMI Reviewer</a>
+						<a class="navbar-brand" href="{site_url('home')}">KIBM Reviewer</a>
 					{else}
-						<a class="navbar-brand" href="{base_url()}">SIM-PKMI Reviewer</a>
+						<a class="navbar-brand" href="{base_url()}">KIBM Reviewer</a>
 					{/if}
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
 					{if $ci->session->user}
 						<ul class="nav navbar-nav">
 							<li>
-								<a href="{site_url('review')}">Penilaian KBMI</a>
+								<a href="{site_url('review')}">Penilaian KIBM</a>
 							</li>
 							<li>
 								<a href="{site_url('review-startup')}">Penilaian Startup</a>

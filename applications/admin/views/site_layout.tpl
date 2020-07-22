@@ -29,9 +29,9 @@
 						<span class="icon-bar"></span>
 					</button>
 					{if $ci->session->user}
-						<a class="navbar-brand" href="{site_url('home')}">SIM-PKMI</a>
+						<a class="navbar-brand" href="{site_url('home')}">KIBM</a>
 					{else}
-						<a class="navbar-brand" href="{base_url()}">SIM-PKMI</a>
+						<a class="navbar-brand" href="{base_url()}">KIBM</a>
 					{/if}
 				</div>
 				<div id="navbar" class="collapse navbar-collapse">
@@ -123,9 +123,9 @@
 
 		<footer class="footer">
 			<div class="container">
-				<p class="text-center">&copy; Direktorat Jenderal Pendidikan Tinggi<br/>
-					Jl. Jenderal Sudirman, Senayan, Jakarta 10270, Indonesia<br/>
-                    <a href="http://dikti.kemdikbud.go.id">dikti.kemdikbud.go.id</a></p>
+				<p class="text-center">&copy; Pusat Prestasi Nasional<br/>
+					Jl. Jenderal Sudirman, Senayan, Jakarta 10270<br/>
+					<a href="http://pusatprestasinasional.kemdikbud.go.id">pusatprestasinasional.kemdikbud.go.id</a></p>
 			</div>
 		</footer>
 
