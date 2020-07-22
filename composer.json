@@ -21,7 +21,7 @@
 		"ext-json": "*",
         "twbs/bootstrap": "3.3.*",
         "nnnick/chartjs": "^2.8",
-        "thomaspark/bootswatch": "3.3.*",
+        "thomaspark/bootswatch": "3.4.*",
         "components/jquery": "~1",
         "nerones/codeigniter-phpcs": "dev-master"
     }
