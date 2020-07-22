@@ -6,10 +6,10 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Kompetisi Inovasi Bisnis Mahasiswa (KIBM)</title>
 		{if ENVIRONMENT == 'development'}
-			<link href="{base_url('vendor/thomaspark/bootswatch/flatly/bootstrap.min.css')}" rel="stylesheet"/>
+			<link href="{base_url('vendor/thomaspark/bootswatch/lumen/bootstrap.min.css')}" rel="stylesheet"/>
 		{/if}
 		{if ENVIRONMENT == 'production'}
-			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/3.4.1/flatly/bootstrap.min.css" integrity="sha384-bfWZLPtvQKHg/nZNhaO/ZW4Ba8ISud5CtEjnCTU6OR1yOq5zrrF+JP2o7om6rzLf" crossorigin="anonymous">
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/3.4.1/lumen/bootstrap.min.css" integrity="sha384-bfWZLPtvQKHg/nZNhaO/ZW4Ba8ISud5CtEjnCTU6OR1yOq5zrrF+JP2o7om6rzLf" crossorigin="anonymous">
 		{/if}
 		<link href="{base_url('assets/css/site.css')}" rel="stylesheet"/>
 		{block name='head'}
