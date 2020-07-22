@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Program Kewirausahaan Mahasiswa Indonesia</title>
+		<title>Kompetisi Inovasi Bisnis Mahasiswa (KIBM)</title>
 		{if ENVIRONMENT == 'development'}
 			<link href="{base_url('../vendor/thomaspark/bootswatch/flatly/bootstrap.min.css')}" rel="stylesheet"/>
 		{/if}
