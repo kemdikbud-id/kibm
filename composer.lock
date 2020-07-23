@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6b96a0e7df9756e49332aa9c641851a5",
+    "content-hash": "7d81a0d2eec88a27119ef39b11fea5b1",
     "packages": [
         {
             "name": "codeigniter/framework",
@@ -1043,16 +1043,16 @@
         },
         {
             "name": "thomaspark/bootswatch",
-            "version": "v3.4.1+1",
+            "version": "v3.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thomaspark/bootswatch.git",
-                "reference": "c41a8f066feb8950c6f9c6bcf5a3c37d1085404e"
+                "reference": "4b0d3762f309326a6d66fa4ea18945a7fc11f8ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/c41a8f066feb8950c6f9c6bcf5a3c37d1085404e",
-                "reference": "c41a8f066feb8950c6f9c6bcf5a3c37d1085404e",
+                "url": "https://api.github.com/repos/thomaspark/bootswatch/zipball/4b0d3762f309326a6d66fa4ea18945a7fc11f8ef",
+                "reference": "4b0d3762f309326a6d66fa4ea18945a7fc11f8ef",
                 "shasum": ""
             },
             "suggest": {
@@ -1097,7 +1097,7 @@
                 }
             ],
             "description": "Themes for Bootstrap",
-            "time": "2019-06-22T15:55:51+00:00"
+            "time": "2016-07-30T21:56:26+00:00"
         },
         {
             "name": "twbs/bootstrap",
