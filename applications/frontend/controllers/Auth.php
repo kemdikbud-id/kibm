@@ -112,6 +112,7 @@ class Auth extends Frontend_Controller
 				if ($user == null)
 				{
 					$mahasiswa->email = $email;
+					unset($mahasiswa->id_institusi); // Hapus pt.id_institusi dari mahasiswa_model->get_by_nim
 					$this->mahasiswa_model->update($mahasiswa);
 					
 					$user = $this->user_model->create_user_mahasiswa($mahasiswa, $pt->id, $pt->npsn);
