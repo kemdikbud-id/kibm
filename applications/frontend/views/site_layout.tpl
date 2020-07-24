@@ -77,6 +77,7 @@
 							<li><a href="{site_url()}">Halaman depan</a></li>
 							<li><a href="{site_url('site/download')}">Download</a></li>
 							<li><a href="{site_url('auth/registrasi-pt')}" title="Registrasi Perguruan Tinggi">Registrasi PT</a></li>
+							<li><a href="{site_url('auth/registrasi-mahasiswa')}">Registrasi Mahasiswa</a></li>
 							<li><a href="{site_url('auth/login')}">Login</a></li>
 							{*
 							<li><a href="#">Tanya Jawab</a></li>
