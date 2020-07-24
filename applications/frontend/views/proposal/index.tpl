@@ -3,7 +3,7 @@
 	<style>.table { font-size: 14px; }</style>
 {/block}
 {block name='content'}
-	<h2 class="page-header">Daftar Proposal {if $ci->session->program_id == 1}PBBT{else}KBMI{/if}</h2>
+	<h2 class="page-header">Daftar Proposal {if $ci->session->program_id == 1}PBBT{else}KIBM{/if}</h2>
 	<div class="row">
 		<div class="col-lg-12">
 
@@ -53,6 +53,13 @@
 						</tr>
 					{/foreach}
 				</tbody>
+				<tfoot>
+				<tr>
+					<td colspan="7">
+						<a href="{site_url('proposal/create')}" class="btn btn-primary"><i class=""></i> Usulan Baru</a>
+					</td>
+				</tr>
+				</tfoot>
 			</table>
 
 		</div>
