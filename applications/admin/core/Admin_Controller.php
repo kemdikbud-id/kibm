@@ -3,15 +3,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * @author Fathoni <m.fathoni@mail.com>
- * 
- * @property Backend_Session_Session $session
+ * @property CI_Config $config
+ * @property CI_Email $email
  * @property CI_Input $input
  * @property CI_Loader $load
  * @property CI_Upload $upload
  * @property Smarty_wrapper $smarty
- * @property CI_DB_query_builder $db
- * @property CI_DB_mysqli_driver $db
- * @property CI_Session $session
+ * @property CI_DB_query_builder|CI_DB_mysqli_driver $db
+ * @property Admin_Session $session
  * @property Mpdf_wrapper $mpdf
  */
 class Admin_Controller extends CI_Controller
