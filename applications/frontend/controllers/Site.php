@@ -49,24 +49,20 @@ class Site extends Frontend_Controller
 	{
 		$this->load->library('email');  // configuration file : applications/user/config/email.php
 		
-		$this->email->from('no-reply@kibm.kemdikbud.go.id', 'KIBM');
+		$this->email->from($this->config->item('smtp_user'), 'KIBM');
 		$this->email->to('m.fathoni@mail.com');
 		$this->email->cc('mokhammad.fathoni.rokhman@gmail.com');
 
 		$this->email->subject('Email test yang dikirim pada '. date('H:i:s d/m/Y'));
 		
-		//$this->smarty->assign('nama', "Yufi Yes");
-		//$this->smarty->assign('email', "yufiazmi@gmail.com");
-		//$this->smarty->assign('password', "IndonesiaMerdeka1945");
-		
 		$body = $this->smarty->fetch("email/registration.tpl");
 		$this->email->message($body);
 			
-		$result = $this->email->send();
+		$result = $this->email->send(FALSE);
 		
 		if ($result)
 			echo "Pengiriman berhasil";
 		else
-			echo "Pengiriman (koyoke) gagal";
+			echo "Pengiriman (koyoke) gagal. " . $this->email->print_debugger(['header', 'subject', 'body']);
 	}
 }
