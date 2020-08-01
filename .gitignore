@@ -34,9 +34,9 @@ composer.phar
 /user_guide/
 
 # Applications
-applications/admin/config/email.php
 applications/shared/config/database.php
 applications/shared/config/email.php
+applications/*/config/email.php
 applications/*/config/pddikti.php
 applications/*/logs/*
 !applications/*/logs/index.html
