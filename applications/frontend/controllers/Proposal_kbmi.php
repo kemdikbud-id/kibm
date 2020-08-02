@@ -257,7 +257,7 @@ class Proposal_KBMI extends Frontend_Controller
 		$this->config->load('email');
 		
 		// Kirim Email
-		$this->email->from($this->config->item('smtp_user'), 'KIBM');
+		$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 		$this->email->to($mahasiswa->email);
 		$this->email->subject('Informasi Akun KIBM');
 		$this->email->message($body);
