@@ -40,8 +40,8 @@
 							<li>
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Proposal {if $ci->session->program_id == 1}PBBT{else}KIBM{/if}<span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="{site_url('proposal')}">Daftar Proposal {if $ci->session->program_id == 1}PBBT{else}KIBM{/if}</a></li>
-									<li><a href="{site_url('proposal/create')}">Usulan Baru</a></li>
+									<li><a href="{site_url('proposal-kbmi')}">Daftar Proposal {if $ci->session->program_id == 1}PBBT{else}KIBM{/if}</a></li>
+									<li><a href="{site_url('proposal-kbmi/create')}">Usulan Baru</a></li>
 								</ul>
 							</li>
 							{* Ini untuk link pengusulan proposal model Proposal Isian *}

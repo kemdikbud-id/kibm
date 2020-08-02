@@ -4,7 +4,7 @@
     <div class="row">
 		<div class="col-lg-12">
 			<p>
-				<a href="{site_url('proposal')}" class="btn btn-default">
+				<a href="{site_url('proposal-kbmi')}" class="btn btn-default">
 					<i class="glyphicon glyphicon-folder-open"></i> Daftar Proposal
 				</a>
 			</p>

@@ -10,7 +10,7 @@
 	</style>
 {/block}
 {block name='content'}
-	<h2 class="page-header">Daftar Proposal KBMI {if $kegiatan != NULL}{$kegiatan->tahun}{/if}</h2>
+	<h2 class="page-header">Daftar Proposal KIBM {if $kegiatan != NULL}{$kegiatan->tahun}{/if}</h2>
 	<div class="row">
 		<div class="col-lg-12">
 
