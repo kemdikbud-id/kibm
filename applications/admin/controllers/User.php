@@ -174,18 +174,30 @@ class User extends Admin_Controller
 
 				// Kirim Email
 
-				$this->email->from($this->config->item('smtp_user'), 'KIBM');
+				$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 				$this->email->to($data->email);
 				$this->email->subject('Informasi Akun KIBM');
 				$this->email->message($body);
 				$this->email->set_mailtype("html");
-				$send_result = $this->email->send();
+				$send_result = $this->email->send(FALSE);
 
-				$this->session->set_flashdata('result', array(
-					'page_title' => 'Daftar User Request',
-					'message' => 'Berhasil',
-					'link_1' => '<a href="'.site_url('user/request').'">Kembali ke daftar user request</a>'
-				));
+				if ($send_result)
+				{
+					$this->session->set_flashdata('result', array(
+						'page_title' => 'Daftar User Request',
+						'message' => 'Berhasil',
+						'link_1' => '<a href="'.site_url('user/request').'">Kembali ke daftar user request</a>'
+					));
+				}
+				else
+				{
+					$this->session->set_flashdata('result', array(
+						'page_title' => 'Daftar User Request',
+						'message' => 'Gagal. Error Message: ' .
+							$this->email->print_debugger(['headers', 'subject', 'body']),
+						'link_1' => '<a href="'.site_url('user/request').'">Kembali ke daftar user request</a>'
+					));
+				}
 
 				redirect(site_url('alert/success'));
 			}
@@ -215,21 +227,32 @@ class User extends Admin_Controller
 			$this->request_user_model->reject($id, $reject_message);
 			
 			// Kirim email
-			$this->email->from($this->config->item('smtp_user'), 'KIBM');
+			$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 			$this->email->to($data->email);
 			$this->email->subject('Registrasi User KIBM Tidak Disetujui '. date('H:i:s d/m/Y'));
 			$this->smarty->assign('message', $reject_message);
 			$body = $this->smarty->fetch("email/request_user_reject.tpl");
 			$this->email->message($body);
 			$this->email->set_mailtype("html");
-			$result = $this->email->send();
-			
-			$this->session->set_flashdata('result', array(
-				'page_title' => 'Daftar User Request',
-				'message' => 'Berhasil',
-				'link_1' => '<a href="'.site_url('user/request').'">Kembali ke daftar user request</a>'
-			));
-			
+			$send_result = $this->email->send(FALSE);
+
+			if ($send_result)
+			{
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Daftar User Request',
+					'message' => 'Berhasil',
+					'link_1' => '<a href="'.site_url('user/request').'">Kembali ke daftar user request</a>'
+				));
+			}
+			else
+			{
+				$this->session->set_flashdata('result', array(
+					'page_title' => 'Daftar User Request',
+					'message' => 'Gagal. Error: ' . $this->email->print_debugger(['headers', 'subject', 'body']),
+					'link_1' => '<a href="'.site_url('user/request').'">Kembali ke daftar user request</a>'
+				));
+			}
+
 			redirect(site_url('alert/success'));
 		}
 		
@@ -259,7 +282,7 @@ class User extends Admin_Controller
 			$body = $this->smarty->fetch("email/user_reset_password.tpl");
 			
 			// Kirim Email
-			$this->email->from($this->config->item('smtp_user'), 'KIBM');
+			$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 			$this->email->to($user->email);
 			$this->email->subject('Reset Password Berhasil - KIBM');
 			$this->email->message($body);
@@ -289,14 +312,17 @@ class User extends Admin_Controller
 			$body = $this->smarty->fetch("email/user_resend_login.tpl");
 			
 			// Kirim Email
-			$this->email->from($this->config->item('smtp_user'), 'KIBM');
+			$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 			$this->email->to($user->email);
 			$this->email->subject('Informasi Login - KIBM');
 			$this->email->message($body);
 			$this->email->set_mailtype("html");
-			$mail_result = $this->email->send();
+			$mail_result = $this->email->send(FALSE);
 
-			echo json_encode(array('result' => $mail_result));
+			echo json_encode([
+				'result' => $mail_result,
+				'debug' => $mail_result ? null : $this->email->print_debugger(['headers', 'subject', 'body'])
+			]);
 		}
 	}
 	
