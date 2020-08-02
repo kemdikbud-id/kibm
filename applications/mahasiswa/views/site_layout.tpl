@@ -6,13 +6,11 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>Kompetisi Inovasi Bisnis Mahasiswa (KIBM)</title>
 		{if ENVIRONMENT == 'development'}
-			<link href="{base_url('../vendor/twbs/bootstrap/dist/css/bootstrap.css')}" rel="stylesheet"/>
+			<link href="{base_url('../vendor/thomaspark/bootswatch/lumen/bootstrap.min.css')}" rel="stylesheet"/>
 		{/if}
 		{if ENVIRONMENT == 'production'}
-			<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-			<link href="https://fonts.googleapis.com/css?family=Oswald|Comfortaa|Nunito+Sans:400,700" rel="stylesheet">
+			<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css" crossorigin="anonymous">
 		{/if}
-		<link href="{base_url('../assets/css/bootstrap-cerulean.min.css')}" rel="stylesheet"/>
 		<link href="{base_url('../assets/css/site.css')}" rel="stylesheet"/>
 		{block name='head'}
 		{/block}
@@ -38,29 +36,8 @@
 					{if $ci->session->user}
 						<ul class="nav navbar-nav">
                             <li>
-                                <a href="{site_url('home')}">Beranda</a>
+                                <a href="{site_url()}">Beranda</a>
                             </li>
-							<li>
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Program KBMI <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="{site_url('kbmi/identitas')}">Identitas Proposal</a></li>
-									<li><a href="{site_url('kbmi/step/0')}">Isi Proposal</a></li>
-									<li><a href="{site_url('kbmi/upload')}">Unggah Berkas</a></li>
-									<li><a href="{site_url('kbmi/confirm')}">Submit Proposal</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Program Akselerasi Startup <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-									<li><a href="{site_url('startup')}">Unggah Pitchdeck &amp; Produk</a></li>
-								</ul>
-							</li>
-							<li>
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Program Online Workshop <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-									<li><a href="{site_url('online-workshop')}">Daftar Online Workshop</a></li>
-								</ul>
-							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							{if $ci->session->user}
