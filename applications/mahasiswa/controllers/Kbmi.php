@@ -56,7 +56,7 @@ class Kbmi extends Mahasiswa_Controller
 				$this->proposal_model->update($proposal->id, $proposal);
 			}
 			
-			redirect('kbmi/step/0');
+			redirect('kbmi/step/1');
 			exit();
 		}
 		
