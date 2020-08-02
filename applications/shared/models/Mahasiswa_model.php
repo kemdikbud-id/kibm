@@ -3,6 +3,7 @@ use GuzzleHttp\Client;
 
 /**
  * @author Fathoni <m.fathoni@mail.com>
+ * @property CI_Config $config
  * @property CI_Loader $load
  * @property CI_DB_query_builder $db 
  * @property Program_studi_model $program_studi_model
