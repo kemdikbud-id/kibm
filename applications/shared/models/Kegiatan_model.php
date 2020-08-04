@@ -171,4 +171,18 @@ class Kegiatan_model extends CI_Model
 			'tahun'			=> $tahun
 		], 1)->row();
 	}
+
+	/**
+	 * Mendapatkan jumlah isian
+	 * @param int $kegiatan_id
+	 * @param int $bentuk_pendidikan_id
+	 * @return int
+	 */
+	public function get_jumlah_isian($kegiatan_id, $bentuk_pendidikan_id)
+	{
+		return $this->db->from('isian')->where([
+			'kegiatan_id' => $kegiatan_id,
+			'bentuk_pendidikan_id' => $bentuk_pendidikan_id
+		])->count_all_results();
+	}
 }

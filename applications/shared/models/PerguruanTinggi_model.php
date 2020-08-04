@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
  * @property Client $client
  * @property Program_studi_model $prodi_model
  * @property int $id
+ * @property int $bentuk_pendidikan_id
  * @property string $npsn
  * @property string $nama_pt
  * @property string $email_pt

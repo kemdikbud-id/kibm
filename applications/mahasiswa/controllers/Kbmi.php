@@ -10,6 +10,7 @@
  * @property Anggota_proposal_model $anggota_model
  * @property Syarat_model $syarat_model
  * @property Isian_model $isian_model
+ * @property PerguruanTinggi_model $pt_model
  */
 class Kbmi extends Mahasiswa_Controller
 {
@@ -30,6 +31,7 @@ class Kbmi extends Mahasiswa_Controller
 		$this->load->model(MODEL_ANGGOTA_PROPOSAL, 'anggota_model');
 		$this->load->model(MODEL_SYARAT, 'syarat_model');
 		$this->load->model(MODEL_ISIAN, 'isian_model');
+		$this->load->model(MODEL_PERGURUAN_TINGGI, 'pt_model');
 	}
 	
 	public function identitas()
@@ -184,7 +186,9 @@ class Kbmi extends Mahasiswa_Controller
     public function step($step)
 	{
 		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
-		$isian = $this->isian_model->get_single($kegiatan->id, $step);
+		$pt = $this->pt_model->get_single($this->session->user->mahasiswa->perguruan_tinggi_id);
+		$jumlah_isian = $this->kegiatan_model->get_jumlah_isian($kegiatan->id, $pt->bentuk_pendidikan_id);
+		$isian = $this->isian_model->get_single($kegiatan->id, $pt->bentuk_pendidikan_id, $step);
 
 		// If expired, redirect ke home
 		if (time() < strtotime($kegiatan->tgl_awal_upload) || strtotime($kegiatan->tgl_akhir_upload) < time())
@@ -193,7 +197,7 @@ class Kbmi extends Mahasiswa_Controller
 		}
 		
 		// Prevent URL Hack
-		if ($step < 0 || $step > 31 || !is_numeric($step))
+		if ($step < 0 || $step > $jumlah_isian || !is_numeric($step))
 		{
 			show_error('Halaman tidak ditemukan.');
 		}
@@ -201,36 +205,8 @@ class Kbmi extends Mahasiswa_Controller
 		$proposal = $this->proposal_model->get_by_ketua($kegiatan->id, $this->session->user->mahasiswa_id);
 		
 		if ($this->input->method() == 'post')
-			$this->_step($step, $proposal);
-		
-		if (in_array($step, [1, 2, 3, 4, 5]))
 		{
-			$this->smarty->assign('heading', 'Noble Purpose');
-		}
-		
-		if (in_array($step, [6, 7, 8, 9, 10, 11, 12]))
-		{
-			$this->smarty->assign('heading', 'Sasaran Pelanggan');
-		}
-		
-		if (in_array($step, [13, 14, 15, 16, 17, 18, 19]))
-		{
-			$this->smarty->assign('heading', 'Informasi Produk');
-		}
-		
-		if (in_array($step, [20, 21, 22, 23, 24]))
-		{
-			$this->smarty->assign('heading', 'Hubungan dengan Pelanggan');
-		}
-		
-		if (in_array($step, [25, 26, 27, 28, 29, 30]))
-		{
-			$this->smarty->assign('heading', 'Sumber Daya');
-		}
-		
-		if (in_array($step, [31]))
-		{
-			$this->smarty->assign('heading', 'Pernyataan');
+			$this->_step($step, $proposal, $jumlah_isian);
 		}
 
 		$this->smarty->assign('isian', $isian);
@@ -244,10 +220,11 @@ class Kbmi extends Mahasiswa_Controller
 	/**
 	 * @param int $step
 	 * @param Proposal_model $proposal
+	 * @param int $jumlah_isian
 	 */
-	private function _step($step, $proposal)
+	private function _step($step, $proposal, $jumlah_isian)
 	{
-		if ($step == 0)
+		if ($step == 1)
 		{
 			if ($this->input->post('tombol') == 'Sebelumnya')
 			{
@@ -260,9 +237,8 @@ class Kbmi extends Mahasiswa_Controller
 				redirect("kbmi/step/{$step}"); exit();
 			}
 		}
-		
-		// Bab Noble Purpose, Sasaran Pelanggan
-		if ($step >= 1 && $step <= 31)
+
+		if ($step >= 1 && $step <= $jumlah_isian)
 		{
 			// Data proposal diupdate jika belum disubmit
 			if (!$proposal->is_submited)
@@ -279,7 +255,7 @@ class Kbmi extends Mahasiswa_Controller
 			if ($this->input->post('tombol') == 'Berikutnya')
 			{
 				// Last Step
-				if ($step == 31)
+				if ($step == $jumlah_isian)
 				{
 					redirect("kbmi/upload"); exit();
 				}
@@ -292,9 +268,13 @@ class Kbmi extends Mahasiswa_Controller
 	
 	public function upload()
 	{
+		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
+		$pt = $this->pt_model->get_single($this->session->user->mahasiswa->perguruan_tinggi_id);
+		$jumlah_isian = $this->kegiatan_model->get_jumlah_isian($kegiatan->id, $pt->bentuk_pendidikan_id);
+
 		if ($this->input->post('tombol') == 'Sebelumnya')
 		{
-			redirect("kbmi/step/31"); exit();
+			redirect("kbmi/step/" . $jumlah_isian); exit();
 		}
 		
 		if ($this->input->post('tombol') == 'Berikutnya')
