@@ -41,13 +41,6 @@
 						</div>
 					{/if}
 
-					{if $step == 0}
-						<h4>Menjadi pengusaha membutuhkan yang tekad kuat, mampu memunculkan ide-ide inovatif, sekaligus determinasi tinggi dalam
-							menghadapi tantangan. Neil Patel, seorang angel investor dalam dunia digital, pada tahun 2016 mengatakan,
-							sebanyak 9 dari 10 startup gagal di tengah jalan dalam membangun bisnis yang berkelanjutan. Untuk itu,
-							dibutuhkan sebuah alasan yang kuat untuk menjadi pengusaha (<i>noble purpose</i>).</h4>
-					{/if}
-					
 					<div class="form-group">
 						<div class="col-lg-6">
 							<input type="submit" class="btn btn-primary" name="tombol" value="Sebelumnya" />
