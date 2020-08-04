@@ -5,7 +5,7 @@
 
 			<h2>Selamat datang, {$ci->session->user->mahasiswa->nama}</h2>
 
-			<h3>Program KIBM</h3>
+			<h3>Program KIBM (<span class="text-warning">{$jenis_program}</span>)</h3>
 			{if $kegiatan_kbmi != NULL}
 				<p>Program Berjalan : {$kegiatan_kbmi->tahun}.
 					Mulai unggah <strong>{strftime('%d %B %Y %H:%M:%S', strtotime($kegiatan_kbmi->tgl_awal_upload))}</strong>
@@ -18,7 +18,8 @@
 							<tr>
 								<th style="width: 1%">Tahun</th>
 								<th>Judul</th>
-								<th>Kelengkapan</th>
+								<th>Kelengkapan Isian</th>
+								<th>Berkas Lampiran</th>
 								<th>Status</th>
 								<th></th>
 							</tr>
@@ -29,6 +30,7 @@
 									<td>{$proposal_kbmi->tahun}</td>
 									<td>{$proposal_kbmi->judul|htmlentities}</td>
 									<td><span class="badge">{$proposal_kbmi->isian_proposal}</span> dari <span class="badge">{$proposal_kbmi->jumlah_isian}</span></td>
+									<td><span class="badge">{$proposal_kbmi->jumlah_upload}</span></td>
 									<td>
 										{if $proposal_kbmi->is_submited}
 											<span class="label label-success">Sudah Submit</span>
