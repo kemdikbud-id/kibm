@@ -15,6 +15,7 @@ use GuzzleHttp\Client;
  * @property string $email
  * @property string $no_hp
  * @property int $program_studi_id
+ * @property bool $is_disabilitas
  * @property Program_studi_model $program_studi 
  * @property GuzzleHttp\Client $client
  */

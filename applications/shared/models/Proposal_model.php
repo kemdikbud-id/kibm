@@ -2,7 +2,7 @@
 
 /**
  * @author Fathoni <m.fathoni@mail.com>
- * @property CI_DB_query_builder $db
+ * @property CI_DB_query_builder|CI_DB_mysqli_driver $db
  * @property int $id
  * @property int $perguruan_tinggi_id
  * @property string $judul
@@ -133,6 +133,7 @@ class Proposal_model extends CI_Model
 		$select_isian_count = $this->db
 			->select('count(i.id)')->from('isian i')
 			->where('i.kegiatan_id = p.kegiatan_id')
+			->where('i.is_disabilitas = m.is_disabilitas')
 			->get_compiled_select();
 
 		$select_file_pitchdeck = $this->db
@@ -171,13 +172,14 @@ class Proposal_model extends CI_Model
 	{
 		$select_isian_proposal_count = $this->db
 			->select('count(ip.id)')->from('isian_proposal ip')
-			->where('ip.isian is not null', NULL, FALSE)
+			->where('(ip.isian is not null OR ip.nama_file is not null)', NULL, FALSE)
 			->where('ip.proposal_id = p.id')
 			->get_compiled_select();
 
 		$select_isian_count = $this->db
 			->select('count(i.id)')->from('isian i')
 			->where('i.kegiatan_id = p.kegiatan_id')
+			->where('i.is_disabilitas = m.is_disabilitas')
 			->get_compiled_select();
 
 		$select_file_pitchdeck = $this->db
@@ -425,33 +427,48 @@ class Proposal_model extends CI_Model
 			'id' => $proposal_id
 		]);
 	}
-	
-	function get_isian_proposal($proposal_id, $isian_ke)
+
+	/**
+	 * @param int $proposal_id
+	 * @param int $isian_id
+	 * @return IsianProposal_model
+	 */
+	function get_isian_proposal($proposal_id, $isian_id)
 	{
-		$isian_proposal = $this->db->get_where('isian_proposal', ['proposal_id' => $proposal_id, 'isian_ke' => $isian_ke], 1)->row();
+		$isian_proposal = $this->db->get_where('isian_proposal', [
+			'proposal_id' => $proposal_id, 'isian_id' => $isian_id
+		], 1)->row();
 		
 		if ($isian_proposal == NULL)
 		{
-			$this->db->insert('isian_proposal', [
-				'proposal_id' => $proposal_id,
-				'isian_ke' => $isian_ke,
-				'created_at' => date('Y-m-d H:i:s')
-			]);
-			
-			$isian_proposal = $this->db->get_where('isian_proposal', ['proposal_id' => $proposal_id, 'isian_ke' => $isian_ke], 1)->row();
+			$isian_proposal = new stdClass();
+			$isian_proposal->proposal_id = $proposal_id;
+			$isian_proposal->isian_id = $isian_id;
+			$isian_proposal->isian = NULL;
+			$isian_proposal->nama_file = NULL;
+			$isian_proposal->nama_asli = NULL;
+			$isian_proposal->created_at = date('Y-m-d H:i:s');
+			$this->db->insert('isian_proposal', $isian_proposal);
+			$isian_proposal->id = $this->db->insert_id();
 		}
 		
 		return $isian_proposal;
 	}
-	
-	function update_isian_proposal($proposal_id, $isian_ke, $isian)
+
+	/**
+	 * @param int $proposal_id
+	 * @param int $isian_id
+	 * @param string $isian
+	 * @return bool
+	 */
+	function update_isian_proposal($proposal_id, $isian_id, $isian)
 	{
 		$isian = strlen(trim($isian)) == 0 ? NULL : $isian;
 		
 		return $this->db->update('isian_proposal', [
 			'isian' => $isian,
 			'updated_at' => date('Y-m-d H:i:s')
-		], ['proposal_id' => $proposal_id, 'isian_ke' => $isian_ke]);
+		], ['proposal_id' => $proposal_id, 'isian_id' => $isian_id]);
 	}
 	
 	/**
@@ -484,12 +501,31 @@ class Proposal_model extends CI_Model
 		
 		// Ambil jumlah isian
 		$jumlah_isian_proposal = $this->db->where([
-			'isian_ke > ' => 0,
-			'isian IS NOT NULL' => NULL
+			'proposal_id' => $proposal_id,
+			'isian IS NOT NULL OR nama_file IS NOT NULL' => NULL
 		])->count_all_results('isian_proposal');
+
+		/// select count(i.id) from proposal p
+		//join anggota_proposal ap on ap.proposal_id = p.id and ap.no_urut = 1
+		//join mahasiswa m on m.id = ap.mahasiswa_id
+		//join perguruan_tinggi pt on pt.id = p.perguruan_tinggi_id
+		//join kegiatan k on k.id = p.kegiatan_id
+		//join isian i on i.kegiatan_id = k.id and i.bentuk_pendidikan_id = pt.bentuk_pendidikan_id and i.is_disabilitas = m.is_disabilitas
+		//where p.id = 15618
+
+		$jumlah_isian = $this->db
+			->from('proposal p')
+			->join('anggota_proposal ap', 'ap.proposal_id = p.id AND ap.no_urut = 1')
+			->join('mahasiswa m', 'm.id = ap.mahasiswa_id')
+			->join('perguruan_tinggi pt', 'pt.id = p.perguruan_tinggi_id')
+			->join('isian i', 'i.kegiatan_id = p.kegiatan_id AND ' .
+				'i.bentuk_pendidikan_id = pt.bentuk_pendidikan_id AND ' .
+				'i.is_disabilitas = m.is_disabilitas')
+			->where('p.id', $proposal_id)
+			->count_all_results();
 		
 		// Cek isian form harus 31
-		if ($jumlah_isian_proposal < 31)
+		if ($jumlah_isian_proposal < $jumlah_isian)
 		{
 			array_push($hasil, 'Isian proposal masih kurang lengkap');
 		}

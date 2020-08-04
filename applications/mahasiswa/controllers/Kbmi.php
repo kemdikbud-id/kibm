@@ -186,9 +186,10 @@ class Kbmi extends Mahasiswa_Controller
     public function step($step)
 	{
 		$kegiatan = $this->kegiatan_model->get_aktif(PROGRAM_KBMI);
-		$pt = $this->pt_model->get_single($this->session->user->mahasiswa->perguruan_tinggi_id);
+		$mahasiswa = $this->session->user->mahasiswa;
+		$pt = $this->pt_model->get_single($mahasiswa->perguruan_tinggi_id);
 		$jumlah_isian = $this->kegiatan_model->get_jumlah_isian($kegiatan->id, $pt->bentuk_pendidikan_id);
-		$isian = $this->isian_model->get_single($kegiatan->id, $pt->bentuk_pendidikan_id, $step);
+		$isian = $this->isian_model->get_single($kegiatan->id, $pt->bentuk_pendidikan_id, $mahasiswa->is_disabilitas, $step);
 
 		// If expired, redirect ke home
 		if (time() < strtotime($kegiatan->tgl_awal_upload) || strtotime($kegiatan->tgl_akhir_upload) < time())
@@ -203,53 +204,60 @@ class Kbmi extends Mahasiswa_Controller
 		}
 		
 		$proposal = $this->proposal_model->get_by_ketua($kegiatan->id, $this->session->user->mahasiswa_id);
-		
+		$isian_proposal = $this->proposal_model->get_isian_proposal($proposal->id, $isian->id);
+
 		if ($this->input->method() == 'post')
 		{
-			$this->_step($step, $proposal, $jumlah_isian);
+			if ($this->input->post('tombol') == 'Upload')
+			{
+				$this->_step_upload($step, $proposal, $isian, $isian_proposal);
+			}
+			elseif ($this->input->post('tombol') == 'Change Upload')
+			{
+				$this->_step_delete_upload($step, $isian_proposal);
+			}
+			else
+			{
+				$this->_step($step, $proposal, $isian->id, $jumlah_isian);
+			}
 		}
 
 		$this->smarty->assign('isian', $isian);
-		$this->smarty->assign('isian_proposal', $this->proposal_model->get_isian_proposal($proposal->id, $step));
-
+		$this->smarty->assign('isian_proposal', $isian_proposal);
 		$this->smarty->assign('step', $step);
 		$this->smarty->assign('proposal', $proposal);
+		$this->smarty->assign('upload_error', $this->session->flashdata('upload_error'));
 		$this->smarty->display();
 	}
 	
 	/**
 	 * @param int $step
 	 * @param Proposal_model $proposal
+	 * @param int $isian_id
 	 * @param int $jumlah_isian
 	 */
-	private function _step($step, $proposal, $jumlah_isian)
+	private function _step($step, $proposal, $isian_id, $jumlah_isian)
 	{
-		if ($step == 1)
-		{
-			if ($this->input->post('tombol') == 'Sebelumnya')
-			{
-				redirect('kbmi/identitas'); exit();
-			}
-			
-			if ($this->input->post('tombol') == 'Berikutnya')
-			{
-				$step++;
-				redirect("kbmi/step/{$step}"); exit();
-			}
-		}
-
 		if ($step >= 1 && $step <= $jumlah_isian)
 		{
 			// Data proposal diupdate jika belum disubmit
-			if (!$proposal->is_submited)
+			if ( ! $proposal->is_submited)
 			{
-				$this->proposal_model->update_isian_proposal($proposal->id, $step, $this->input->post('isian'));
+				$this->proposal_model->update_isian_proposal($proposal->id, $isian_id, $this->input->post('isian'));
 			}
 			
 			if ($this->input->post('tombol') == 'Sebelumnya')
 			{
-				$step--;
-				redirect("kbmi/step/{$step}"); exit();
+				// First Step
+				if ($step == 1)
+				{
+					redirect('kbmi/identitas'); exit();
+				}
+				else
+				{
+					$step--;
+					redirect("kbmi/step/{$step}"); exit();
+				}
 			}
 
 			if ($this->input->post('tombol') == 'Berikutnya')
@@ -264,6 +272,65 @@ class Kbmi extends Mahasiswa_Controller
 				redirect("kbmi/step/{$step}"); exit();
 			}
 		}
+	}
+
+	/**
+	 * @param int $step
+	 * @param Proposal_model $proposal
+	 * @param Isian_model $isian
+	 * @param IsianProposal_model $isian_proposal
+	 */
+	private function _step_upload($step, $proposal, $isian, $isian_proposal)
+	{
+		$this->load->library('upload');
+
+		$upload_path = FCPATH . 'upload/isian/' . $proposal->id . '/';
+
+		if ( ! file_exists($upload_path))
+		{
+			mkdir($upload_path, 0777, TRUE);
+		}
+
+		$this->upload->initialize([
+			'encrypt_name'	=> TRUE,
+			'upload_path'	=> $upload_path,
+			'allowed_types'	=> explode(',', $isian->allowed_types),
+			'max_size'		=> (int)$isian->max_size * 1024
+		]);
+
+		if ($this->upload->do_upload('file'))
+		{
+			$upload_data = $this->upload->data();
+			$isian_proposal->nama_file = $upload_data['file_name'];
+			$isian_proposal->nama_asli = $upload_data['orig_name'];
+			$isian_proposal->updated_at = date('Y-m-d H:i:s');
+			$this->db->update('isian_proposal', $isian_proposal, ['id' => $isian_proposal->id]);
+		}
+		else
+		{
+			$this->session->set_flashdata('upload_error', $this->upload->display_errors());
+		}
+
+		redirect(site_url('kbmi/step/'.$step));
+		exit();
+	}
+
+	/**
+	 * @param int $step
+	 * @param IsianProposal_model $isian_proposal
+	 */
+	private function _step_delete_upload($step, $isian_proposal)
+	{
+		// Hapus file
+		unlink(FCPATH . 'upload/isian/' . $isian_proposal->proposal_id . '/' . $isian_proposal->nama_file);
+
+		$isian_proposal->nama_file = NULL;
+		$isian_proposal->nama_asli = NULL;
+		$isian_proposal->updated_at = date('Y-m-d H:i:s');
+		$this->db->update('isian_proposal', $isian_proposal, ['id' => $isian_proposal->id]);
+
+		redirect(site_url('kbmi/step/'.$step));
+		exit();
 	}
 	
 	public function upload()
@@ -296,12 +363,19 @@ class Kbmi extends Mahasiswa_Controller
 		if ($this->input->post('tombol') == 'Unggah')
 		{
 			$this->load->library('upload');
+
+			$upload_path = FCPATH . 'upload/lampiran/';
+
+			if ( ! file_exists($upload_path))
+			{
+				mkdir($upload_path, 0777, TRUE);
+			}
 			
 			foreach ($syarat_set as &$syarat)
 			{
 				$this->upload->initialize([
 					'encrypt_name'	=> TRUE,
-					'upload_path'	=> FCPATH.'upload/lampiran/',
+					'upload_path'	=> $upload_path,
 					'allowed_types'	=> explode(',', $syarat->allowed_types),
 					'max_size'		=> (int)$syarat->max_size * 1024
 				]);
@@ -484,4 +558,6 @@ class Kbmi extends Mahasiswa_Controller
 	{
 		$this->smarty->display();
 	}
+
+
 }

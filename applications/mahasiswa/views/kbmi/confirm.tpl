@@ -6,13 +6,16 @@
 			<form action="{current_url()}" method="post" class="form-horizontal">
 				
 				<fieldset>
-					<legend class="text-center"><h2>Konfirmasi</h2></legend>
+					<legend class="text-center"><h2>Pengisian Selesai</h2></legend>
 					
 					<p style="font-size: 18px">Selamat ! 
-						Pada tahap ini ada sudah menyelesaikan semua isian yang diperlukan untuk pengajuan proposal KBMI. 
-						Anda bisa memperbaiki isian selama belum melakukan Submit termasuk mengganti file yang telah di upload.
-						Jika sudah tidak ada yang akan diperbaiki lagi, anda bisa melakukan submit proposal dan setelah itu isian proposal tidak akan bisa dirubah lagi.
-						</p>
+						Pada tahap ini ada sudah menyelesaikan semua isian yang diperlukan untuk pengajuan proposal.
+						Pastikan anda mengisi semua isian yang diperlukan.
+						Anda bisa memperbaiki isian selama belum di Submit termasuk mengganti file yang telah di upload.
+						Jika proposal sudah disubmit maka isian proposal tidak akan bisa dirubah lagi.
+					</p>
+
+					<p>* Submit hanya bisa dilakukan oleh admin operator</p>
 					
 					{if isset($error_message)}
 						<div class="alert alert-danger alert-dismissible" role="alert">
@@ -32,15 +35,6 @@
 								{/foreach}
 							</ul>
 						</div>
-						
-					{else}
-						<div class="form-group">
-							<div class="col-lg-12">
-								<label class="control-label" for="isian">Kode Keamanan</label>
-								<p class="form-control-static">{$img_captcha}</p>
-								<input type="text" class="form-control" id="captcha" name="captcha" />
-							</div>
-						</div>
 					{/if}
 							
 					<div class="form-group">
@@ -49,7 +43,7 @@
 						</div>
 						<div class="col-lg-6 text-right">
 							{if !is_array($kelengkapan)}
-								<input type="submit" class="btn btn-success" name="tombol" value="Submit Proposal" />
+								<a href="{site_url()}" class="btn btn-success">Kembali ke Beranda</a>
 							{/if}
 						</div>
 					</div>
