@@ -41,7 +41,13 @@
 										{if $kegiatan_kbmi != NULL}
 											{if $kegiatan_kbmi->tahun == $proposal_kbmi->tahun}
 												<a href="{site_url('kbmi/identitas')}" class="btn btn-primary btn-xs">
-													<i class="glyphicon glyphicon-pencil"></i> Identitas Proposal
+													Identitas
+												</a>
+												<a href="{site_url('kbmi/step/1')}" class="btn btn-primary btn-xs">
+													Isian Proposal
+												</a>
+												<a href="{site_url('kbmi/upload')}" class="btn btn-primary btn-xs">
+													Berkas Pendukung
 												</a>
 											{/if}
 										{/if}
