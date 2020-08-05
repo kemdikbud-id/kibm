@@ -192,7 +192,7 @@ class Proposal_KBMI extends Frontend_Controller
 		}
 		
 		$this->smarty->assignForCombo('program_studi_set',
-			$this->program_studi_model->list_by_pt_sarjana_only($current_pt->npsn), 'id', 'nama');
+			$this->program_studi_model->list_by_pt($current_pt->npsn), 'id', 'nama');
 		$this->smarty->display();
 	}
 	
