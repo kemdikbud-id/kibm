@@ -35,8 +35,8 @@ composer.phar
 
 # Applications
 applications/shared/config/database.php
-applications/shared/config/email.php
-applications/shared/config/pddikti.php
+applications/*/config/email.php
+applications/*/config/pddikti.php
 applications/*/logs/*
 !applications/*/logs/index.html
 applications/sessions/*
