@@ -31,7 +31,11 @@
 										<a class="btn btn-xs btn-default btn-edit" data-id="{$syarat->id}" title="Ubah file"><i class="glyphicon glyphicon-edit"></i> Ubah</a>
 									{/if}
 								</p>
+								<span class="help-block">{$syarat->keterangan}</span>
 							</div>
+
+							<hr/>
+
 						{/if}
 						
 					{/foreach}
