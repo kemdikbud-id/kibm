@@ -300,6 +300,18 @@ class Proposal_KBMI extends Frontend_Controller
 		$this->smarty->assign('proposal', $proposal);
 		$this->smarty->display();
 	}
+
+	public function submit($proposal_id)
+	{
+		$proposal = $this->proposal_model->get_single($proposal_id);
+
+		$proposal->is_submited = 1;
+		$proposal->updated_at = date('Y-m-d H:i:s');
+
+		$this->proposal_model->update($proposal->id, $proposal);
+
+		redirect('proposal-kbmi/index');
+	}
 	
 	public function cancel_submit($proposal_id)
 	{
