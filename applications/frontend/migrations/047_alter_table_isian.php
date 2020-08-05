@@ -17,7 +17,7 @@ class Migration_Alter_table_isian extends CI_Migration
 			'is_uploadable' => ['type' => 'boolean', 'default' => '0', 'after' => 'radio_options'],
 			'allowed_types' => ['type' => 'text', 'after' => 'is_uploadable', 'default' => 'pdf'],
 			'max_size' => ['type' => 'int', 'after' => 'allowed_types', 'comment' => 'in megabytes'],
-			'CONSTRAINT isian_kegiatan_bpendidikan_isian_ke_unique UNIQUE (kegiatan_id, bentuk_pendidikan_id, isian_ke)'
+			'CONSTRAINT isian_kegiatan_bpendidikan_isian_ke_unique UNIQUE (kegiatan_id, bentuk_pendidikan_id, is_disabilitas, isian_ke)'
 		]);
 		$this->dbforge->modify_column('isian', [
 			'jenis' => [
