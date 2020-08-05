@@ -136,10 +136,16 @@ class Proposal_model extends CI_Model
 			->where('i.is_disabilitas = m.is_disabilitas')
 			->get_compiled_select();
 
+		$select_uploaded_count = $this->db
+			->select('count(fp.id)')->from('file_proposal fp')
+			->where('fp.proposal_id = p.id')
+			->get_compiled_select();
+
 		return $this->db
 			->select('p.id, p.judul, ap.mahasiswa_id, m.nim, m.nama, ps.nama as nama_program_studi, d.nama as nama_dosen, p.is_submited, p.is_reviewed')
 			->select("({$select_isian_proposal_count}) as isian_proposal", FALSE)
 			->select("({$select_isian_count}) as jumlah_isian", FALSE)
+			->select("({$select_uploaded_count}) as jumlah_upload", FALSE)
 			->from('proposal p')
 			->join('anggota_proposal ap', 'ap.proposal_id = p.id AND ap.no_urut = 1') // Ketua di No Urut 1
 			->join('mahasiswa m', 'm.id = ap.mahasiswa_id')

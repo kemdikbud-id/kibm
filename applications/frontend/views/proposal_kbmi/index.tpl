@@ -19,28 +19,40 @@
 					<tr>
 						<th></th>
 						<th>Usulan</th>
-						<th>Kelengkapan Isian</th>
-						<th>Status</th>
-						<th>Aksi</th>
+						<th class="text-center">Kelengkapan Isian</th>
+						<th class="text-center">Berkas Lampiran</th>
+						<th class="text-center">Status</th>
+						<th class="text-center">Submit</th>
+						<th class="text-center">Aksi</th>
 					</tr>
 				</thead>
 				<tbody>
 					{foreach $data_set as $data}
 						<tr>
-							<td>{$data@index + 1}</td>
+							<td class="text-center">{$data@index + 1}</td>
 							<td>
 								<p class="judul">{$data->judul}</p>
 								<p class="sub-judul">{$data->nama} - {$data->nim} - {$data->nama_program_studi}</p>
 								<p class="sub-judul">Pembimbing: {$data->nama_dosen}</p>
 							</td>
 							<td class="text-center">{$data->isian_proposal} dari {$data->jumlah_isian}</td>
+							<td class="text-center">{$data->jumlah_upload}</td>
 							<td class="text-center">
 								{if $data->is_reviewed == TRUE}
 									<label class="label label-primary">Direview</label>
 								{elseif $data->is_submited == TRUE}
 									<label class="label label-success">Submit</label>
 								{else}
-									<label class="label label-default">Pengisian Form</label>
+									<label class="label label-default">Pengisian</label>
+								{/if}
+							</td>
+							<td class="text-center">
+								{if $waktu_sekarang < $kegiatan->tgl_akhir_upload}
+									{if $data->is_submited == 0}
+										<a href="{site_url('proposal-kbmi/submit')}/{$data->id}" class="btn btn-xs btn-success">Submit</a>
+									{else}
+										<a href="{site_url('proposal-kbmi/cancel-submit')}/{$data->id}" class="btn btn-xs btn-default" style="margin-top: 5px">Batalkan Submit</a>
+									{/if}
 								{/if}
 							</td>
 							<td>
@@ -52,8 +64,6 @@
 								{if $waktu_sekarang < $kegiatan->tgl_akhir_upload}
 									{if $data->is_submited == 0}{* Jika belum disubmit, bisa dihapus *}
 										<a href="{site_url('proposal-kbmi/delete')}/{$data->id}" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i></a>
-									{elseif $data->is_reviewed == 0}{* Jika belum di review, bisa dibatalkan *}
-										<a href="{site_url('proposal-kbmi/cancel-submit')}/{$data->id}" class="btn btn-xs btn-default" style="margin-top: 5px">Batalkan Submit</a>
 									{/if}
 								{/if}
 							</td>
