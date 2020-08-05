@@ -18,6 +18,7 @@ use GuzzleHttp\Client;
  * @property bool $is_disabilitas
  * @property Program_studi_model $program_studi 
  * @property GuzzleHttp\Client $client
+ * @property string $updated_at
  */
 class Mahasiswa_model extends CI_Model
 {

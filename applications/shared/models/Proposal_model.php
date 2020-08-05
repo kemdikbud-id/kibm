@@ -133,6 +133,7 @@ class Proposal_model extends CI_Model
 		$select_isian_count = $this->db
 			->select('count(i.id)')->from('isian i')
 			->where('i.kegiatan_id = p.kegiatan_id')
+			->where('i.bentuk_pendidikan_id = pt.bentuk_pendidikan_id')
 			->where('i.is_disabilitas = m.is_disabilitas')
 			->get_compiled_select();
 
@@ -142,7 +143,8 @@ class Proposal_model extends CI_Model
 			->get_compiled_select();
 
 		return $this->db
-			->select('p.id, p.judul, ap.mahasiswa_id, m.nim, m.nama, ps.nama as nama_program_studi, d.nama as nama_dosen, p.is_submited, p.is_reviewed')
+			->select('p.id, p.judul, ap.mahasiswa_id, m.nim, m.nama, m.is_disabilitas, ps.nama as nama_program_studi')
+			->select('d.nama as nama_dosen, p.is_submited, p.is_reviewed')
 			->select("({$select_isian_proposal_count}) as isian_proposal", FALSE)
 			->select("({$select_isian_count}) as jumlah_isian", FALSE)
 			->select("({$select_uploaded_count}) as jumlah_upload", FALSE)
@@ -151,8 +153,9 @@ class Proposal_model extends CI_Model
 			->join('mahasiswa m', 'm.id = ap.mahasiswa_id')
 			->join('program_studi ps', 'ps.id = m.program_studi_id')
 			->join('dosen d', 'd.id = p.dosen_id', 'LEFT')
+			->join('perguruan_tinggi pt', 'pt.id = p.perguruan_tinggi_id')
 			->where(['p.perguruan_tinggi_id' => $perguruan_tinggi_id, 'p.kegiatan_id' => $kegiatan_id])
-			->group_by('p.id, p.judul, ap.mahasiswa_id, m.nim, m.nama, ps.nama, d.nama, p.is_submited')
+			->group_by('p.id, p.judul, ap.mahasiswa_id, m.nim, m.nama, m.is_disabilitas, ps.nama, d.nama, p.is_submited')
 			->get()->result();
 	}
 	
@@ -167,6 +170,7 @@ class Proposal_model extends CI_Model
 		$select_isian_count = $this->db
 			->select('count(i.id)')->from('isian i')
 			->where('i.kegiatan_id = p.kegiatan_id')
+			->where('i.bentuk_pendidikan_id = pt.bentuk_pendidikan_id')
 			->where('i.is_disabilitas = m.is_disabilitas')
 			->get_compiled_select();
 
@@ -185,6 +189,7 @@ class Proposal_model extends CI_Model
 			->join('proposal p', 'p.id = ap.proposal_id')
 			->join('kegiatan k', 'k.id = p.kegiatan_id')
 			->join('program pr', 'pr.id = k.program_id')
+			->join('perguruan_tinggi pt', 'pt.id = p.perguruan_tinggi_id')
 			->where(['m.id' => $mahasiswa_id, 'pr.id' => $program_id])
 			->get()->result();
 	}

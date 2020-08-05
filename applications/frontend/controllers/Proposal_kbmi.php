@@ -216,6 +216,7 @@ class Proposal_KBMI extends Frontend_Controller
 			
 			$mahasiswa->email = $this->input->post('email');
 			$mahasiswa->no_hp = $this->input->post('no_hp');
+			$mahasiswa->is_disabilitas = $this->input->post('is_disabilitas');
 			$mahasiswa->updated_at = date('Y-m-d H:i:s');
 			$this->mahasiswa_model->update($mahasiswa);
 			

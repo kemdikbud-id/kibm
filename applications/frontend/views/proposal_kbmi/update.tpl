@@ -48,6 +48,16 @@
 					</div>
 
 					<div class="form-group">
+						<label class="col-lg-2 control-label">Status Disabilitas</label>
+						<div class="col-lg-2">
+							<select name="is_disabilitas" class="form-control">
+								<option value="0" {if $mahasiswa->is_disabilitas == 0}selected{/if}>Tidak</option>
+								<option value="1" {if $mahasiswa->is_disabilitas == 1}selected{/if}>Ya</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group">
 						<div class="col-lg-offset-2 col-lg-4">
 							<a href="{site_url('proposal-kbmi/index')}" class="btn btn-default">Kembali</a>
 							<button class="btn btn-success">Simpan</button>

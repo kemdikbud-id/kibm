@@ -34,6 +34,9 @@
 								<p class="judul">{$data->judul}</p>
 								<p class="sub-judul">{$data->nama} - {$data->nim} - {$data->nama_program_studi}</p>
 								<p class="sub-judul">Pembimbing: {$data->nama_dosen}</p>
+								{if $data->is_disabilitas}
+									<span class="label label-warning">Disabilitas</span>
+								{/if}
 							</td>
 							<td class="text-center">{$data->isian_proposal} dari {$data->jumlah_isian}</td>
 							<td class="text-center">{$data->jumlah_upload}</td>
@@ -94,6 +97,9 @@
 			</table>
 
 			<p style="font-size: small">* Login mahasiswa bisa dilihat di menu Edit apabila email tidak terkirim melalui menu Kirim Login.</p>
+
+			<p style="font-size: small">** Untuk mengubah status Disabilitas mahasiswa di menu Edit</p>
+
 
 		</div>
 	</div>
