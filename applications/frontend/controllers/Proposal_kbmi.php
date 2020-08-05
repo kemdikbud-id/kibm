@@ -253,12 +253,13 @@ class Proposal_KBMI extends Frontend_Controller
 		$this->config->load('email');
 		
 		// Kirim Email
+		$this->config->load('email');
 		$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 		$this->email->to($mahasiswa->email);
 		$this->email->subject('Informasi Akun KIBM');
 		$this->email->message($body);
 		$this->email->set_mailtype("html");
-		$send_result = $this->email->send();
+		$send_result = $this->email->send(FALSE);
 
 		$this->session->set_flashdata('result', array(
 			'page_title' => 'Pengiriman Akun KIBM',

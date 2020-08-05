@@ -173,7 +173,7 @@ class User extends Admin_Controller
 				$body = $this->smarty->fetch("email/request_user_approve.tpl");
 
 				// Kirim Email
-
+				$this->config->load('email');
 				$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 				$this->email->to($data->email);
 				$this->email->subject('Informasi Akun KIBM');
@@ -227,6 +227,7 @@ class User extends Admin_Controller
 			$this->request_user_model->reject($id, $reject_message);
 			
 			// Kirim email
+			$this->config->load('email');
 			$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 			$this->email->to($data->email);
 			$this->email->subject('Registrasi User KIBM Tidak Disetujui '. date('H:i:s d/m/Y'));
@@ -282,12 +283,13 @@ class User extends Admin_Controller
 			$body = $this->smarty->fetch("email/user_reset_password.tpl");
 			
 			// Kirim Email
+			$this->config->load('email');
 			$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 			$this->email->to($user->email);
 			$this->email->subject('Reset Password Berhasil - KIBM');
 			$this->email->message($body);
 			$this->email->set_mailtype("html");
-			$mail_result = $this->email->send();
+			$mail_result = $this->email->send(FALSE);
 			
 			echo json_encode(array(
 				'change_result' => $change_result,
@@ -312,6 +314,7 @@ class User extends Admin_Controller
 			$body = $this->smarty->fetch("email/user_resend_login.tpl");
 			
 			// Kirim Email
+			$this->config->load('email');
 			$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 			$this->email->to($user->email);
 			$this->email->subject('Informasi Login - KIBM');

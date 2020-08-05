@@ -48,14 +48,14 @@ class Site extends Frontend_Controller
 	public function test_send_mail()
 	{
 		$this->load->library('email');  // configuration file : applications/user/config/email.php
-		
-		$this->email->from($this->config->item('smtp_user'), 'KIBM');
+		$this->config->load('email');
+		$this->email->from($this->config->item('email_from'), $this->config->item('email_from_name'));
 		$this->email->to('m.fathoni@mail.com');
 		$this->email->cc('mokhammad.fathoni.rokhman@gmail.com');
 
 		$this->email->subject('Email test yang dikirim pada '. date('H:i:s d/m/Y'));
 		
-		$body = $this->smarty->fetch("email/registration.tpl");
+		$body = $this->smarty->fetch("email/test_send_email.tpl");
 		$this->email->message($body);
 			
 		$result = $this->email->send(FALSE);

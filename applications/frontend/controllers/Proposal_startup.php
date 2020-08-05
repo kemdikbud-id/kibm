@@ -222,7 +222,7 @@ class Proposal_Startup extends Frontend_Controller
 		$this->email->subject('Informasi Akun KIBM');
 		$this->email->message($body);
 		$this->email->set_mailtype("html");
-		$send_result = $this->email->send();
+		$send_result = $this->email->send(FALSE);
 
 		$this->session->set_flashdata('result', array(
 			'page_title' => 'Pengiriman Akun KIBM',
