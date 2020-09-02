@@ -115,7 +115,7 @@
 									<td class="isian">
 										{$komponen_isian->isian}
 										{if $komponen_isian->nama_file != ''}
-											<p><a href="{$komponen_isian->nama_file}">{$komponen_isian->nama_asli}</a></p>
+											<p><a href="{base_url('../upload/isian')}/{$proposal->id}/{$komponen_isian->nama_file}">{$komponen_isian->nama_asli}</a></p>
 										{/if}
 									</td>
 								</tr>
