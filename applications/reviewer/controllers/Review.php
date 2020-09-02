@@ -6,6 +6,8 @@
  * @property Kegiatan_model $kegiatan_model
  * @property Tahapan_model $tahapan_model
  * @property Proposal_model $proposal_model
+ * @property Anggota_proposal_model $anggota_model
+ * @property Mahasiswa_model $mahasiswa_model
  * @property TahapanProposal_model $tproposal_model
  * @property File_proposal_model $file_proposal_model
  * @property Reviewer_model $reviewer_model
@@ -23,6 +25,8 @@ class Review extends Reviewer_Controller
 		$this->load->model(MODEL_KEGIATAN, 'kegiatan_model');
 		$this->load->model(MODEL_TAHAPAN, 'tahapan_model');
 		$this->load->model(MODEL_PROPOSAL, 'proposal_model');
+		$this->load->model(MODEL_ANGGOTA_PROPOSAL, 'anggota_model');
+		$this->load->model(MODEL_MAHASISWA, 'mahasiswa_model');
 		$this->load->model(MODEL_TAHAPAN_PROPOSAL, 'tproposal_model');
 		$this->load->model(MODEL_FILE_PROPOSAL, 'file_proposal_model');
 		$this->load->model(MODEL_REVIEWER, 'reviewer_model');
@@ -234,7 +238,9 @@ class Review extends Reviewer_Controller
 		$file_proposal_set	= $this->file_proposal_model->list_by_proposal($tahapan_proposal->proposal_id);
 		$kegiatan			= $this->kegiatan_model->get_single($proposal->kegiatan_id);
 		$pt					= $this->pt_model->get_single($proposal->perguruan_tinggi_id);
-		
+		$anggota			= $this->anggota_model->get_ketua($proposal->id);
+		$mahasiswa			= $this->mahasiswa_model->get($anggota->mahasiswa_id);
+
 		$reviewer_id = $this->session->userdata('user')->reviewer_id;
 		
 		// Ambil komponen penilaian di left join dengan hasil penilaian per reviewer
@@ -245,21 +251,28 @@ class Review extends Reviewer_Controller
 			->join('tahapan_proposal tp', 'tp.id = pr.tahapan_proposal_id')
 			->join('kegiatan k', 'k.id = tp.kegiatan_id')
 			->join('tahapan t', 't.id = tp.tahapan_id')
-			->join('komponen_penilaian kp', 'kp.kegiatan_id = k.id AND kp.tahapan_id = t.id')
+			->join('proposal p', 'p.id = tp.proposal_id')
+			->join('perguruan_tinggi pt', 'pt.id = p.perguruan_tinggi_id')
+			->join('anggota_proposal ap', 'ap.proposal_id = p.id AND ap.no_urut = 1')
+			->join('mahasiswa m', 'm.id = ap.mahasiswa_id')
+			->join('komponen_penilaian kp', 'kp.kegiatan_id = k.id AND kp.tahapan_id = t.id ' .
+				'AND kp.bentuk_pendidikan_id = pt.bentuk_pendidikan_id ' .
+				'AND kp.is_disabilitas = m.is_disabilitas')
 			->join('hasil_penilaian hp', 'hp.plot_reviewer_id = pr.id AND hp.komponen_penilaian_id = kp.id', 'LEFT')
 			->where(['pr.id' => $plot_reviewer_id])
 			->order_by('kp.urutan')
 			->get()->result();
-		
+
 		foreach ($penilaian_set as &$penilaian)
 		{
 			$penilaian->isian_set = $isian_set = $this->db
-				->select('kpi.pertanyaan, ip.isian_ke, ip.isian')
+				->select('kpi.pertanyaan, i.isian_ke, ip.isian, ip.nama_file, ip.nama_asli')
 				->from('isian_proposal ip')
+				->join('isian i', 'i.id = ip.isian_id')
 				->join('proposal p', 'p.id = ip.proposal_id')
 				->join('tahapan_proposal tp', 'tp.proposal_id = p.id')
 				->join('plot_reviewer pr', 'pr.tahapan_proposal_id = tp.id')
-				->join('komponen_penilaian_isian kpi', 'kpi.isian_ke = ip.isian_ke')
+				->join('komponen_penilaian_isian kpi', 'kpi.isian_ke = i.isian_ke')
 				->where('pr.id', $plot_reviewer_id)
 				->where('kpi.komponen_penilaian_id', $penilaian->komponen_penilaian_id)
 				->order_by('kpi.urutan')

@@ -13,9 +13,10 @@
 		td.has-error { background-color: #f2dede; }
 		td>ol { margin-bottom: 0 }
 		.table>thead>tr>th { border-bottom: 2px solid black; }
-		.table>tbody>tr>td { line-height: 155%; }
+		.table>tbody>tr>td { line-height: 155%; color: black; }
 		.table>tbody>tr>td.kriteria, .table>tbody>tr>td.isian { vertical-align: top; }
 		.table>tbody>tr>td.border-tebal { border-bottom: 2px solid black; }
+		table > tbody > tr > td.isian p { margin-bottom: 10px; }
 	</style>
 {/block}
 {block name='content'}
@@ -111,7 +112,12 @@
 							{foreach $penilaian->isian_set as $komponen_isian}
 								<tr>
 									<td><i>{$komponen_isian->pertanyaan}</i></td>
-									<td>{$komponen_isian->isian|nl2br}</td>
+									<td class="isian">
+										{$komponen_isian->isian}
+										{if $komponen_isian->nama_file != ''}
+											<p><a href="{$komponen_isian->nama_file}">{$komponen_isian->nama_asli}</a></p>
+										{/if}
+									</td>
 								</tr>
 							{/foreach}
 							<tr>
@@ -144,7 +150,7 @@
 						<span class="input-group-addon">Rp.</span>
 						<input type="text" class="form-control number" name="biaya_rekomendasi" value="{$plot_reviewer->biaya_rekomendasi}"/>
 					</div>
-					<span class="help-block">Min Rp 10.000.000 , Maks Rp 20.000.000 </span>
+					<span class="help-block">Min Rp 5.000.000 , Maks Rp 15.000.000 </span>
 					{if form_error('biaya_rekomendasi')}
 						{form_error('biaya_rekomendasi')}
 					{/if}
