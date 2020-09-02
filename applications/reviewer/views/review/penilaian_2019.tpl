@@ -104,6 +104,10 @@
 					<tbody>
 						{foreach $penilaian_set as $penilaian}
 							{$jumlah_isian = count($penilaian->isian_set)}
+							{if $penilaian->kriteria == 'Laporan Keuangan dan Proyeksi Keuangan'
+								or $penilaian->kriteria == 'Foto-dokumentasi dan dokumen pendukung lain, CV'}
+								{$jumlah_isian = 1}
+							{/if}
 							<tr>
 								<td class="text-center border-tebal" rowspan="{$jumlah_isian + 2}">{$penilaian->urutan}</td>
 								<td class="kriteria" colspan="2">{$penilaian->kriteria}</td>
@@ -120,6 +124,38 @@
 									</td>
 								</tr>
 							{/foreach}
+							{if $penilaian->kriteria == 'Laporan Keuangan dan Proyeksi Keuangan'}
+								<tr>
+									<td></td>
+									<td>
+										{foreach $file_proposal_set as $file_proposal}
+											{if $file_proposal->syarat == 'Keuangan'}
+												<p class="form-control-static" style="min-height: 0; padding: 2px 0">
+													<span class="label label-primary">{$file_proposal->syarat}</span>
+													{$file_proposal->nama_asli}
+													<a class="btn btn-sm btn-default" href="{$download_url}?id={$file_proposal->id}&mode=download" target="_blank">Download <i class="glyphicon glyphicon-download-alt"></i></a>
+												</p>
+											{/if}
+										{/foreach}
+									</td>
+								</tr>
+							{/if}
+							{if $penilaian->kriteria == 'Foto-dokumentasi dan dokumen pendukung lain, CV'}
+								<tr>
+									<td></td>
+									<td>
+										{foreach $file_proposal_set as $file_proposal}
+											{if $file_proposal->syarat == 'Lampiran'}
+												<p class="form-control-static" style="min-height: 0; padding: 2px 0">
+													<span class="label label-primary">{$file_proposal->syarat}</span>
+													{$file_proposal->nama_asli}
+													<a class="btn btn-sm btn-default" href="{$download_url}?id={$file_proposal->id}&mode=download" target="_blank">Download <i class="glyphicon glyphicon-download-alt"></i></a>
+												</p>
+											{/if}
+										{/foreach}
+									</td>
+								</tr>
+							{/if}
 							<tr>
 								<td {if form_error("skor[`$penilaian->komponen_penilaian_id`]")}class="text-center border-tebal has-error"{else}class="text-center border-tebal"{/if} colspan="2">
 									<label>Bobot: {$penilaian->bobot} x </label>
