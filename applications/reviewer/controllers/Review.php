@@ -384,6 +384,7 @@ class Review extends Reviewer_Controller
 		$this->smarty->assign('tahapan', $tahapan);
 		$this->smarty->assign('file_proposal_set', $file_proposal_set);
 		$this->smarty->assign('pt', $pt);
+		$this->smarty->assign('mahasiswa', $mahasiswa);
 		
 		$download_url = $this->config->item('global_base_url') . '/index.php/download/';
 		$this->smarty->assign('download_url', $download_url);

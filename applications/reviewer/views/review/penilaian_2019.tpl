@@ -46,6 +46,9 @@
 					<label class="col-md-2 col-sm-3 control-label">Judul</label>
 					<div class="col-md-10 col-sm-9">
 						<p class="form-control-static">{$proposal->judul}</p>
+						{if $mahasiswa->is_disabilitas}
+							<span class="label label-warning">Disabilitas</span>
+						{/if}
 					</div>
 				</div>
 					
