@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Reviewer - Program Kewirausahaan Mahasiswa Indonesia</title>
+		<title>Reviewer - Kompetisi Inovasi Bisnis Mahasiswa</title>
 		{if ENVIRONMENT == 'development'}
 			<link href="{base_url('../vendor/twbs/bootstrap/dist/css/bootstrap.css')}" rel="stylesheet"/>
 		{/if}
