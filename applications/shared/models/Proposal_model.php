@@ -194,6 +194,20 @@ class Proposal_model extends CI_Model
 			->get()->result();
 	}
 
+	public function list_by_dosen($dosen_id, $kegiatan_id)
+	{
+		return $this->db
+			->select('p.id, p.judul, m.nama, ps.nama as prodi')
+			->from('proposal p')
+			->join('anggota_proposal ap', 'ap.proposal_id = p.id AND ap.no_urut = 1')
+			->join('mahasiswa m', 'm.id = ap.mahasiswa_id')
+			->join('program_studi ps', 'ps.id = m.program_studi_id')
+			->where('p.dosen_id', $dosen_id)
+			->where('p.kegiatan_id', $kegiatan_id)
+			->where('p.is_didanai', 1)
+			->get()->result();
+	}
+
 	/**
 	 * Mengambil satu data Proposal
 	 * @param int $id
