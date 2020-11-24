@@ -559,5 +559,81 @@ class Kbmi extends Mahasiswa_Controller
 		$this->smarty->display();
 	}
 
+	/**
+	 * Halaman untuk mengupload laporan kemajuan
+	 */
+	public function kemajuan()
+	{
+		$proposal_id = $this->input->get('id');
+		$pt_id = $this->session->user->mahasiswa->perguruan_tinggi_id;
+		$proposal = $this->proposal_model->get_single($proposal_id, $pt_id);
+		$kegiatan = $this->kegiatan_model->get_single($proposal->kegiatan_id);
+		$syarat = $this->syarat_model->get_single_by_name($proposal->kegiatan_id, 'Laporan Kemajuan', $proposal->id);
 
+		if ($this->input->method() == 'post')
+		{
+			$this->load->library('upload');
+
+			$upload_path = FCPATH . 'upload/laporan-kemajuan/';
+
+			if ( ! file_exists($upload_path))
+				mkdir($upload_path, 0777, TRUE);
+
+			$this->upload->initialize([
+				'encrypt_name'	=> TRUE,
+				'upload_path'	=> $upload_path,
+				'allowed_types'	=> explode(',', $syarat->allowed_types),
+				'max_size'		=> (int)$syarat->max_size * 1024
+			]);
+
+			if ($this->upload->do_upload('file_syarat_' . $syarat->id))
+			{
+				$data = $this->upload->data();
+
+				$file_row_exist = $this->db->where(array(
+					'proposal_id' => $proposal->id,
+					'syarat_id' => $syarat->id
+				))->count_all_results('file_proposal') > 0;
+
+				// if file record exist : update
+				if ($file_row_exist)
+				{
+					$this->db->update('file_proposal', array(
+						'nama_asli' => $data['orig_name'],
+						'nama_file' => $data['file_name']
+					), array('proposal_id' => $proposal->id, 'syarat_id' => $syarat->id));
+				}
+				else // insert
+				{
+					$this->db->insert('file_proposal', array(
+						'proposal_id' => $proposal->id,
+						'nama_asli' => $data['orig_name'],
+						'nama_file' => $data['file_name'],
+						'syarat_id' => $syarat->id
+					));
+				}
+
+				redirect("kbmi/kemajuan?id={$proposal->id}");
+				exit();
+			}
+			else
+			{
+				$syarat->upload_error_msg = $this->upload->display_errors('', '');
+			}
+		}
+
+		// Formating tanggal
+		$now = date('Y-m-d H:i:s');
+		$kegiatan->tgl_awal_upload_kemajuan_dmy =
+			strftime('%d %B %Y %T', strtotime($kegiatan->tgl_awal_upload_kemajuan));
+		$kegiatan->tgl_akhir_upload_kemajuan_dmy =
+			strftime('%d %B %Y %T', strtotime($kegiatan->tgl_akhir_upload_kemajuan));
+		$kegiatan->in_jadwal =
+			$kegiatan->tgl_awal_upload_kemajuan <= $now && $now <= $kegiatan->tgl_akhir_upload_kemajuan;
+
+		$this->smarty->assign('proposal', $proposal);
+		$this->smarty->assign('kegiatan', $kegiatan);
+		$this->smarty->assign('syarat', $syarat);
+		$this->smarty->display();
+	}
 }

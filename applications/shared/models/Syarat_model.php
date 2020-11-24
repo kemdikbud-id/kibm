@@ -66,6 +66,16 @@ class Syarat_model extends CI_Model
 	{
 		return $this->db->get_where('syarat', ['id' => $id], 1)->row();
 	}
+
+	public function get_single_by_name($kegiatan_id, $syarat, $proposal_id = 0)
+	{
+		return $this->db
+			->select('s.*, fp.id as fp_id, fp.nama_file, fp.nama_asli')
+			->from('syarat s')
+			->join('file_proposal fp', 'fp.syarat_id = s.id AND fp.proposal_id = '.$proposal_id, 'LEFT')
+			->where(['s.kegiatan_id' => $kegiatan_id, 's.syarat' => $syarat])
+			->get()->first_row();
+	}
 	
 	public function update($id)
 	{

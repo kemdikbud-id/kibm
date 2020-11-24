@@ -22,6 +22,7 @@
 								<th class="text-center">Berkas Lampiran</th>
 								<th>Status</th>
 								<th>Aksi</th>
+								<th>Progress</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -55,6 +56,13 @@
 												<a href="{site_url('kbmi/upload')}" class="btn btn-primary btn-xs">
 													Berkas Pendukung
 												</a>
+											{/if}
+										{/if}
+									</td>
+									<td>
+										{if $kegiatan_kbmi != NULL}
+											{if $kegiatan_kbmi->tahun == $proposal_kbmi->tahun}
+												<a href="{site_url('kbmi/kemajuan')}?id={$proposal_kbmi->id}" class="btn btn-default btn-xs">Laporan Kemajuan</a>
 											{/if}
 										{/if}
 									</td>
