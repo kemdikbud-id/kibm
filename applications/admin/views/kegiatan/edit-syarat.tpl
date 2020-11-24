@@ -20,7 +20,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="tahapan_id">Tahapan</label>
 						<div class="col-md-3">
-							<select name="tahapan_id" class="form-control input-md">
+							<select id="tahapan_id" name="tahapan_id" class="form-control input-md">
 								{html_options options=$tahapan_set selected=$data->tahapan_id}
 							</select>
 						</div>
@@ -54,7 +54,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="is_wajib">Status Wajib</label>
 						<div class="col-md-3">
-							<select name="is_wajib" class="form-control input-md">
+							<select id="is_wajib" name="is_wajib" class="form-control input-md">
 							{html_options options=$wajib_set selected=$data->is_wajib}
 							</select>
 						</div>
@@ -64,7 +64,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label" for="is_upload">File Upload</label>
 						<div class="col-md-3">
-							<select name="is_upload" class="form-control input-md">
+							<select id="is_upload" name="is_upload" class="form-control input-md">
 							{html_options options=$upload_set selected=$data->is_upload}
 							</select>
 						</div>
