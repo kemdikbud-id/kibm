@@ -13,6 +13,7 @@
 				<thead>
 					<tr>
 						<th>Urut</th>
+						<th>Tahapan</th>
 						<th>Syarat File</th>
 						<th>Keterangan</th>
 						<th>Wajib</th>
@@ -24,6 +25,7 @@
 					{foreach $data_set as $data}
 						<tr>
 							<td class="text-center">{$data->urutan}</td>
+							<td>{$data->tahapan}</td>
 							<td>{$data->syarat}</td>
 							<td>{$data->keterangan}</td>
 							<td class="text-center">{if $data->is_wajib}<span class="label label-primary">Wajib</span>{else}<span class="label label-default">Tidak Wajib</span>{/if}</td>

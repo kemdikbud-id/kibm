@@ -7,6 +7,7 @@
  * @property LokasiWorkshop_model $lokasi_model
  * @property Syarat_model $syarat_model
  * @property Meeting_model $meeting_model
+ * @property Tahapan_model $tahapan_model
  */
 class Kegiatan extends Admin_Controller
 {
@@ -16,11 +17,12 @@ class Kegiatan extends Admin_Controller
 		
 		$this->check_credentials();
 		
-		$this->load->model('Kegiatan_model', 'kegiatan_model');
-		$this->load->model('Program_model', 'program_model');
-		$this->load->model('LokasiWorkshop_model', 'lokasi_model');
-		$this->load->model('Syarat_model', 'syarat_model');
-		$this->load->model('Meeting_model', 'meeting_model');
+		$this->load->model(MODEL_KEGIATAN, 'kegiatan_model');
+		$this->load->model(MODEL_PROPOSAL, 'program_model');
+		$this->load->model(MODEL_LOKASI_WORKSHOP, 'lokasi_model');
+		$this->load->model(MODEL_SYARAT, 'syarat_model');
+		$this->load->model(MODEL_MEETING, 'meeting_model');
+		$this->load->model(MODEL_TAHAPAN, 'tahapan_model');
 	}
 	
 	public function index()
@@ -194,9 +196,7 @@ class Kegiatan extends Admin_Controller
 	public function syarat()
 	{
 		$kegiatan_id = $this->input->get('kegiatan_id');
-		
 		$kegiatan = $this->kegiatan_model->get_single($kegiatan_id);
-		
 		$data_set = $this->syarat_model->list_by_kegiatan($kegiatan_id);
 		
 		foreach ($data_set as &$data)
@@ -240,12 +240,12 @@ class Kegiatan extends Admin_Controller
 		}
 		
 		$kegiatan = $this->kegiatan_model->get_single($kegiatan_id);
-		
 		$this->smarty->assign('kegiatan', $kegiatan);
-		
-		$wajib_set = [1 => 'Wajib', 0 => 'Tidak Wajib'];
-		$this->smarty->assign('wajib_set', $wajib_set);
-		
+
+		$tahapan_set = $this->tahapan_model->list_all_for_option();
+		$this->smarty->assign('tahapan_set', $tahapan_set);
+
+		$this->smarty->assign('wajib_set', [1 => 'Wajib', 0 => 'Tidak Wajib']);
 		$this->smarty->assign('upload_set', [1 => 'Upload', 0 => 'Link']);
 		
 		$this->smarty->display();

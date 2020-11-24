@@ -25,15 +25,19 @@ class Syarat_model extends CI_Model
 			return $this->db
 				->select('s.id, s.syarat, s.keterangan, s.is_wajib, s.allowed_types, s.max_size, s.is_aktif, s.is_upload')
 				->select('fp.id as file_proposal_id, fp.nama_file, fp.nama_asli')
-				->from('syarat s')->join('file_proposal fp', 'fp.syarat_id = s.id AND fp.proposal_id = '.$proposal_id, 'LEFT')
+				->from('syarat s')
+				->join('file_proposal fp', 'fp.syarat_id = s.id AND fp.proposal_id = '.$proposal_id, 'LEFT')
 				->where(['s.kegiatan_id' => $kegiatan_id])->order_by('urutan')
 				->get()->result();
 		}
 		else
 		{
-			return $this->db->from('syarat')->where(['kegiatan_id' => $kegiatan_id])->order_by('urutan')->get()->result();
+			return $this->db
+				->select('s.*, t.tahapan')
+				->from('syarat s')
+				->join('tahapan t', 't.id = s.tahapan_id')
+				->where(['kegiatan_id' => $kegiatan_id])->order_by('urutan')->get()->result();
 		}
-		
 	}
 	
 	public function is_deletable($id)
@@ -46,6 +50,7 @@ class Syarat_model extends CI_Model
 		$post = $this->input->post();
 		
 		$syarat					= new stdClass();
+		$syarat->tahapan_id		= $post['tahapan_id'];
 		$syarat->kegiatan_id	= $post['kegiatan_id'];
 		$syarat->urutan			= $post['urutan'];
 		$syarat->syarat			= $post['syarat'];
@@ -67,6 +72,7 @@ class Syarat_model extends CI_Model
 		$post = $this->input->post();
 		
 		$syarat					= $this->get_single($id);
+		$syarat->tahapan_id		= $post['tahapan_id'];
 		$syarat->urutan			= $post['urutan'];
 		$syarat->syarat			= $post['syarat'];
 		$syarat->keterangan		= $post['keterangan'];
