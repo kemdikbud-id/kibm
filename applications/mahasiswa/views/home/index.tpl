@@ -18,10 +18,10 @@
 							<tr>
 								<th style="width: 1%">Tahun</th>
 								<th>Judul</th>
-								<th>Kelengkapan Isian</th>
-								<th>Berkas Lampiran</th>
+								<th class="text-center">Kelengkapan Isian</th>
+								<th class="text-center">Berkas Lampiran</th>
 								<th>Status</th>
-								<th></th>
+								<th>Aksi</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -29,11 +29,15 @@
 								<tr>
 									<td>{$proposal_kbmi->tahun}</td>
 									<td>{$proposal_kbmi->judul|htmlentities}</td>
-									<td><span class="badge">{$proposal_kbmi->isian_proposal}</span> dari <span class="badge">{$proposal_kbmi->jumlah_isian}</span></td>
-									<td><span class="badge">{$proposal_kbmi->jumlah_upload}</span></td>
+									<td class="text-center"><span class="badge">{$proposal_kbmi->isian_proposal}</span> dari <span class="badge">{$proposal_kbmi->jumlah_isian}</span></td>
+									<td class="text-center"><span class="badge">{$proposal_kbmi->jumlah_upload}</span></td>
 									<td>
 										{if $proposal_kbmi->is_submited}
-											<span class="label label-success">Sudah Submit</span>
+											{if $proposal_kbmi->is_didanai}
+												<span class="label label-info">Didanai</span>
+											{else}
+												<span class="label label-success">Sudah Submit</span>
+											{/if}
 										{else}
 											<span class="label label-default">Belum Submit</span>
 										{/if}

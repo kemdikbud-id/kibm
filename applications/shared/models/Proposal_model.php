@@ -45,7 +45,7 @@ class Proposal_model extends CI_Model
 	/**
 	 * Mendapatkan list data semua proposal per kegiatan (versi 2019) untuk datatables
 	 * @param int $kegiatan_id
-	 * @return array Array untuk diformat json kebutuhan datatables
+	 * @return stdClass|array Array untuk diformat json kebutuhan datatables
 	 */
 	public function list_all_per_kegiatan_v2_dt($kegiatan_id, $tampilan, $dt_params, $debug_query = false)
 	{
@@ -180,7 +180,7 @@ class Proposal_model extends CI_Model
 			->get_compiled_select();
 		
 		return $this->db
-			->select('p.id, k.tahun, p.judul, p.is_submited')
+			->select('p.id, k.tahun, p.judul, p.is_submited, p.is_didanai')
 			->select("({$select_isian_proposal_count}) as isian_proposal", FALSE)
 			->select("({$select_isian_count}) as jumlah_isian", FALSE)
 			->select("({$select_uploaded_count}) as jumlah_upload", FALSE)
