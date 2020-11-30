@@ -559,22 +559,35 @@ class Kbmi extends Mahasiswa_Controller
 		$this->smarty->display();
 	}
 
-	/**
-	 * Halaman untuk mengupload laporan kemajuan
-	 */
-	public function kemajuan()
+	private function proses_tahapan($tahapan)
 	{
+		$tahapans = [
+			'kemajuan' => [
+				'syarat' => 'Laporan Kemajuan',
+				'path' => 'upload/laporan-kemajuan/',
+				'url' => 'kbmi/kemajuan',
+				'template' => 'kbmi/kemajuan.tpl'
+			],
+			'akhir' => [
+				'syarat' => 'Laporan Akhir',
+				'path' => 'upload/laporan-akhir/',
+				'url' => 'kbmi/laporan-akhir',
+				'template' => 'kbmi/laporan-akhir.tpl'
+			],
+		];
+
 		$proposal_id = $this->input->get('id');
 		$pt_id = $this->session->user->mahasiswa->perguruan_tinggi_id;
 		$proposal = $this->proposal_model->get_single($proposal_id, $pt_id);
 		$kegiatan = $this->kegiatan_model->get_single($proposal->kegiatan_id);
-		$syarat = $this->syarat_model->get_single_by_name($proposal->kegiatan_id, 'Laporan Kemajuan', $proposal->id);
+		$syarat = $this->syarat_model->get_single_by_name(
+			$proposal->kegiatan_id, $tahapans[$tahapan]['syarat'], $proposal->id);
 
 		if ($this->input->method() == 'post')
 		{
 			$this->load->library('upload');
 
-			$upload_path = FCPATH . 'upload/laporan-kemajuan/';
+			$upload_path = FCPATH . $tahapans[$tahapan]['path'];
 
 			if ( ! file_exists($upload_path))
 				mkdir($upload_path, 0777, TRUE);
@@ -591,9 +604,9 @@ class Kbmi extends Mahasiswa_Controller
 				$data = $this->upload->data();
 
 				$file_row_exist = $this->db->where(array(
-					'proposal_id' => $proposal->id,
-					'syarat_id' => $syarat->id
-				))->count_all_results('file_proposal') > 0;
+						'proposal_id' => $proposal->id,
+						'syarat_id' => $syarat->id
+					))->count_all_results('file_proposal') > 0;
 
 				// if file record exist : update
 				if ($file_row_exist)
@@ -613,7 +626,7 @@ class Kbmi extends Mahasiswa_Controller
 					));
 				}
 
-				redirect("kbmi/kemajuan?id={$proposal->id}");
+				redirect("{$tahapans[$tahapan]['url']}?id={$proposal->id}");
 				exit();
 			}
 			else
@@ -624,16 +637,46 @@ class Kbmi extends Mahasiswa_Controller
 
 		// Formating tanggal
 		$now = date('Y-m-d H:i:s');
-		$kegiatan->tgl_awal_upload_kemajuan_dmy =
-			strftime('%d %B %Y %T', strtotime($kegiatan->tgl_awal_upload_kemajuan));
-		$kegiatan->tgl_akhir_upload_kemajuan_dmy =
-			strftime('%d %B %Y %T', strtotime($kegiatan->tgl_akhir_upload_kemajuan));
-		$kegiatan->in_jadwal =
-			$kegiatan->tgl_awal_upload_kemajuan <= $now && $now <= $kegiatan->tgl_akhir_upload_kemajuan;
+
+		if ($tahapan == 'kemajuan')
+		{
+			$kegiatan->tgl_awal_upload_kemajuan_dmy =
+				strftime('%d %B %Y %T', strtotime($kegiatan->tgl_awal_upload_kemajuan));
+			$kegiatan->tgl_akhir_upload_kemajuan_dmy =
+				strftime('%d %B %Y %T', strtotime($kegiatan->tgl_akhir_upload_kemajuan));
+			$kegiatan->in_jadwal =
+				$kegiatan->tgl_awal_upload_kemajuan <= $now && $now <= $kegiatan->tgl_akhir_upload_kemajuan;
+		}
+
+		if ($tahapan == 'akhir')
+		{
+			$kegiatan->tgl_awal_laporan_akhir_dmy =
+				strftime('%d %B %Y %T', strtotime($kegiatan->tgl_awal_laporan_akhir));
+			$kegiatan->tgl_akhir_laporan_akhir_dmy =
+				strftime('%d %B %Y %T', strtotime($kegiatan->tgl_akhir_laporan_akhir));
+			$kegiatan->in_jadwal =
+				$kegiatan->tgl_awal_laporan_akhir <= $now && $now <= $kegiatan->tgl_akhir_laporan_akhir;
+		}
 
 		$this->smarty->assign('proposal', $proposal);
 		$this->smarty->assign('kegiatan', $kegiatan);
 		$this->smarty->assign('syarat', $syarat);
-		$this->smarty->display();
+		$this->smarty->display($tahapans[$tahapan]['template']);
+	}
+
+	/**
+	 * Halaman untuk mengupload laporan kemajuan
+	 */
+	public function kemajuan()
+	{
+		return $this->proses_tahapan('kemajuan');
+	}
+
+	/**
+	 * Halaman untuk mengupload laporan akhir
+	 */
+	public function laporan_akhir()
+	{
+		return $this->proses_tahapan('akhir');
 	}
 }

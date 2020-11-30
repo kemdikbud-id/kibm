@@ -63,6 +63,7 @@
 										{if $kegiatan_kbmi != NULL}
 											{if $kegiatan_kbmi->tahun == $proposal_kbmi->tahun}
 												<a href="{site_url('kbmi/kemajuan')}?id={$proposal_kbmi->id}" class="btn btn-default btn-xs">Laporan Kemajuan</a>
+												<a href="{site_url('kbmi/laporan-akhir')}?id={$proposal_kbmi->id}" class="btn btn-default btn-xs">Laporan Akhir</a>
 											{/if}
 										{/if}
 									</td>
