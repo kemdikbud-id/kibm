@@ -43,6 +43,7 @@ class Kegiatan_model extends CI_Model
 	
 	public function update($id)
 	{
+		$this->load->helper('smarty_date');
 		$post = $this->input->post();
 		
 		$this->db->trans_start();
@@ -51,11 +52,15 @@ class Kegiatan_model extends CI_Model
 		$kegiatan = new stdClass();
 		$kegiatan->proposal_per_pt	= $this->input->post('proposal_per_pt');
 		$kegiatan->peserta_per_pt	= $this->input->post('peserta_per_pt');
-		$kegiatan->tgl_awal_upload	= "{$post['awal_upload_Year']}-{$post['awal_upload_Month']}-{$post['awal_upload_Day']} {$post['awal_upload_HMS']}";
-		$kegiatan->tgl_akhir_upload	= "{$post['akhir_upload_Year']}-{$post['akhir_upload_Month']}-{$post['akhir_upload_Day']} {$post['akhir_upload_HMS']}";
-		$kegiatan->tgl_awal_review	= "{$post['awal_review_Year']}-{$post['awal_review_Month']}-{$post['awal_review_Day']} {$post['awal_review_HMS']}";
-		$kegiatan->tgl_akhir_review	= "{$post['akhir_review_Year']}-{$post['akhir_review_Month']}-{$post['akhir_review_Day']} {$post['akhir_review_HMS']}";
-		$kegiatan->tgl_pengumuman	= "{$post['pengumuman_Year']}-{$post['pengumuman_Month']}-{$post['pengumuman_Day']} {$post['pengumuman_HMS']}";
+		$kegiatan->tgl_awal_upload	= get_formated_date_from_post('awal_upload_');
+		$kegiatan->tgl_akhir_upload	= get_formated_date_from_post('akhir_upload_');
+		$kegiatan->tgl_awal_review	= get_formated_date_from_post('awal_review_');
+		$kegiatan->tgl_akhir_review	= get_formated_date_from_post('akhir_review_');
+		$kegiatan->tgl_pengumuman	= get_formated_date_from_post('pengumuman_');
+		$kegiatan->tgl_awal_upload_kemajuan	= get_formated_date_from_post('awal_upload_kemajuan_');
+		$kegiatan->tgl_akhir_upload_kemajuan= get_formated_date_from_post('akhir_upload_kemajuan_');
+		$kegiatan->tgl_awal_laporan_akhir	= get_formated_date_from_post('awal_laporan_akhir_');
+		$kegiatan->tgl_akhir_laporan_akhir	= get_formated_date_from_post('akhir_laporan_akhir_');
 		$kegiatan->is_aktif			= $this->input->post('is_aktif');
 		
 		$this->db->update('kegiatan', $kegiatan, ['id' => $id]);
