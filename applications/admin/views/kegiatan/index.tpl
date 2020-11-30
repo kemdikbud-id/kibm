@@ -12,11 +12,11 @@
 						<th>Maks Proposal</th>
 						<th>Maks Peserta</th>
 						<th>Status</th>
-						<th>Awal Upload</th>
-						<th>Tanggal Akhir Upload</th>
-						<th>Tanggal Awal Review</th>
-						<th>Tanggal Akhir Review</th>
-						<th>Tanggal Pengumuman</th>
+						<th>Upload Usulan</th>
+						<th>Review Usulan</th>
+						<th>Pengumuman</th>
+						<th>Laporan Kemajuan</th>
+						<th>Laporan Akhir</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -37,13 +37,25 @@
 							{elseif $data->program_id == PROGRAM_ONLINE_WORKSHOP}
 								<td colspan="5" class="text-center">
 									<a href="{site_url("kegiatan/meeting")}?kegiatan_id={$data->id}" class="btn btn-sm btn-default">Jadwal Meeting</a>
-								</td>
+								</td>s
 							{else}
-								<td>{$data->tgl_awal_upload|date_format:"%d %b %Y %T"}</td>
-								<td>{$data->tgl_akhir_upload|date_format:"%d %b %Y %T"}</td>
-								<td>{$data->tgl_awal_review|date_format:"%d %b %Y %T"}</td>
-								<td>{$data->tgl_akhir_review|date_format:"%d %b %Y %T"}</td>
+								<td>
+									{$data->tgl_awal_upload|date_format:"%d %b %Y %T"}<br/>
+									{$data->tgl_akhir_upload|date_format:"%d %b %Y %T"}
+								</td>
+								<td>
+									{$data->tgl_awal_review|date_format:"%d %b %Y %T"}<br/>
+									{$data->tgl_akhir_review|date_format:"%d %b %Y %T"}
+								</td>
 								<td>{$data->tgl_pengumuman|date_format:"%d %b %Y %T"}</td>
+								<td>
+									{$data->tgl_awal_upload_kemajuan|date_format:"%d %b %Y %T"}<br/>
+									{$data->tgl_akhir_upload_kemajuan|date_format:"%d %b %Y %T"}
+								</td>
+								<td>
+									{$data->tgl_awal_laporan_akhir|date_format:"%d %b %Y %T"}<br/>
+									{$data->tgl_akhir_laporan_akhir|date_format:"%d %b %Y %T"}
+								</td>
 							{/if}
 							<td>
 								<a href="{site_url("kegiatan/update/{$data->id}")}" class="btn btn-xs btn-default">Edit</a>
