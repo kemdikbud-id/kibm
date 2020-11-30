@@ -36,7 +36,7 @@ class Kegiatan extends Admin_Controller
 	
 	public function add()
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$add_result = $this->kegiatan_model->add();
 			
@@ -71,7 +71,7 @@ class Kegiatan extends Admin_Controller
 	
 	public function update($id)
 	{
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$result = $this->kegiatan_model->update($id);
 			
@@ -121,7 +121,7 @@ class Kegiatan extends Admin_Controller
 	{
 		$kegiatan_id = $this->input->get('kegiatan_id');
 		
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$add_result = $this->lokasi_model->add();
 			
@@ -158,7 +158,7 @@ class Kegiatan extends Admin_Controller
 	{
 		$lokasi = $this->lokasi_model->get_single($id);
 		
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$update_result = $this->lokasi_model->update($id);
 			
@@ -310,7 +310,7 @@ class Kegiatan extends Admin_Controller
 	{
 		$kegiatan_id = $this->input->get('kegiatan_id');
 		
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$add_result = $this->meeting_model->add();
 			
@@ -347,7 +347,7 @@ class Kegiatan extends Admin_Controller
 	{
 		$meeting = $this->meeting_model->get_single($id);
 		
-		if ($_SERVER['REQUEST_METHOD'] == 'POST')
+		if ($this->input->method() == 'post')
 		{
 			$update_result = $this->meeting_model->update($id);
 			
