@@ -34,8 +34,8 @@
 								<td colspan="5" class="text-center">
 									<a href="{site_url("kegiatan/lokasi")}?kegiatan_id={$data->id}" class="btn btn-sm btn-default">Lokasi</a>
 								</td>
-                            {else if $data->program_id == PROGRAM_ONLINE_WORKSHOP}
-                                <td colspan="5" class="text-center">
+							{elseif $data->program_id == PROGRAM_ONLINE_WORKSHOP}
+								<td colspan="5" class="text-center">
 									<a href="{site_url("kegiatan/meeting")}?kegiatan_id={$data->id}" class="btn btn-sm btn-default">Jadwal Meeting</a>
 								</td>
 							{else}
@@ -56,7 +56,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="10">
+						<td colspan="11">
 							<a href="{site_url('kegiatan/add/')}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah Kegiatan</a>
 						</td>
 					</tr>
