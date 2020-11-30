@@ -41,7 +41,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="6">
+						<td colspan="8">
 							<a href="{site_url('kegiatan/add-syarat')}?kegiatan_id={$kegiatan->id}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Tambah Syarat</a>
 							<a href="{site_url('kegiatan')}" class="btn btn-sm btn-default">Kembali ke Jadwal Kegiatan</a>
 						</td>
